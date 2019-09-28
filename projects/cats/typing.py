@@ -5,23 +5,24 @@ from ucb import main, interact, trace
 from datetime import datetime
 
 
-###########
-# Phase 1 #
-###########
-
-
 def choose(paragraphs, select, k):
-    """Return the Kth paragraph from PARAGRAPHS for which SELECT called on the
+    """
+    Return the Kth paragraph from PARAGRAPHS for which SELECT called on the
     paragraph returns true. If there are fewer than K such paragraphs, return
     the empty string.
     """
     # BEGIN PROBLEM 1
-2
+    paragraphs = [option for option in paragraphs if select(option)]
+
+    if -1 < k < len(paragraphs):
+        return paragraphs[k]
+    return ''
     # END PROBLEM 1
 
 
 def about(topic):
-    """Return a select function that returns whether a paragraph contains one
+    """
+    Return a select function that returns whether a paragraph contains one
     of the words in TOPIC.
 
     >>> about_dogs = about(['dog', 'dogs', 'pup', 'puppy'])
@@ -31,13 +32,23 @@ def about(topic):
     'Nice pup.'
     """
     assert all([lower(x) == x for x in topic]), 'topics should be lowercase.'
+
     # BEGIN PROBLEM 2
-    "*** YOUR CODE HERE ***"
+    def select(option):
+        option = [remove_punctuation(text) for text in split(lower(option))]
+
+        for w in topic:
+            if w in option:
+                return True
+        return False
+
+    return select
     # END PROBLEM 2
 
 
 def accuracy(typed, reference):
-    """Return the accuracy (percentage of words typed correctly) of TYPED
+    """
+    Return the accuracy (percentage of words typed correctly) of TYPED
     when compared to the prefix of REFERENCE that was typed.
 
     >>> accuracy('Cute Dog!', 'Cute Dog.')
@@ -56,7 +67,16 @@ def accuracy(typed, reference):
     typed_words = split(typed)
     reference_words = split(reference)
     # BEGIN PROBLEM 3
-    "*** YOUR CODE HERE ***"
+    correct_words, max_index = 0, min(len(typed_words), len(reference_words))
+
+    if max_index == 0:
+        return 0.0
+
+    for i in range(max_index):
+        if typed_words[i] == reference_words[i]:
+            correct_words += 1
+
+    return correct_words / len(typed_words) * 100
     # END PROBLEM 3
 
 
@@ -64,50 +84,74 @@ def wpm(typed, elapsed):
     """Return the words-per-minute (WPM) of the TYPED string."""
     assert elapsed > 0, 'Elapsed time must be positive'
     # BEGIN PROBLEM 4
-    "*** YOUR CODE HERE ***"
+    return 60 * len(typed) / (5 * elapsed)
     # END PROBLEM 4
 
 
 def autocorrect(user_word, valid_words, diff_function, limit):
-    """Returns the element of VALID_WORDS that has the smallest difference
+    """
+    Returns the element of VALID_WORDS that has the smallest difference
     from USER_WORD. Instead returns USER_WORD if that difference is greater
     than or equal to LIMIT.
     """
     # BEGIN PROBLEM 5
-    "*** YOUR CODE HERE ***"
+    if user_word in valid_words:
+        return user_word
+
+    # Constructs a dict of diff values where key returns word from valid_words
+    diff_dict = {}
+    for i in range(len(valid_words) - 1, -1, -1):
+        val = diff_function(user_word, valid_words[i], limit)
+        diff_dict[val] = valid_words[i]
+
+    min_diff = min(diff_dict)
+
+    if min_diff <= limit:
+        return diff_dict[min_diff]
+    return user_word
     # END PROBLEM 5
 
 
 def swap_diff(start, goal, limit):
-    """A diff function for autocorrect that determines how many letters
+    """
+    A diff function for autocorrect that determines how many letters
     in START need to be substituted to create GOAL, then adds the difference in
     their lengths.
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    if start == goal:
+        return 0
+    if limit == 0:
+        return 1
+    if start == '' or goal == '':
+        return max(len(start), len(goal))
+
+    # Sets change to either 1 or 0
+    change = start[0] != goal[0]
+
+    return change + swap_diff(start[1:], goal[1:], limit - change)
     # END PROBLEM 6
+
 
 def edit_diff(start, goal, limit):
     """A diff function that computes the edit distance from START to GOAL."""
-    assert False, 'Remove this line'
+    # BEGIN PROBLEM 7
+    if start == goal:
+        return 0
+    if limit == 0:
+        return 1
+    if start == '' or goal == '':
+        return max(len(start), len(goal))
 
-    if ______________: # Fill in the condition
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
+    # Sets change to either 1 or 0
+    change = start[0] != goal[0]
 
-    elif ___________: # Feel free to remove or add additional cases
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
+    add_diff = 1 + edit_diff(start, goal[1:], limit - 1)
+    remove_diff = 1 + edit_diff(start[1:], goal, limit - 1)
+    substitute_diff = change + edit_diff(start[1:], goal[1:], limit - change)
 
-    else:
-        add_diff = ...  # Fill in these lines
-        remove_diff = ... 
-        substitute_diff = ... 
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
+    return min(add_diff, remove_diff, substitute_diff)
+    # END PROBLEM 7
 
 
 def final_diff(start, goal, limit):
@@ -115,17 +159,19 @@ def final_diff(start, goal, limit):
     assert False, 'Remove this line to use your final_diff function'
 
 
-
-
-###########
-# Phase 3 #
-###########
-
-
 def report_progress(typed, prompt, id, send):
     """Send a report of your id and progress so far to the multiplayer server."""
     # BEGIN PROBLEM 8
-    "*** YOUR CODE HERE ***"
+    count = 0
+    for i in range(len(typed)):
+        if typed[i] == prompt[i]:
+            count += 1
+        else:
+            break
+
+    progress = count/len(prompt)
+    send({'id': id, 'progress': progress})
+    return progress
     # END PROBLEM 8
 
 
@@ -142,16 +188,41 @@ def fastest_words_report(word_times):
 def fastest_words(word_times, margin=1e-5):
     """A list of which words each player typed fastest."""
     n_players = len(word_times)
-    n_words = len(word_times[0]) - 1
-    assert all(len(times) == n_words + 1 for times in word_times)
+    n_words = len(word_times[0])
+    assert all(len(times) == n_words for times in word_times)
     assert margin > 0
     # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
+
+    # Construct empty return list
+    results = [[] for _ in word_times]
+
+    # Loops through words after 'START'
+    for word_i in range(1, n_words):
+
+        # Computes player typing times for current word and gets fastest
+        typing_times = []
+        for player_i in range(n_players):
+            player_time = elapsed_time(word_times[player_i][word_i]) - elapsed_time(word_times[player_i][word_i-1])
+            typing_times.append(player_time)
+        fastest_time = min(typing_times)
+
+        # Constructs dict of fastest players for current word
+        times_dict = {}
+        for player_i in range(n_players):
+            if typing_times[player_i] == fastest_time or abs(fastest_time - typing_times[player_i]) <= margin:
+                times_dict[player_i] = word(word_times[0][word_i])
+
+        # Appends results in dict to list
+        for player_i in range(n_players):
+            if player_i in times_dict.keys():
+                results[player_i].append(times_dict[player_i])
+
+    return results
     # END PROBLEM 9
 
 
 def word_time(word, elapsed_time):
-    """A data abstrction for the elapsed time that a player finished a word."""
+    """A data abstraction for the elapsed time that a player finished a word."""
     return [word, elapsed_time]
 
 
