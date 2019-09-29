@@ -197,25 +197,25 @@ def fastest_words(word_times, margin=1e-5):
     results = [[] for _ in word_times]
 
     # Loops through words after 'START'
-    for word_i in range(1, n_words):
+    for w in range(1, n_words):
 
         # Computes player typing times for current word and gets fastest
         typing_times = []
-        for player_i in range(n_players):
-            player_time = elapsed_time(word_times[player_i][word_i]) - elapsed_time(word_times[player_i][word_i-1])
+        for p in range(n_players):
+            player_time = elapsed_time(word_times[p][w]) - elapsed_time(word_times[p][w-1])
             typing_times.append(player_time)
         fastest_time = min(typing_times)
 
         # Constructs dict of fastest players for current word
         times_dict = {}
-        for player_i in range(n_players):
-            if typing_times[player_i] == fastest_time or abs(fastest_time - typing_times[player_i]) <= margin:
-                times_dict[player_i] = word(word_times[0][word_i])
+        for p in range(n_players):
+            if typing_times[p] == fastest_time or abs(fastest_time - typing_times[p]) <= margin:
+                times_dict[p] = word(word_times[0][w])
 
         # Appends results in dict to list
-        for player_i in range(n_players):
-            if player_i in times_dict.keys():
-                results[player_i].append(times_dict[player_i])
+        for p in range(n_players):
+            if p in times_dict.keys():
+                results[p].append(times_dict[p])
 
     return results
     # END PROBLEM 9
