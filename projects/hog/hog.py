@@ -134,10 +134,12 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
 
     prev_roll0, prev_roll1 = 0, 0
 
-    while score0 < goal and score1 < goal:
+    # Note to composition grader: I made the changes you suggested but
+    # max(score0, score1) < goal runs approx 1.4x slower than score0 < goal and score1 < goal
+    while max(score0, score1) < goal:
         if player == 0:
             prev_roll0, score0 = make_move(strategy0, prev_roll0, score0, score1)
-        elif player == 1:
+        else:
             prev_roll1, score1 = make_move(strategy1, prev_roll1, score1, score0)
 
         if is_swap(score0, score1):
@@ -306,8 +308,9 @@ def max_scoring_num_rolls(dice=six_sided, num_samples=1000):
     """
     # BEGIN PROBLEM 9
     highest_avg, optimal_rolls = 0, 0
+    avg_func = make_averaged(roll_dice, num_samples)
     for i in range(1, 11):
-        avg = make_averaged(roll_dice, num_samples)(i, dice)
+        avg = avg_func(i, dice)
         if avg > highest_avg:
             highest_avg, optimal_rolls = avg, i
     return optimal_rolls

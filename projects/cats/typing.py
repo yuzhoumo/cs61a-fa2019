@@ -98,7 +98,8 @@ def autocorrect(user_word, valid_words, diff_function, limit):
     if user_word in valid_words:
         return user_word
 
-    # Constructs a dict of diff values where key returns word from valid_words
+    # Constructs dict with diff value keys, returns word from valid_words
+    # Loops in reverse to overwrite undesired values
     diff_dict = {}
     for i in range(len(valid_words) - 1, -1, -1):
         val = diff_function(user_word, valid_words[i], limit)
@@ -126,7 +127,7 @@ def swap_diff(start, goal, limit):
     if start == '' or goal == '':
         return max(len(start), len(goal))
 
-    # Sets change to either 1 or 0
+    # Sets change to either True or False (1 or 0)
     change = start[0] != goal[0]
 
     return change + swap_diff(start[1:], goal[1:], limit - change)
@@ -143,7 +144,7 @@ def edit_diff(start, goal, limit):
     if start == '' or goal == '':
         return max(len(start), len(goal))
 
-    # Sets change to either 1 or 0
+    # Sets change to either True or False (1 or 0)
     change = start[0] != goal[0]
 
     add_diff = 1 + edit_diff(start, goal[1:], limit - 1)
@@ -169,7 +170,7 @@ def report_progress(typed, prompt, id, send):
         else:
             break
 
-    progress = count/len(prompt)
+    progress = count / len(prompt)
     send({'id': id, 'progress': progress})
     return progress
     # END PROBLEM 8
@@ -188,8 +189,8 @@ def fastest_words_report(word_times):
 def fastest_words(word_times, margin=1e-5):
     """A list of which words each player typed fastest."""
     n_players = len(word_times)
-    n_words = len(word_times[0])
-    assert all(len(times) == n_words for times in word_times)
+    n_words = len(word_times[0]) - 1
+    assert all(len(times) == n_words + 1 for times in word_times)
     assert margin > 0
     # BEGIN PROBLEM 9
 
@@ -197,25 +198,20 @@ def fastest_words(word_times, margin=1e-5):
     results = [[] for _ in word_times]
 
     # Loops through words after 'START'
-    for w in range(1, n_words):
+    for w in range(1, n_words + 1):
 
         # Computes player typing times for current word and gets fastest
         typing_times = []
         for p in range(n_players):
-            player_time = elapsed_time(word_times[p][w]) - elapsed_time(word_times[p][w-1])
+            player_time = elapsed_time(word_times[p][w]) - elapsed_time(word_times[p][w - 1])
             typing_times.append(player_time)
         fastest_time = min(typing_times)
 
-        # Constructs dict of fastest players for current word
-        times_dict = {}
+        # Appends words to results
         for p in range(n_players):
             if typing_times[p] == fastest_time or abs(fastest_time - typing_times[p]) <= margin:
-                times_dict[p] = word(word_times[0][w])
-
-        # Appends results in dict to list
-        for p in range(n_players):
-            if p in times_dict.keys():
-                results[p].append(times_dict[p])
+                item = word(word_times[0][w])
+                results[p].append(item)
 
     return results
     # END PROBLEM 9
