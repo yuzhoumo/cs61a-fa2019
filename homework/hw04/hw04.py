@@ -139,16 +139,10 @@ def balanced(m):
     >>> balanced(mobile(side(1, w), side(1, v)))
     False
     """
-    values = []
-    left_part, right_part = left(m), right(m)
+    left_s, right_s = left(m), right(m)
+    left_torque, right_torque = total_weight(left_s) * length(left_s), total_weight(right_s) * length(right_s)
 
-    if is_mobile(left_part) or is_side(left_part):
-        left_torque = torque(left_part)
-    if is_mobile(right_part) or is_side(right_part):
-        right_torque = torque(right_part)
 
-    if left_torque != right_torque:
-        return False
 
 
 def torque(mobile_or_side):
