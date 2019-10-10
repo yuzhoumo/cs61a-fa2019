@@ -1,5 +1,8 @@
-# CS61A
-UC Berkeley CS61A, Fall 2019: Homeworks, labs, projects, exams, etc.
+# CS61A Fall 2019
+UC Berkeley CS61A: Homeworks, labs, projects, exams, worksheets
+
+* Website - https://cs61a.org
+* Textbook - http://www.composingprograms.com
 
 ## Homeworks
 * [9/5 HW01](homework/hw01): Control
