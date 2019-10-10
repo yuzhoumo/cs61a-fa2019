@@ -8,13 +8,13 @@ UC Berkeley CS61A, Fall 2019: Homeworks, labs, projects, exams, etc.
 * [10/10 HW04](homework/hw04): Data Abstraction, Trees, Nonlocal
 
 ## Labs
-* [9/6 Lab00](lab/lab00): Getting Started
-* [9/6 Lab01](lab/lab01): Variables & Functions, Control
-* [9/13 Lab02](lab/lab2): Higher-Order Functions
-* 9/20 Lab03: No Lab03 due to [Midterm 1]()
-* [9/27 Lab04](lab/lab04): Recursion, Python Lists
-* [10/4 Lab05](lab/lab05): Data Abstraction, Trees
-* [10/11 Lab06](lab/lab06): Nonlocal, Object-Oriented Programming
+* [9/6 Lab00](labs/lab00): Getting Started
+* [9/6 Lab01](labs/lab01): Variables & Functions, Control
+* [9/13 Lab02](labs/lab2): Higher-Order Functions
+* 9/20 Lab03: No Lab03 due to [Midterm 1](exams/midterm-1)
+* [9/27 Lab04](labs/lab04): Recursion, Python Lists
+* [10/4 Lab05](labs/lab05): Data Abstraction, Trees
+* [10/11 Lab06](labs/lab06): Nonlocal, Object-Oriented Programming
 
 ## Projects
 * [9/12 Hog](projects/hog): Dice game (Higher order functions, while loops)
