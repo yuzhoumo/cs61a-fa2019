@@ -139,14 +139,13 @@ def balanced(m):
     >>> balanced(mobile(side(1, w), side(1, v)))
     False
     """
-    left_s, right_s = left(m), right(m)
-    left_torque, right_torque = total_weight(left_s) * length(left_s), total_weight(right_s) * length(right_s)
+    if is_weight(m):
+        return True
 
-
-
-
-def torque(mobile_or_side):
-    return total_weight(mobile_or_side) * length(mobile_or_side)
+    # If left torque == right torque
+    if length(left(m)) * total_weight(end(left(m))) == length(right(m)) * total_weight(end(right(m))):
+        return balanced(end(left(m))) and balanced(end(right(m)))
+    return False
 
 
 def totals_tree(m):
@@ -174,7 +173,9 @@ def totals_tree(m):
           3
           2
     """
-    "*** YOUR CODE HERE ***"
+    if is_mobile(m):
+        return tree(total_weight(m), [totals_tree(end(left(m))), totals_tree(end(right(m)))])
+    return tree(total_weight(m), [])
 
 
 def replace_leaf(t, old, new):
@@ -206,7 +207,7 @@ def replace_leaf(t, old, new):
     >>> laerad == yggdrasil # Make sure original tree is unmodified
     True
     """
-    "*** YOUR CODE HERE ***"
+    return tree(new if label(t) == old and is_leaf(t) else label(t), [replace_leaf(b, old, new) for b in branches(t)])
 
 
 def make_fib():
@@ -233,7 +234,17 @@ def make_fib():
     ...       ['List'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    i, j, cnt = 0, 1, -1
+
+    def fib():
+        nonlocal i, j, cnt
+        if cnt > 0:
+            i, j = j, i + j
+            return j
+        cnt += 1
+        return cnt
+
+    return fib
 
 
 def make_withdraw(balance, password):
@@ -264,7 +275,23 @@ def make_withdraw(balance, password):
     >>> type(w(10, 'l33t')) == str
     True
     """
-    "*** YOUR CODE HERE ***"
+    attempts = []
+
+    def withdraw(amount, attempt):
+        nonlocal balance
+        if len(attempts) > 2:
+            return 'Your account is locked. Attempts: ' + str(attempts)
+
+        if attempt == password:
+            if amount > balance:
+                return 'Insufficient funds'
+            balance = balance - amount
+            return balance
+        else:
+            attempts.append(attempt)
+            return 'Incorrect password'
+
+    return withdraw
 
 
 def make_joint(withdraw, old_password, new_password):
@@ -305,7 +332,18 @@ def make_joint(withdraw, old_password, new_password):
     >>> make_joint(w, 'hax0r', 'hello')
     "Your account is locked. Attempts: ['my', 'secret', 'password']"
     """
-    "*** YOUR CODE HERE ***"
+    result = withdraw(0, old_password)
+    if type(result) == str:
+        return result
+
+    passwords = (old_password, new_password)
+
+    def joint_withdraw(amount, attempt):
+        if attempt in passwords:
+            return withdraw(amount, old_password)
+        return withdraw(amount, attempt)
+
+    return joint_withdraw
 
 
 ## Tree Methods ##

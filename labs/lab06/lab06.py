@@ -1,4 +1,3 @@
-
 def make_adder_inc(n):
     """
     >>> adder1 = make_adder_inc(5)
@@ -14,4 +13,11 @@ def make_adder_inc(n):
     >>> adder2(5)
     11
     """
-    "*** YOUR CODE HERE ***"
+    increment = -1
+
+    def adder(x):
+        nonlocal increment
+        increment += 1
+        return n + x + increment
+
+    return adder
