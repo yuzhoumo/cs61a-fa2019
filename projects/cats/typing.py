@@ -101,9 +101,9 @@ def autocorrect(user_word, valid_words, diff_function, limit):
     # Constructs dict with diff value keys, returns word from valid_words
     # Loops in reverse to overwrite undesired values
     diff_dict = {}
-    for i in range(len(valid_words) - 1, -1, -1):
-        val = diff_function(user_word, valid_words[i], limit)
-        diff_dict[val] = valid_words[i]
+    for w in reversed(valid_words):
+        val = diff_function(user_word, w, limit)
+        diff_dict[val] = w
 
     min_diff = min(diff_dict)
 
