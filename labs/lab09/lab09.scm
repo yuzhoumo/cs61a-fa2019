@@ -4,9 +4,7 @@
     (cond
         ((> x y) 1)
         ((< x y) -1)
-        (else 0)
-    )
-)
+        (else 0)))
 
 ;;; Tests
 (over-or-under 1 2)
@@ -17,8 +15,7 @@
 ; expect 0
 
 (define (filter-lst f lst)
-    (filter f lst)
-)
+    (filter f lst))
 
 ;;; Tests
 (define (even? x)
@@ -27,8 +24,7 @@
 ; expect (0 2 8)
 
 (define (make-adder num)
-    (lambda (x) (+ num x))
-)
+    (lambda (x) (+ num x)))
 
 ;;; Tests
 (define adder (make-adder 5))
@@ -38,17 +34,14 @@
 ;; Extra questions
 
 (define lst
-    (list (list 1) 2 (list 3 4) 5)
-)
+    (list (list 1) 2 (list 3 4) 5))
 
 (define (composed f g)
-    (lambda (x) (f (g x)))
-)
+    (lambda (x) (f (g x))))
 
 (define (remove item lst)
-    (filter (lambda(x) (if (equal? item x) #f #t)) lst)
-)
-
+    (filter
+        (lambda(x) (not (equal? item x))) lst))
 
 ;;; Tests
 (remove 3 nil)
@@ -59,20 +52,34 @@
 ; expect (3 1 4 4)
 
 (define (no-repeats s)
-    (if (equal? s nil)
+    (if (null? s)
         nil
         (cons
             (car s)
             (no-repeats
-                (filter (lambda (x)
-                    (if (equal? x (car s)) #f #t)) (cdr s)))))
-)
+                (filter
+                    (lambda (x) (not (equal? x (car s))))
+                    (cdr s))))))
 
 (define (substitute s old new)
-    
-)
-
+    (cond
+        ((null? s) nil)
+        ((pair? (car s))
+            (cons
+                (substitute (car s) old new)
+                (substitute (cdr s) old new)))
+        ((eq? (car s) old)
+            (cons
+                new
+                (substitute (cdr s) old new)))
+        (else
+            (cons
+                (car s)
+                (substitute (cdr s) old new)))))
 
 (define (sub-all s olds news)
-  'YOUR-CODE-HERE
-)
+    (if (null? olds) s
+        (sub-all
+            (substitute s (car olds) (car news))
+            (cdr olds)
+            (cdr news))))

@@ -29,5 +29,5 @@
             (car s)
             (unique
                 (filter
-                    (lambda (x) (if (equal? x (car s)) #f #t))
+                    (lambda (x) (not (equal? x (car s))))
                     (cdr s))))))
