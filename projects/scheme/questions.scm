@@ -9,12 +9,11 @@
     (map (lambda (rest) (cons first rest)) rests))
 
 (define (zip pairs)
-    (cond
-        ((null? pairs) '(() ()))
-        ((or (null? (car pairs)) (null? (cadr pairs))) nil)
-        (else (cons
-            (list (caar pairs) (caar (cdr pairs)))
-            (zip (list (cdar pairs) (cdar (cdr pairs))))))))
+    (define (make-pair lst)
+        (if (null? lst) nil
+            (cons (caar lst) (make-pair (cdr lst)))))
+    (if (null? (car pairs)) nil
+        (cons (make-pair pairs) (zip (map (lambda (x) (cdr x)) pairs)))))
 
 (define (range start end)
     (if (>= start end) nil
@@ -24,14 +23,22 @@
 ;; Returns a list of two-element lists
 (define (enumerate s)
     ; BEGIN PROBLEM 16
-        (zip (list (range 0 (length s)) s)))
+    (zip (list (range 0 (length s)) s)))
     ; END PROBLEM 16
 
 ;; Problem 17
 ;; List all ways to make change for TOTAL with DENOMS
 (define (list-change total denoms)
     ; BEGIN PROBLEM 17
-    'replace-this-line)
+    (cond
+        ((eq? total 0) '(()))
+        ((< total 0) nil)
+        ((null? denoms) nil)
+        (else (append
+                (cons-all
+                    (car denoms)
+                    (list-change (- total (car denoms)) denoms))
+                    (list-change total (cdr denoms))))))
     ; END PROBLEM 17
 
 ;; Problem 18
@@ -46,31 +53,29 @@
 
 ;; Converts all let special forms in EXPR into equivalent forms using lambda
 (define (let-to-lambda expr)
+; BEGIN PROBLEM 18
     (cond
-        ((atom? expr)
-            ; BEGIN PROBLEM 18
-            'replace-this-line)
-            ; END PROBLEM 18
-        ((quoted? expr)
-            ; BEGIN PROBLEM 18
-            'replace-this-line)
-            ; END PROBLEM 18
+        ((or (atom? expr) (quoted? expr))
+            expr)
+
         ((or (lambda? expr) (define? expr))
             (let
                 ((form (car expr))
                 (params (cadr expr))
-                (body (cddr expr)))
-                ; BEGIN PROBLEM 18
-                'replace-this-line))
-                ; END PROBLEM 18
+                (body (let-to-lambda (cddr expr))))
+                (append (list form params) body)))
+
         ((let? expr)
             (let
-                ((values (cadr expr))
-                (body (cddr expr)))
-                ; BEGIN PROBLEM 18
-                'replace-this-line))
-                ; END PROBLEM 18
-        (else
-             ; BEGIN PROBLEM 18
-             'replace-this-line)))
-             ; END PROBLEM 18
+                ((values (let-to-lambda
+                    (cadr expr)))
+                (body (let-to-lambda
+                    (cddr expr))))
+                (cons
+                    (append
+                        (list 'lambda (car (zip values)))
+                        body)
+                    (cadr (zip values)))))
+
+        (else (map let-to-lambda expr))))
+; END PROBLEM 18
