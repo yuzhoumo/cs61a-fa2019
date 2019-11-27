@@ -2,14 +2,11 @@
 
 -- QUESTIONS --
 
-
-
 -------------------------------------------------------------------------
 ------------------------ Give Interest- ---------------------------------
 -------------------------------------------------------------------------
 
--- replace this line with your solution
-
+UPDATE accounts SET amount = amount + 0.02 * amount;
 
 create table give_interest_result as select * from accounts; -- just for tests
 
@@ -17,8 +14,12 @@ create table give_interest_result as select * from accounts; -- just for tests
 ------------------------ Split Accounts ---------------------------------
 -------------------------------------------------------------------------
 
--- replace this line with your solution
+CREATE TABLE temp(name, account);
+INSERT INTO temp SELECT name || "'s Checking account", amount * 0.5 FROM accounts;
+INSERT INTO temp SELECT name || "'s Savings account", amount * 0.5 FROM accounts;
 
+DROP TABLE accounts;
+CREATE TABLE accounts AS SELECT * FROM temp;
 
 create table split_account_results as select * from accounts; -- just for tests
 
@@ -26,17 +27,19 @@ create table split_account_results as select * from accounts; -- just for tests
 -------------------------------- Whoops ---------------------------------
 -------------------------------------------------------------------------
 
--- replace this line with your solution
+DROP TABLE accounts;
 
 
 CREATE TABLE average_prices AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+    SELECT category, AVG(MSRP) AS average_price FROM products GROUP BY category;
 
 CREATE TABLE lowest_prices AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+    SELECT store, item, MIN(price) AS lowest_price FROM inventory GROUP BY item;
 
 CREATE TABLE shopping_list AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+    SELECT name, store FROM lowest_prices, products WHERE name = item
+        GROUP BY category HAVING MIN(MSRP/rating);
 
 CREATE TABLE total_bandwidth AS
-  SELECT "REPLACE THIS LINE WITH YOUR SOLUTION";
+    SELECT SUM(Mbs) FROM shopping_list AS a, stores AS b
+        WHERE a.store = b.store;

@@ -1,2 +1,1 @@
-(define quine
-    'your-code-here)
+(define quine ((lambda (x) `((lambda (x) ,x) ',x)) '`((lambda (x) ,x) ',x)))

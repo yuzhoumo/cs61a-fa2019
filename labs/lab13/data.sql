@@ -7,8 +7,7 @@ create table accounts as
     select "Cy D Fect"              as name, 2300    as amount union
     select "Eben Scrooge"           as name, 9800    as amount union
     select "Louis Reasoner"         as name, 7800    as amount union
-    select "Robert Cratchet"        as name, 1200    as amount
-    ;
+    select "Robert Cratchet"        as name, 1200    as amount;
 
 CREATE TABLE flights AS
   SELECT "SFO" AS departure, "LAX" AS arrival, 97 AS price UNION
@@ -23,7 +22,7 @@ CREATE TABLE flights AS
   SELECT "SLC"             , "SEA"           , 42          UNION
   SELECT "SFO"             , "SLC"           , 97          UNION
   SELECT "LAS"             , "SLC"           , 50          UNION
-  SELECT "LAX"             , "PDX"           , 89               ;
+  SELECT "LAX"             , "PDX"           , 89;
 
 CREATE TABLE supermarket AS
   SELECT "turkey" AS item, 30 AS price UNION
@@ -33,7 +32,7 @@ CREATE TABLE supermarket AS
   SELECT "cranberries"   , 7           UNION
   SELECT "pumpkin pie"   , 15          UNION
   SELECT "CAKE!"         , 60          UNION
-  SELECT "foie gras"     , 70               ;
+  SELECT "foie gras"     , 70;
 
 CREATE TABLE main_course AS
   SELECT "turkey" AS meat, "cranberries" AS side, 2000 AS calories UNION
@@ -47,13 +46,13 @@ CREATE TABLE main_course AS
   SELECT "tofurky"       , "soup"               , 1200             UNION
   SELECT "chicken"       , "cranberries"        , 2500             UNION
   SELECT "turducken"     , "butter"             , 10000            UNION
-  SELECT "turducken"     , "more_butter"        , 15000                 ;
+  SELECT "turducken"     , "more_butter"        , 15000;
 
 CREATE TABLE pies AS
   SELECT "pumpkin" AS pie, 500 AS calories UNION
   SELECT "apple"         , 400             UNION
   SELECT "chocolate"     , 600             UNION
-  SELECT "cherry"        , 550                  ;
+  SELECT "cherry"        , 550;
 
 CREATE TABLE products AS
   SELECT "phone" AS category, "uPhone" AS name, 99.99 AS MSRP, 4.5 AS rating UNION
@@ -63,7 +62,7 @@ CREATE TABLE products AS
   SELECT "games"            , "QBox"          , 399.99       , 3.5           UNION
   SELECT "computer"         , "iBook"         , 112.99       , 4             UNION
   SELECT "computer"         , "wBook"         , 114.29       , 4.4           UNION
-  SELECT "computer"         , "kBook"         , 99.99        , 3.8                ;
+  SELECT "computer"         , "kBook"         , 99.99        , 3.8;
 
 CREATE TABLE inventory AS
   SELECT "Hallmart" AS store, "uPhone" AS item, 99.99 AS price UNION
@@ -96,9 +95,9 @@ CREATE TABLE inventory AS
 
   SELECT "Hallmart"         , "kBook"         , 95.99          UNION
   SELECT "Targive"          , "kBook"         , 96.99          UNION
-  SELECT "RestBuy"          , "kBook"         , 94.99               ;
+  SELECT "RestBuy"          , "kBook"         , 94.99;
 
 CREATE TABLE stores AS
   SELECT "Hallmart" AS store, "50 Lawton Way" AS address, 25 AS Mbs UNION
   SELECT "Targive"          , "2 Red Circle Way"        , 40        UNION
-  SELECT "RestBuy"          , "1 Kiosk Ave"             , 30             ;
+  SELECT "RestBuy"          , "1 Kiosk Ave"             , 30;
