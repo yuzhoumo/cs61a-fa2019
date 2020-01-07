@@ -53,6 +53,6 @@ UC Berkeley CS61A: Homeworks, labs, projects, exams, worksheets
 
 Grade Bin Shift: None
 
-[](exams/midterm-1/mt1.png)
-[](exams/midterm-2/mt2.png)
-[](exams/final/final.png)
+![](exams/midterm-1/mt1.png)
+![](exams/midterm-2/mt2.png)
+![](exams/final/final.png)
