@@ -54,8 +54,8 @@ UC Berkeley CS61A: Homeworks, labs, projects, exams, worksheets
 Grade Bin Shift: None
 
 ## Exam Histograms
-![Midterm 1](exams/midterm-1/mt1.png)
+![Midterm 1 Histogram](exams/midterm-1/mt1.png)
 
-![Midterm 2](exams/midterm-2/mt2.png)
+![Midterm 2 Histogram](exams/midterm-2/mt2.png)
 
-![Final](exams/final/final.png)
+![Final Histogram](exams/final/final.png)
