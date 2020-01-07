@@ -44,7 +44,7 @@ UC Berkeley CS61A: Homeworks, labs, projects, exams, worksheets
 * [10/24 Midterm 2](exams/midterm-2): 20:00-22:00 (1 hr 50 min)
 * [12/19     Final](exams/final): 15:00-18:00 (2 hr 50 min)
 
-## Statistics
+## Exam Scores
 |Exam     |Mean |Median|Standard Deviation|Minimum|Maximum|Possible|
 |---------|-----|------|------------------|-------|-------|--------|
 |Midterm 1|26.85|28.00 |08.51             |1      |40     |40      |
@@ -53,6 +53,7 @@ UC Berkeley CS61A: Homeworks, labs, projects, exams, worksheets
 
 Grade Bin Shift: None
 
+## Exam Histograms
 ![](exams/midterm-1/mt1.png)
 ![](exams/midterm-2/mt2.png)
 ![](exams/final/final.png)
