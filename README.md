@@ -55,5 +55,7 @@ Grade Bin Shift: None
 
 ## Exam Histograms
 ![](exams/midterm-1/mt1.png)
+
 ![](exams/midterm-2/mt2.png)
+
 ![](exams/final/final.png)
