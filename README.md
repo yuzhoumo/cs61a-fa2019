@@ -34,11 +34,20 @@ UC Berkeley CS61A: Homeworks, labs, projects, exams, worksheets
 * [12/06 Lab14](labs/lab14): Final Review
 
 ## Projects
-* [09/12 Hog](projects/hog): Dice game (Higher order functions, while loops)
-* [10/03 Cats](projects/cats): Typing test (Recursion, lists, for loops)
-* [10/18 Ants](projects/ants): Plants vs Zombies clone (OOP)
+* [09/12    Hog](projects/hog): Dice game (Higher order functions, while loops)
+* [10/03   Cats](projects/cats): Typing test (Recursion, lists, for loops)
+* [10/18   Ants](projects/ants): Plants vs Zombies clone (OOP)
 * [11/20 Scheme](projects/scheme): Scheme Interpreter
 
 ## Exams
-* [09/16 Midterm 1](exams/midterm-1): 7-9 PM
-* [10/24 Midterm 2](exams/midterm-2): 8-10 PM
+* [09/16 Midterm 1](exams/midterm-1): 19:00-21:00 ()
+* [10/24 Midterm 2](exams/midterm-2): 20:00-22:00 ()
+* [12/19     Final](exams/midterm-2): 15:00-18:00 ()
+
+## Stats
+|Exam     |Mean |Median|Standard Deviation|Minimum|Maximum|Possible|
+|---------|-----|------|------------------|-------|-------|--------|
+|Midterm 1|26.85|28.00 |08.51             |1      |40     |40      |
+|Midterm 2|30.13|31.50 |10.71             |0      |50     |50      |
+|Final    |49.88|54.75 |16.90             |0      |74     |75      |
+Grade Bin Shift: None
