@@ -20,7 +20,7 @@ UC Berkeley CS61A: Homeworks, labs, projects, exams, worksheets
 * [09/06 Lab00](labs/lab00): Getting Started
 * [09/06 Lab01](labs/lab01): Variables & Functions, Control
 * [09/13 Lab02](labs/lab2): Higher-Order Functions
-* 09/20 Lab03: No Lab due to [Midterm 1](exams/midterm-1)
+* 09/20 Lab03: No lab due to [Midterm 1](exams/midterm-1)
 * [09/27 Lab04](labs/lab04): Recursion, Python Lists
 * [10/04 Lab05](labs/lab05): Data Abstraction, Trees
 * [10/11 Lab06](labs/lab06): Nonlocal, Object-Oriented Programming
