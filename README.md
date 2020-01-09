@@ -44,16 +44,16 @@ UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 * [10/24 Midterm 2](exams/midterm-2): 20:00-22:00 (1 hr 50 min)
 * [12/19     Final](exams/final): 15:00-18:00 (2 hr 50 min)
 
-## Exam Scores
-|Exam     |Mean |Median|Standard Deviation|Minimum|Maximum|Possible|
-|---------|-----|------|------------------|-------|-------|--------|
-|Midterm 1|26.85|28    | 8.51             |1      |40     |40      |
-|Midterm 2|30.13|31.5  |10.71             |0      |50     |50      |
-|Final    |49.88|54.75 |16.9              |0      |74     |75      |
+## Exam Statistics
+|Exam     |Mean |Median|Standard Deviation|Total Points|
+|---------|-----|------|------------------|------------|
+|Midterm 1|26.85|28    | 8.51             |40          |
+|Midterm 2|30.13|31.5  |10.71             |50          |
+|Final    |49.88|54.75 |16.9              |75          |
 
 Grade Bin Shift: None
 
-## Exam Histograms
+## Histograms
 ![Midterm 1 Histogram](exams/midterm-1/mt1.png)
 
 ![Midterm 2 Histogram](exams/midterm-2/mt2.png)
