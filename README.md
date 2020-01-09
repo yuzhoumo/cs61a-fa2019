@@ -34,9 +34,9 @@ UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 * [12/06 Lab14](labs/lab14): Final Review
 
 ## Projects
-* [09/12    Hog](projects/hog): Dice game (Higher order functions, while loops)
-* [10/03   Cats](projects/cats): Typing test (Recursion, lists, for loops)
-* [10/18   Ants](projects/ants): Plants vs Zombies clone (OOP)
+* [09/12    Hog](projects/hog): Dice game
+* [10/03   Cats](projects/cats): Typing test
+* [10/18   Ants](projects/ants): Plants vs Zombies clone
 * [11/20 Scheme](projects/scheme): Scheme Interpreter
 
 ## Exams
