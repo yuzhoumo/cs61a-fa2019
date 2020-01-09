@@ -51,8 +51,6 @@ UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 |Midterm 2|30.13|31.5  |10.71             |50          |
 |Final    |49.88|54.75 |16.9              |75          |
 
-Grade Bin Shift: None
-
 ## Histograms
 ![Midterm 1 Histogram](exams/midterm-1/mt1.png)
 
