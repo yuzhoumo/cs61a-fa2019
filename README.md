@@ -1,7 +1,7 @@
 # CS61A Fall 2019
 UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 
-* Website - https://cs61a.org
+* Website - https://inst.eecs.berkeley.edu/~cs61a/fa19/
 * Textbook - http://www.composingprograms.com
 
 ## Homework
