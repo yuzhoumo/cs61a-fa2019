@@ -20,7 +20,7 @@ UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 * [09/06 Lab00](labs/lab00): Getting Started
 * [09/06 Lab01](labs/lab01): Variables & Functions, Control
 * [09/13 Lab02](labs/lab2): Higher-Order Functions
-* 09/20 Lab03: No lab due to [Midterm 1](exams/midterm-1)
+*  09/20 Lab03: No lab due to [Midterm 1](exams/midterm-1)
 * [09/27 Lab04](labs/lab04): Recursion, Python Lists
 * [10/04 Lab05](labs/lab05): Data Abstraction, Trees
 * [10/11 Lab06](labs/lab06): Nonlocal, Object-Oriented Programming
@@ -51,9 +51,11 @@ UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 |Midterm 2|30.13|31.5  |10.71             |50          |
 |Final    |49.88|54.75 |16.9              |75          |
 
-## Histograms
+### Midterm 1 Histogram
 ![Midterm 1 Histogram](exams/midterm-1/mt1.png)
 
+### Midterm 2 Histogram
 ![Midterm 2 Histogram](exams/midterm-2/mt2.png)
 
+### Final Histogram
 ![Final Histogram](exams/final/final.png)
