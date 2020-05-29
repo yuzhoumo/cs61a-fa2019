@@ -1,0 +1,20 @@
+Q: Is one GrowList implementation always better than the others?
+A: JavaGrowList seems to perform much better than the other ones (except for perhaps cases with small array sizes).
+
+Q: Why is the runtime for N insertions into a geometrically resizing list a Theta(N) operation?
+A: The array size doubles each time it's filled, so any additional insertions take constant time until the array needs to be resized again. The amortized time is linear.
+
+Q: Why is the runtime for N insertions into a arithmetically resizing list a Theta(N^2) operation?
+A: Each time an element is added to the list, the entire array storing the elements needs to be copied into a larger array.
+
+Q: How does the runtime per operation for the ArithGrowList compare to that of GeomGrowList and JavaGrowList? Specifically look at the non-accumulated plots and describe the trends for how long each operation takes as a function of how many elements have already been inserted in the list.
+A: ArithGrowList is O(n^2) because it resizes by only 1 each time an element is added. Thus, it needs to create a new array each time. GeomGrowList and JavaGrowList are O(n) because they offset the time needed to resize arrays by resizing them by a factor of 2 (which allows for the following insertions to be performed in constant time until the array is filled again).
+
+Q: When are there spikes in the per operation runtime graphs for each of the implementations? Do these make sense to you? Hint: some of these should and others might not. Empirical runtime can be quite messy and depends on machine specifics which will be revealed in other subsequent classes like CS61C.
+A: There are spikes in the graph each time the array needs to resize. For the arithmetic grow list, this is essentially every time something is added. For the other ones, the lists resize by an amount greater than 1 each time, so there is a period of insertions after each array resize that can be performed in constant time.
+
+Q: Optional: Try changing the code for GeomGrowList to resize by a different factor. How does this effect the theoretical asymptotic runtime? How does this effect the plotted runtime?
+A:
+
+Q: Optional: Try changing the code for ArithGrowList to resize by adding a different fixed number of spots in the array. How does this effect the theoretical asymptotic runtime? How does this effect the plotted runtime?
+A:

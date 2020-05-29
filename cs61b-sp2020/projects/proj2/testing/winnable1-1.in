@@ -1,0 +1,65 @@
+#*java -ea loa.Main
+# Set up a winnable position and see if AI can win.
+seed 2198483
+manual White
+d1-b3
+h5-g4
+e8-f7
+h3-f1
+c8-c6
+a6-b7
+f8-d6
+h6-g7
+b8-e5
+h7-f5
+e1-e3
+g4-f3
+d8-b6
+g7-g4
+g1-g4
+f3-d1
+g4-e2
+h2-e2
+g8-h7
+a7-e7
+d6-a6
+a4-c6
+h7-g8
+e2-g4
+g8-h7
+c6-e4
+e5-b5
+f1-f4
+b5-a4
+d1-g1
+a4-c2
+g1-g3
+e3-a3
+a5-b4
+b6-c7
+b4-c3
+b1-b4
+h4-f2
+c1-e3
+f2-h4
+c2-a2
+e4-c6
+h7-f5
+h4-d4
+c7-d8
+e7-e5
+e3-e5
+d4-d6
+e5-c3
+c6-e4
+a6-c6
+e4-e5
+a3-d6
+g3-d3
+f7-f4
+e5-g7
+b4-b7
+dump
+auto Black
+auto White
+#*move/win+

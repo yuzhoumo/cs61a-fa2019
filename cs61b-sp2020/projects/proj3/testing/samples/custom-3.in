@@ -1,0 +1,93 @@
+# Checks that log outputs are consistent (not random)
+I prelude1.inc
+> init
+A Gitlet version-control system already exists in the current directory.
+<<<
++ a.txt wug.txt
++ b.txt notwug.txt
++ c.txt wug2.txt
+> add a.txt
+<<<
+> commit "Added a.txt"
+<<<
+> add b.txt
+<<<
+> commit "Added b.txt"
+<<<
+> add c.txt
+<<<
+> commit "Added c.txt"
+<<<
+> global-log
+===
+${COMMIT_HEAD}
+Added c.txt
+
+===
+${COMMIT_HEAD}
+Added b.txt
+
+===
+${COMMIT_HEAD}
+Added a.txt
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
+> log
+===
+${COMMIT_HEAD}
+Added c.txt
+
+===
+${COMMIT_HEAD}
+Added b.txt
+
+===
+${COMMIT_HEAD}
+Added a.txt
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*
++ f.txt wug.txt
+> add f.txt
+<<<
+> rm f.txt
+<<<
+> status
+=== Branches ===
+*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+f.txt
+
+<<<
+> global-log
+===
+${COMMIT_HEAD}
+Added c.txt
+
+===
+${COMMIT_HEAD}
+Added b.txt
+
+===
+${COMMIT_HEAD}
+Added a.txt
+
+===
+${COMMIT_HEAD}
+initial commit
+
+<<<*

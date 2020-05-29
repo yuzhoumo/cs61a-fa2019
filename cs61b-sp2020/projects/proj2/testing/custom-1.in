@@ -1,0 +1,5 @@
+# Test if seed yields the same result every time.
+#* java -ea loa.Main
+seed 352365
+auto black
+dump

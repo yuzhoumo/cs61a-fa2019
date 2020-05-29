@@ -1,0 +1,60 @@
+# Various tests
+C DIR1
+C DIR2
+C DIR1
+> init
+<<<
++ a.txt wug.txt
++ b.txt notwug.txt
+> status
+=== Branches ===
+*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+a.txt
+b.txt
+<<<
+> add a.txt
+<<<
+> add b.txt
+<<<
+> status
+=== Branches ===
+*master
+
+=== Staged Files ===
+a.txt
+b.txt
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+
+<<<
+> commit "Add a.txt and b.txt"
+<<<
+> status
+=== Branches ===
+*master
+
+=== Staged Files ===
+
+=== Removed Files ===
+
+=== Modifications Not Staged For Commit ===
+
+=== Untracked Files ===
+<<<
+> add-remote r ../DIR2
+<<<
+> push r branch
+Remote directory not found.
+<<<
