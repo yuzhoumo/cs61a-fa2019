@@ -1,4 +1,4 @@
-# CS61B Spring 2020
+# CS61B Spring 2020 (COVID Edition)
 UC Berkeley CS61B: Data Structures, Spring 2020
 
 * Website - https://inst.eecs.berkeley.edu/~cs61b/sp20/
