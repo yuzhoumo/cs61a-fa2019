@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS" />
+    <meta name="author" content ="John DeNero" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/hw.css">
+
+
+    <title>
+Homework 5 | CS 61A Fall 2019
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="index.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="../../instructor.html">Instructors</a></li>
+                <li><a href="../../TAs.html">TAs</a></li>
+                <li><a href="../../tutors.html">Tutors</a></li>
+                <li><a href="../../academic-interns.html">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li><a href="../../resources.html">Resources</a></li>
+            <li><a href="../../articles/about.html">Syllabus</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2019/cs61a" target="_blank">Piazza</a></li>
+            <li><a href="../../extra.html">Extra</a></li>
+            <!-- <li><a href="https://scheme.cs61a.org">Scheme</a></li> -->
+            <!-- <li><a href="https://sql.cs61a.org">SQL</a></li> -->
+            <li><a href="https://code.cs61a.org">Code</a></li>
+            <li><a href="http://tutor.cs61a.org">Tutor</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Homework 5: Linked Lists, Trees, and Generators
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw05.zip" class="label label-outline">hw05.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><em>Due by 11:59pm on Tuesday, October 22</em></p>
+
+
+
+
+
+<h2>Instructions</h2>
+
+
+
+<p><strong>Submission:</strong> When you are done, submit with <code>python3 ok
+  --submit</code>.  You may submit more than once before the deadline; only the
+final submission will be scored. Check that you have successfully submitted
+your code on <a href="https://okpy.org/">okpy.org</a>.  See <a
+  href="../../lab/lab00/index.html#submitting-the-assignment">Lab 0</a> for more instructions on
+submitting assignments.</p>
+
+<p><strong>Using Ok:</strong> If you have any questions about using Ok, please
+refer to <a href="../../articles/using-ok.html">this guide.</a>
+
+
+  <p><strong>Readings:</strong> You might find the following references
+  useful:</p>
+  <ul>
+  <li><a href="http://composingprograms.com/pages/24-mutable-data.html">Section 2.4</a></li>
+  <li><a href="http://composingprograms.com/pages/25-object-oriented-programming.html">Section 2.5</a></li>
+  <li><a href="http://composingprograms.com/pages/42-implicit-sequences.html">Section 4.2</a></li>
+</ul>
+  
+
+<p><strong>Grading:</strong> Homework is graded based on effort, not
+correctness.  However, there is no partial credit; you must show substantial
+effort on every problem to receive any points.
+<strong>This homework is out of 2 points.</strong>
+
+
+
+
+    
+<h1 id="mutable-functions">Mutable functions</h1>
+
+
+<h3 class="question" id="q1">Q1: Counter</h3>
+
+<p>Define a function <code>make_counter</code> that returns a <code>counter</code> function, which takes
+a string and returns the number of times that the function has been called on
+that string.</p>
+
+<solution>
+
+<pre><code>def make_counter():
+    &quot;&quot;&quot;Return a counter function.
+
+    &gt;&gt;&gt; c = make_counter()
+    &gt;&gt;&gt; c(&#x27;a&#x27;)
+    1
+    &gt;&gt;&gt; c(&#x27;a&#x27;)
+    2
+    &gt;&gt;&gt; c(&#x27;b&#x27;)
+    1
+    &gt;&gt;&gt; c(&#x27;a&#x27;)
+    3
+    &gt;&gt;&gt; c2 = make_counter()
+    &gt;&gt;&gt; c2(&#x27;b&#x27;)
+    1
+    &gt;&gt;&gt; c2(&#x27;b&#x27;)
+    2
+    &gt;&gt;&gt; c(&#x27;b&#x27;) + c2(&#x27;b&#x27;)
+    5
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q make_counter</code></pre>
+
+
+
+
+<h1 id="oop">OOP</h1>
+
+
+<h3 class="question" id="q2">Q2: Vending Machine</h3>
+
+<p>Create a class called <code>VendingMachine</code> that represents a vending
+machine for some product. A <code>VendingMachine</code> object returns strings
+describing its interactions.
+<br/>
+
+Fill in the <code>VendingMachine</code> class, adding attributes and methods as
+appropriate, such that its behavior matches the following doctests:</p>
+
+<solution>
+
+<pre><code>class VendingMachine:
+    &quot;&quot;&quot;A vending machine that vends some product for some price.
+
+    &gt;&gt;&gt; v = VendingMachine(&#x27;candy&#x27;, 10)
+    &gt;&gt;&gt; v.vend()
+    &#x27;Machine is out of stock.&#x27;
+    &gt;&gt;&gt; v.deposit(15)
+    &#x27;Machine is out of stock. Here is your $15.&#x27;
+    &gt;&gt;&gt; v.restock(2)
+    &#x27;Current candy stock: 2&#x27;
+    &gt;&gt;&gt; v.vend()
+    &#x27;You must deposit $10 more.&#x27;
+    &gt;&gt;&gt; v.deposit(7)
+    &#x27;Current balance: $7&#x27;
+    &gt;&gt;&gt; v.vend()
+    &#x27;You must deposit $3 more.&#x27;
+    &gt;&gt;&gt; v.deposit(5)
+    &#x27;Current balance: $12&#x27;
+    &gt;&gt;&gt; v.vend()
+    &#x27;Here is your candy and $2 change.&#x27;
+    &gt;&gt;&gt; v.deposit(10)
+    &#x27;Current balance: $10&#x27;
+    &gt;&gt;&gt; v.vend()
+    &#x27;Here is your candy.&#x27;
+    &gt;&gt;&gt; v.deposit(15)
+    &#x27;Machine is out of stock. Here is your $15.&#x27;
+
+    &gt;&gt;&gt; w = VendingMachine(&#x27;soda&#x27;, 2)
+    &gt;&gt;&gt; w.restock(3)
+    &#x27;Current soda stock: 3&#x27;
+    &gt;&gt;&gt; w.restock(3)
+    &#x27;Current soda stock: 6&#x27;
+    &gt;&gt;&gt; w.deposit(2)
+    &#x27;Current balance: $2&#x27;
+    &gt;&gt;&gt; w.vend()
+    &#x27;Here is your soda.&#x27;
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<blockquote><p>You may find <a href="https://docs.python.org/2/library/stdtypes.html#str.format">Python string formatting
+syntax</a> useful.
+A quick example:</p></blockquote>
+
+<pre><code>&gt;&gt;&gt; ten, twenty, thirty = 10, &#x27;twenty&#x27;, [30]
+&gt;&gt;&gt; &#x27;{0} plus {1} is {2}&#x27;.format(ten, twenty, thirty)
+&#x27;10 plus twenty is [30]&#x27;</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q VendingMachine</code></pre>
+
+
+
+
+<h1 id="trees">Trees</h1>
+
+
+<h3 class="question" id="q3">Q3: Preorder</h3>
+
+<p>Define the function <code>preorder</code>, which takes in a tree as an argument and
+returns a list of all the entries in the tree in the order that
+<code>print_tree</code> would print them.</p>
+
+<p>The following diagram shows the order that the nodes would get printed,
+with the arrows representing function calls.</p>
+
+<p><img class="img-responsive center-block" src="assets/preorder.png" alt="preorder"></p>
+
+<blockquote><p><em>Note</em>: This ordering of the nodes in a tree is called a preorder traversal.</p></blockquote>
+
+<solution>
+
+<pre><code>def preorder(t):
+    &quot;&quot;&quot;Return a list of the entries in this tree in the order that they
+    would be visited by a preorder traversal (see problem description).
+
+    &gt;&gt;&gt; numbers = Tree(1, [Tree(2), Tree(3, [Tree(4), Tree(5)]), Tree(6, [Tree(7)])])
+    &gt;&gt;&gt; preorder(numbers)
+    [1, 2, 3, 4, 5, 6, 7]
+    &gt;&gt;&gt; preorder(Tree(2, [Tree(4, [Tree(6)])]))
+    [2, 4, 6]
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q preorder</code></pre>
+
+
+<h1 id="linked-lists">Linked Lists</h1>
+
+
+<h3 class="question" id="q4">Q4: Store Digits</h3>
+
+<p>Write a function <code>store_digits</code> that takes in an integer <code>n</code> and returns
+a linked list where each element of the list is a digit of <code>n</code>.</p>
+
+<solution>
+
+<pre><code>def store_digits(n):
+    &quot;&quot;&quot;Stores the digits of a positive number n in a linked list.
+
+    &gt;&gt;&gt; s = store_digits(1)
+    &gt;&gt;&gt; s
+    Link(1)
+    &gt;&gt;&gt; store_digits(2345)
+    Link(2, Link(3, Link(4, Link(5))))
+    &gt;&gt;&gt; store_digits(876)
+    Link(8, Link(7, Link(6)))
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q store_digits</code></pre>
+
+
+<h1 id="generators-trees">Generators/Trees</h1>
+
+
+<h3 class="question" id="q5">Q5: Generate Paths</h3>
+
+<p>Define a generator function <code>generate_paths</code> which takes in a Tree <code>t</code>, a value
+<code>x</code>, and returns a generator object which yields each path from the root of <code>t</code> 
+to a node that has label <code>x</code>.</p>
+
+<p><code>t</code> is implemented with a class, not as the function-based ADT.</p>
+
+<p>Each path should be represented as a list of the labels along that path in the
+tree. You may yield the paths in any order.</p>
+
+<p>We have provided a (partial) skeleton for you. You do not need to use this skeleton,
+but if your implementation diverges significantly from it, you might
+want to think about how you can get it to fit the skeleton.</p>
+
+<pre><code>def generate_paths(t, x):
+    &quot;&quot;&quot;Yields all possible paths from the root of t to a node with the label x
+    as a list.
+
+    &gt;&gt;&gt; t1 = Tree(1, [Tree(2, [Tree(3), Tree(4, [Tree(6)]), Tree(5)]), Tree(5)])
+    &gt;&gt;&gt; print(t1)
+    1
+      2
+        3
+        4
+          6
+        5
+      5
+    &gt;&gt;&gt; next(generate_paths(t1, 6))
+    [1, 2, 4, 6]
+    &gt;&gt;&gt; path_to_5 = generate_paths(t1, 5)
+    &gt;&gt;&gt; sorted(list(path_to_5))
+    [[1, 2, 5], [1, 5]]
+
+    &gt;&gt;&gt; t2 = Tree(0, [Tree(2, [t1])])
+    &gt;&gt;&gt; print(t2)
+    0
+      2
+        1
+          2
+            3
+            4
+              6
+            5
+          5
+    &gt;&gt;&gt; path_to_2 = generate_paths(t2, 2)
+    &gt;&gt;&gt; sorted(list(path_to_2))
+    [[0, 2], [0, 2, 1, 2]]
+    &quot;&quot;&quot;
+
+    "*** YOUR CODE HERE ***"
+
+    for _______________ in _________________:
+        for _______________ in _________________:
+
+            "*** YOUR CODE HERE ***"
+</code></pre>
+
+<blockquote><p>Hint: If you're having trouble getting started, think about how you'd approach this
+problem if it wasn't a generator function. What would your recursive calls be?
+With a generator function, what happens if you make a "recurisve call" within its body?</p></blockquote>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q generate_paths</code></pre>
+
+
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+<blockquote><p>These are recommended as review for the exam!</p></blockquote>
+
+<h3 class="question" id="q6">Q6: Mint</h3>
+
+<p>Complete the <code>Mint</code> and <code>Coin</code> classes so that the coins created by a mint have
+the correct year and worth.</p>
+
+<ul>
+  <li>Each <code>Mint</code> instance has a <code>year</code> stamp. The <code>update</code> method sets the
+  <code>year</code> stamp to the <code>current_year</code> class attribute of the <code>Mint</code> class.</li>
+  <li>The <code>create</code> method takes a subclass of <code>Coin</code> and returns an instance of
+  that class stamped with the <code>mint</code>'s year (which may be different from
+  <code>Mint.current_year</code> if it has not been updated.)</li>
+  <li>A <code>Coin</code>'s <code>worth</code> method returns the <code>cents</code> value of the coin plus one
+  extra cent for each year of age beyond 50. A coin's age can be determined
+  by subtracting the coin's year from the <code>current_year</code> class attribute of
+  the <code>Mint</code> class.</li>
+</ul>
+
+<solution>
+
+<pre><code>class Mint:
+    &quot;&quot;&quot;A mint creates coins by stamping on years.
+
+    The update method sets the mint&#x27;s stamp to Mint.current_year.
+
+    &gt;&gt;&gt; mint = Mint()
+    &gt;&gt;&gt; mint.year
+    2019
+    &gt;&gt;&gt; dime = mint.create(Dime)
+    &gt;&gt;&gt; dime.year
+    2019
+    &gt;&gt;&gt; Mint.current_year = 2100  # Time passes
+    &gt;&gt;&gt; nickel = mint.create(Nickel)
+    &gt;&gt;&gt; nickel.year     # The mint has not updated its stamp yet
+    2019
+    &gt;&gt;&gt; nickel.worth()  # 5 cents + (81 &#x2d; 50 years)
+    36
+    &gt;&gt;&gt; mint.update()   # The mint&#x27;s year is updated to 2100
+    &gt;&gt;&gt; Mint.current_year = 2175     # More time passes
+    &gt;&gt;&gt; mint.create(Dime).worth()    # 10 cents + (75 &#x2d; 50 years)
+    35
+    &gt;&gt;&gt; Mint().create(Dime).worth()  # A new mint has the current year
+    10
+    &gt;&gt;&gt; dime.worth()     # 10 cents + (156 &#x2d; 50 years)
+    116
+    &gt;&gt;&gt; Dime.cents = 20  # Upgrade all dimes!
+    &gt;&gt;&gt; dime.worth()     # 20 cents + (156 &#x2d; 50 years)
+    126
+
+    &quot;&quot;&quot;
+    current_year = 2019
+
+    def __init__(self):
+        self.update()
+
+    def create(self, kind):
+        "*** YOUR CODE HERE ***"
+
+    def update(self):
+        "*** YOUR CODE HERE ***"
+
+class Coin:
+    def __init__(self, year):
+        self.year = year
+
+    def worth(self):
+        "*** YOUR CODE HERE ***"
+
+class Nickel(Coin):
+    cents = 5
+
+class Dime(Coin):
+    cents = 10</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q Mint</code></pre>
+<h3 class="question" id="q7">Q7: Remove All</h3>
+
+<p>Implement a function <code>remove_all</code> that takes a <code>Link</code>, and a <code>value</code>,
+and remove any linked list node containing that value.  You can assume the
+list already has at least one node containing <code>value</code> and the first element is
+never removed. Notice that you are not returning anything, so you should mutate the list.</p>
+
+<solution>
+
+<pre><code>def remove_all(link , value):
+    &quot;&quot;&quot;Remove all the nodes containing value in link. Assume that the
+    first element is never removed.
+
+    &gt;&gt;&gt; l1 = Link(0, Link(2, Link(2, Link(3, Link(1, Link(2, Link(3)))))))
+    &gt;&gt;&gt; print(l1)
+    &lt;0 2 2 3 1 2 3&gt;
+    &gt;&gt;&gt; remove_all(l1, 2)
+    &gt;&gt;&gt; print(l1)
+    &lt;0 3 1 3&gt;
+    &gt;&gt;&gt; remove_all(l1, 3)
+    &gt;&gt;&gt; print(l1)
+    &lt;0 1&gt;
+    &gt;&gt;&gt; remove_all(l1, 3)
+    &gt;&gt;&gt; print(l1)
+    &lt;0 1&gt;
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q remove_all</code></pre>
+<h3 class="question" id="q8">Q8: Deep Map</h3>
+
+<p>Implement <code>deep_map</code>, which takes a function <code>f</code> and a <code>link</code>. It returns a
+<em>new</em> linked list with the same structure as <code>link</code>, but with <code>f</code> applied to any
+element within <code>link</code> or any <code>Link</code> instance contained in <code>link</code>.</p>
+
+<p>The <code>deep_map</code> function should recursively apply <code>fn</code> to each of that
+<code>Link</code>'s elements rather than to that <code>Link</code> itself.</p>
+
+<p><em>Hint</em>: You may find the built-in <code>isinstance</code> function useful. You can also use the
+<code>type(link) == Link</code> to check whether an object is a linked list (like you did in homework 3
+question 1).</p>
+
+<solution>
+
+<pre><code>def deep_map(f, link):
+    &quot;&quot;&quot;Return a Link with the same structure as link but with fn mapped over
+    its elements. If an element is an instance of a linked list, recursively
+    apply f inside that linked list as well.
+
+    &gt;&gt;&gt; s = Link(1, Link(Link(2, Link(3)), Link(4)))
+    &gt;&gt;&gt; print(deep_map(lambda x: x * x, s))
+    &lt;1 &lt;4 9&gt; 16&gt;
+    &gt;&gt;&gt; print(s) # unchanged
+    &lt;1 &lt;2 3&gt; 4&gt;
+    &gt;&gt;&gt; print(deep_map(lambda x: 2 * x, Link(s, Link(Link(Link(5))))))
+    &lt;&lt;2 &lt;4 6&gt; 8&gt; &lt;&lt;10&gt;&gt;&gt;
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q deep_map</code></pre>
+
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="index.html#mutable-functions">Mutable functions</a></li>
+  <ul>
+    <li><a href="index.html#q1">Q1: Counter</a></li>
+  </ul>
+  <li><a href="index.html#oop">OOP</a></li>
+  <ul>
+    <li><a href="index.html#q2">Q2: Vending Machine</a></li>
+  </ul>
+  <li><a href="index.html#trees">Trees</a></li>
+  <ul>
+    <li><a href="index.html#q3">Q3: Preorder</a></li>
+  </ul>
+  <li><a href="index.html#linked-lists">Linked Lists</a></li>
+  <ul>
+    <li><a href="index.html#q4">Q4: Store Digits</a></li>
+  </ul>
+  <li><a href="index.html#generators-trees">Generators/Trees</a></li>
+  <ul>
+    <li><a href="index.html#q5">Q5: Generate Paths</a></li>
+  </ul>
+  <li><a href="index.html#optional-questions">Optional Questions</a></li>
+  <ul>
+    <li><a href="index.html#q6">Q6: Mint</a></li>
+    <li><a href="index.html#q7">Q7: Remove All</a></li>
+    <li><a href="index.html#q8">Q8: Deep Map</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about.html#assignments">Assignments</a></li>
+            <li><a href="../../articles/about.html#exams">Exams</a></li>
+            <li><a href="../../articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    console.log(target);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      // window.scrollTo(0, 0);
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    event.preventDefault();
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    } else {
+      window.open(this.href);
+    }
+  });
+</script>
+
+  </body>
+</html>

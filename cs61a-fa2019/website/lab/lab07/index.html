@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS" />
+    <meta name="author" content ="John DeNero" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 7: Generators, Linked Lists, and Trees | CS 61A Fall 2019
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="index.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="../../instructor.html">Instructors</a></li>
+                <li><a href="../../TAs.html">TAs</a></li>
+                <li><a href="../../tutors.html">Tutors</a></li>
+                <li><a href="../../academic-interns.html">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li><a href="../../resources.html">Resources</a></li>
+            <li><a href="../../articles/about.html">Syllabus</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2019/cs61a" target="_blank">Piazza</a></li>
+            <li><a href="../../extra.html">Extra</a></li>
+            <!-- <li><a href="https://scheme.cs61a.org">Scheme</a></li> -->
+            <!-- <li><a href="https://sql.cs61a.org">SQL</a></li> -->
+            <li><a href="https://code.cs61a.org">Code</a></li>
+            <li><a href="http://tutor.cs61a.org">Tutor</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Lab 7: Generators, Linked Lists, and Trees
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab07.zip" class="label label-outline">lab07.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due by 11:59pm on Friday, October 18.</i></p>
+
+
+
+
+<h2 id='starter-files'>Starter Files</h2>
+
+<p>Download <a href="lab07.zip">lab07.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="ok.html">Ok</a> autograder.</p>
+
+
+<h2 id='submission'>Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+
+
+
+
+    
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h2 id="what-would-python-display">What Would Python Display?</h2>
+
+
+<h3 class="question" id="q1">Q1: WWPD: Linked Lists</h3>
+
+<p>Read over the <code>Link</code> class in <code>lab07.py</code>. Make sure you understand the
+doctests.</p>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code>python3 ok &#x2d;q link &#x2d;u</code></pre>
+
+<p>Enter <code>Function</code> if you believe the answer is <code>&lt;function ...&gt;</code>, <code>Error</code> if it
+errors, and <code>Nothing</code> if nothing is displayed.</p>
+
+<p>If you get stuck, try drawing out the box-and-pointer diagram for the linked
+list on a piece of paper or loading the <code>Link</code> class into the interpreter
+with <code>python3 &#x2d;i lab07.py</code>.</p></blockquote>
+
+<pre><code>&gt;&gt;&gt; from lab07 import *
+&gt;&gt;&gt; link = Link(1000)
+&gt;&gt;&gt; link.first
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x31;&#x30;&#x30;&#x30;</div>
+&gt;&gt;&gt; link.rest is Link.empty
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x54;&#x72;&#x75;&#x65;</div>
+&gt;&gt;&gt; link = Link(1000, 2000)
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x41;&#x73;&#x73;&#x65;&#x72;&#x74;&#x69;&#x6f;&#x6e;&#x45;&#x72;&#x72;&#x6f;&#x72;</div>
+&gt;&gt;&gt; link = Link(1000, Link())
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x54;&#x79;&#x70;&#x65;&#x45;&#x72;&#x72;&#x6f;&#x72;</div></code></pre>
+        <button id='prompt-1' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<pre><code>&gt;&gt;&gt; from lab07 import *
+&gt;&gt;&gt; link = Link(1, Link(2, Link(3)))
+&gt;&gt;&gt; link.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x31;</div>
+&gt;&gt;&gt; link.rest.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x32;</div>
+&gt;&gt;&gt; link.rest.rest.rest is Link.empty
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x54;&#x72;&#x75;&#x65;</div>
+&gt;&gt;&gt; link.first = 9001
+&gt;&gt;&gt; link.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x39;&#x30;&#x30;&#x31;</div>
+&gt;&gt;&gt; link.rest = link.rest.rest
+&gt;&gt;&gt; link.rest.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x33;</div>
+&gt;&gt;&gt; link = Link(1)
+&gt;&gt;&gt; link.rest = link
+&gt;&gt;&gt; link.rest.rest.rest.rest.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x31;</div>
+&gt;&gt;&gt; link = Link(2, Link(3, Link(4)))
+&gt;&gt;&gt; link2 = Link(1, link)
+&gt;&gt;&gt; link2.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x31;</div>
+&gt;&gt;&gt; link2.rest.first
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x32;</div></code></pre>
+        <button id='prompt-2' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q2">Q2: WWPD: Trees</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "What Would Python Display?"
+questions:</p>
+
+<pre><code>python3 ok &#x2d;q trees&#x2d;wwpd &#x2d;u</code></pre>
+
+<p>Enter <code>Function</code> if you believe the answer is <code>&lt;function ...&gt;</code>, <code>Error</code> if it
+errors, and <code>Nothing</code> if nothing is displayed. Recall that <code>Tree</code> instances
+will be <a href="../lab09/index.html#displaying-tree-instances">displayed the same way they are constructed</a>.</p></blockquote>
+
+<pre><code>&gt;&gt;&gt; from lab07 import *
+&gt;&gt;&gt; t = Tree(1, Tree(2))
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x45;&#x72;&#x72;&#x6f;&#x72;</div>
+&gt;&gt;&gt; t = Tree(1, [Tree(2)])
+&gt;&gt;&gt; t.label
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x31;</div>
+&gt;&gt;&gt; t.branches[0]
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x54;&#x72;&#x65;&#x65;&#x28;&#x32;&#x29;</div>
+&gt;&gt;&gt; t.branches[0].label
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x32;</div>
+&gt;&gt;&gt; t.label = t.branches[0].label
+&gt;&gt;&gt; t
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x54;&#x72;&#x65;&#x65;&#x28;&#x32;&#x2c;&#x20;&#x5b;&#x54;&#x72;&#x65;&#x65;&#x28;&#x32;&#x29;&#x5d;&#x29;</div>
+&gt;&gt;&gt; t.branches.append(Tree(4, [Tree(8)]))
+&gt;&gt;&gt; len(t.branches)
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x32;</div>
+&gt;&gt;&gt; t.branches[0]
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x54;&#x72;&#x65;&#x65;&#x28;&#x32;&#x29;</div>
+&gt;&gt;&gt; t.branches[1]
+<div class="alt prompt-3">______</div><div class="solution prompt-3">&#x54;&#x72;&#x65;&#x65;&#x28;&#x34;&#x2c;&#x20;&#x5b;&#x54;&#x72;&#x65;&#x65;&#x28;&#x38;&#x29;&#x5d;&#x29;</div></code></pre>
+        <button id='prompt-3' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+
+<h2 id="generators">Generators</h2>
+
+<p>Iterators also allow us to represent infinite sequences, such as the sequence of
+natural numbers (1, 2, ...).</p>
+
+<pre><code>class Naturals:
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; m = Naturals()
+    &gt;&gt;&gt; [next(m) for _ in range(5)]
+    [1, 2, 3, 4, 5]
+    &quot;&quot;&quot;
+    def __init__(self):
+        self.current = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self.current += 1
+        return self.current</code></pre>
+
+<h3 class="question" id="q3">Q3: Scale</h3>
+
+<p>Implement the generator function <code>scale(s, k)</code>, which yields elements of the
+given iterable <code>s</code>, scaled by <code>k</code>. As an extra challenge, try writing this
+function using a <code>yield from</code> statement!</p>
+
+
+
+<pre><code>def scale(s, k):
+    &quot;&quot;&quot;Yield elements of the iterable s scaled by a number k.
+
+    &gt;&gt;&gt; s = scale([1, 5, 2], 5)
+    &gt;&gt;&gt; type(s)
+    &lt;class &#x27;generator&#x27;&gt;
+    &gt;&gt;&gt; list(s)
+    [5, 25, 10]
+
+    &gt;&gt;&gt; m = scale(naturals(), 2)
+    &gt;&gt;&gt; [next(m) for _ in range(5)]
+    [2, 4, 6, 8, 10]
+    &quot;&quot;&quot;
+<div class="alt solution-1">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-1">&#x20;&#x20;&#x20;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x65;&#x6c;&#x65;&#x6d;&#x20;&#x69;&#x6e;&#x20;&#x73;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x79;&#x69;&#x65;&#x6c;&#x64;&#x20;&#x65;&#x6c;&#x65;&#x6d;&#x20;&#x2a;&#x20;&#x6b;&#xa;&#xa;&#x23;&#x20;&#x41;&#x6c;&#x74;&#x65;&#x72;&#x6e;&#x61;&#x74;&#x65;&#x20;&#x73;&#x6f;&#x6c;&#x75;&#x74;&#x69;&#x6f;&#x6e;&#xa;&#x64;&#x65;&#x66;&#x20;&#x73;&#x63;&#x61;&#x6c;&#x65;&#x28;&#x73;&#x2c;&#x20;&#x6b;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x79;&#x69;&#x65;&#x6c;&#x64;&#x20;&#x66;&#x72;&#x6f;&#x6d;&#x20;&#x6d;&#x61;&#x70;&#x28;&#x6c;&#x61;&#x6d;&#x62;&#x64;&#x61;&#x20;&#x78;&#x3a;&#x20;&#x78;&#x2a;&#x6b;&#x2c;&#x20;&#x73;&#x29;</div></code></pre>
+
+
+        <button id='solution-1' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q scale</code></pre>
+
+
+<h2 id="linked-lists">Linked Lists</h2>
+
+
+<h3 class="question" id="q4">Q4: Link to List</h3>
+
+<p>Write a function <code>link_to_list</code> that takes in a linked list and returns the
+sequence as a Python list. You may assume that the input list is shallow; none
+of the elements is another linked list.</p>
+
+<p>Try to find both an iterative and recursive solution for this problem!</p>
+
+
+
+<pre><code>def link_to_list(link):
+    &quot;&quot;&quot;Takes a linked list and returns a Python list with the same elements.
+
+    &gt;&gt;&gt; link = Link(1, Link(2, Link(3, Link(4))))
+    &gt;&gt;&gt; link_to_list(link)
+    [1, 2, 3, 4]
+    &gt;&gt;&gt; link_to_list(Link.empty)
+    []
+    &quot;&quot;&quot;
+<div class="alt solution-2">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-2">&#x20;&#x20;&#x20;&#x20;&#x23;&#x20;&#x52;&#x65;&#x63;&#x75;&#x72;&#x73;&#x69;&#x76;&#x65;&#x20;&#x73;&#x6f;&#x6c;&#x75;&#x74;&#x69;&#x6f;&#x6e;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x69;&#x73;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x2e;&#x65;&#x6d;&#x70;&#x74;&#x79;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x5b;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x5b;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x66;&#x69;&#x72;&#x73;&#x74;&#x5d;&#x20;&#x2b;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x5f;&#x74;&#x6f;&#x5f;&#x6c;&#x69;&#x73;&#x74;&#x28;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x72;&#x65;&#x73;&#x74;&#x29;&#xa;&#xa;&#x23;&#x20;&#x49;&#x74;&#x65;&#x72;&#x61;&#x74;&#x69;&#x76;&#x65;&#x20;&#x73;&#x6f;&#x6c;&#x75;&#x74;&#x69;&#x6f;&#x6e;&#xa;&#x64;&#x65;&#x66;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x5f;&#x74;&#x6f;&#x5f;&#x6c;&#x69;&#x73;&#x74;&#x28;&#x6c;&#x69;&#x6e;&#x6b;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x20;&#x3d;&#x20;&#x5b;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x77;&#x68;&#x69;&#x6c;&#x65;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x69;&#x73;&#x20;&#x6e;&#x6f;&#x74;&#x20;&#x4c;&#x69;&#x6e;&#x6b;&#x2e;&#x65;&#x6d;&#x70;&#x74;&#x79;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x2e;&#x61;&#x70;&#x70;&#x65;&#x6e;&#x64;&#x28;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x66;&#x69;&#x72;&#x73;&#x74;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x20;&#x3d;&#x20;&#x6c;&#x69;&#x6e;&#x6b;&#x2e;&#x72;&#x65;&#x73;&#x74;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#xa;&#xa;&#x20;&#x20;&#x20;&#x20;&#x23;&#x20;&#x56;&#x69;&#x64;&#x65;&#x6f;&#x20;&#x57;&#x61;&#x6c;&#x6b;&#x74;&#x68;&#x72;&#x6f;&#x75;&#x67;&#x68;&#x3a;&#x20;&#x68;&#x74;&#x74;&#x70;&#x73;&#x3a;&#x2f;&#x2f;&#x79;&#x6f;&#x75;&#x74;&#x75;&#x2e;&#x62;&#x65;&#x2f;&#x68;&#x64;&#x4f;&#x39;&#x52;&#x79;&#x38;&#x64;&#x35;&#x46;&#x55;&#x3f;&#x74;&#x3d;&#x32;&#x35;&#x6d;&#x36;&#x73;</div></code></pre>
+
+
+        <button id='solution-2' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q link_to_list</code></pre>
+
+
+<h2 id="trees">Trees</h2>
+
+
+<h3 class="question" id="q5">Q5: Cumulative Sum</h3>
+
+<p>Write a function <code>cumulative_sum</code> that mutates the Tree <code>t</code> so that each node's
+label becomes the sum of all labels in the subtree rooted at the node.</p>
+
+
+
+<pre><code>def cumulative_sum(t):
+    &quot;&quot;&quot;Mutates t so that each node&#x27;s label becomes the sum of all labels in
+    the corresponding subtree rooted at t.
+
+    &gt;&gt;&gt; t = Tree(1, [Tree(3, [Tree(5)]), Tree(7)])
+    &gt;&gt;&gt; cumulative_sum(t)
+    &gt;&gt;&gt; t
+    Tree(16, [Tree(8, [Tree(5)]), Tree(7)])
+    &quot;&quot;&quot;
+<div class="alt solution-3">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-3">&#x20;&#x20;&#x20;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x62;&#x20;&#x69;&#x6e;&#x20;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x63;&#x75;&#x6d;&#x75;&#x6c;&#x61;&#x74;&#x69;&#x76;&#x65;&#x5f;&#x73;&#x75;&#x6d;&#x28;&#x62;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x20;&#x3d;&#x20;&#x73;&#x75;&#x6d;&#x28;&#x5b;&#x62;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x62;&#x20;&#x69;&#x6e;&#x20;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x5d;&#x29;&#x20;&#x2b;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;</div></code></pre>
+
+
+        <button id='solution-3' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q cumulative_sum</code></pre>
+
+<h3 class="question" id="q6">Q6: Is BST</h3>
+
+<p>Write a function <code>is_bst</code>, which takes a Tree <code>t</code> and returns <code>True</code> if, and
+only if, <code>t</code> is a valid binary search tree, which means that:</p>
+
+<ul>
+  <li>Each node has at most two children (a leaf is automatically a valid binary
+  search tree)</li>
+  <li>The children are valid binary search trees</li>
+  <li>For every node, the entries in that node's left child are less than or equal
+  to the label of the node</li>
+  <li>For every node, the entries in that node's right child are greater than the
+  label of the node</li>
+</ul>
+
+<p>Note that, if a node has only one child, that child could be considered either
+the left or right child. You should take this into consideration.</p>
+
+<p><em>Hint:</em> It may be helpful to write helper functions <code>bst_min</code> and <code>bst_max</code> that
+return the minimum and maximum, respectively, of a Tree if it is a valid binary
+search tree.</p>
+
+
+
+<pre><code>def is_bst(t):
+    &quot;&quot;&quot;Returns True if the Tree t has the structure of a valid BST.
+
+    &gt;&gt;&gt; t1 = Tree(6, [Tree(2, [Tree(1), Tree(4)]), Tree(7, [Tree(7), Tree(8)])])
+    &gt;&gt;&gt; is_bst(t1)
+    True
+    &gt;&gt;&gt; t2 = Tree(8, [Tree(2, [Tree(9), Tree(1)]), Tree(3, [Tree(6)]), Tree(5)])
+    &gt;&gt;&gt; is_bst(t2)
+    False
+    &gt;&gt;&gt; t3 = Tree(6, [Tree(2, [Tree(4), Tree(1)]), Tree(7, [Tree(7), Tree(8)])])
+    &gt;&gt;&gt; is_bst(t3)
+    False
+    &gt;&gt;&gt; t4 = Tree(1, [Tree(2, [Tree(3, [Tree(4)])])])
+    &gt;&gt;&gt; is_bst(t4)
+    True
+    &gt;&gt;&gt; t5 = Tree(1, [Tree(0, [Tree(&#x2d;1, [Tree(&#x2d;2)])])])
+    &gt;&gt;&gt; is_bst(t5)
+    True
+    &gt;&gt;&gt; t6 = Tree(1, [Tree(4, [Tree(2, [Tree(3)])])])
+    &gt;&gt;&gt; is_bst(t6)
+    True
+    &gt;&gt;&gt; t7 = Tree(2, [Tree(1, [Tree(5)]), Tree(4)])
+    &gt;&gt;&gt; is_bst(t7)
+    False
+    &quot;&quot;&quot;
+<div class="alt solution-4">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-4">&#x20;&#x20;&#x20;&#x20;&#x64;&#x65;&#x66;&#x20;&#x62;&#x73;&#x74;&#x5f;&#x6d;&#x69;&#x6e;&#x28;&#x74;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x22;&#x22;&#x22;&#x52;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x73;&#x20;&#x74;&#x68;&#x65;&#x20;&#x6d;&#x69;&#x6e;&#x20;&#x6f;&#x66;&#x20;&#x74;&#x2c;&#x20;&#x69;&#x66;&#x20;&#x74;&#x20;&#x68;&#x61;&#x73;&#x20;&#x74;&#x68;&#x65;&#x20;&#x73;&#x74;&#x72;&#x75;&#x63;&#x74;&#x75;&#x72;&#x65;&#x20;&#x6f;&#x66;&#x20;&#x61;&#x20;&#x76;&#x61;&#x6c;&#x69;&#x64;&#x20;&#x42;&#x53;&#x54;&#x2e;&#x22;&#x22;&#x22;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x74;&#x2e;&#x69;&#x73;&#x5f;&#x6c;&#x65;&#x61;&#x66;&#x28;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x6d;&#x69;&#x6e;&#x28;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x2c;&#x20;&#x62;&#x73;&#x74;&#x5f;&#x6d;&#x69;&#x6e;&#x28;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x5b;&#x30;&#x5d;&#x29;&#x29;&#xa;&#xa;&#x20;&#x20;&#x20;&#x20;&#x64;&#x65;&#x66;&#x20;&#x62;&#x73;&#x74;&#x5f;&#x6d;&#x61;&#x78;&#x28;&#x74;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x22;&#x22;&#x22;&#x52;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x73;&#x20;&#x74;&#x68;&#x65;&#x20;&#x6d;&#x61;&#x78;&#x20;&#x6f;&#x66;&#x20;&#x74;&#x2c;&#x20;&#x69;&#x66;&#x20;&#x74;&#x20;&#x68;&#x61;&#x73;&#x20;&#x74;&#x68;&#x65;&#x20;&#x73;&#x74;&#x72;&#x75;&#x63;&#x74;&#x75;&#x72;&#x65;&#x20;&#x6f;&#x66;&#x20;&#x61;&#x20;&#x76;&#x61;&#x6c;&#x69;&#x64;&#x20;&#x42;&#x53;&#x54;&#x2e;&#x22;&#x22;&#x22;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x74;&#x2e;&#x69;&#x73;&#x5f;&#x6c;&#x65;&#x61;&#x66;&#x28;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x6d;&#x61;&#x78;&#x28;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x2c;&#x20;&#x62;&#x73;&#x74;&#x5f;&#x6d;&#x61;&#x78;&#x28;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x5b;&#x2d;&#x31;&#x5d;&#x29;&#x29;&#xa;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x74;&#x2e;&#x69;&#x73;&#x5f;&#x6c;&#x65;&#x61;&#x66;&#x28;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x54;&#x72;&#x75;&#x65;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6c;&#x65;&#x6e;&#x28;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x29;&#x20;&#x3d;&#x3d;&#x20;&#x31;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x63;&#x20;&#x3d;&#x20;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x5b;&#x30;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x69;&#x73;&#x5f;&#x62;&#x73;&#x74;&#x28;&#x63;&#x29;&#x20;&#x61;&#x6e;&#x64;&#x20;&#x28;&#x62;&#x73;&#x74;&#x5f;&#x6d;&#x61;&#x78;&#x28;&#x63;&#x29;&#x20;&#x3c;&#x3d;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x20;&#x6f;&#x72;&#x20;&#x62;&#x73;&#x74;&#x5f;&#x6d;&#x69;&#x6e;&#x28;&#x63;&#x29;&#x20;&#x3e;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x69;&#x66;&#x20;&#x6c;&#x65;&#x6e;&#x28;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x29;&#x20;&#x3d;&#x3d;&#x20;&#x32;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x63;&#x31;&#x2c;&#x20;&#x63;&#x32;&#x20;&#x3d;&#x20;&#x74;&#x2e;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x76;&#x61;&#x6c;&#x69;&#x64;&#x5f;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x20;&#x3d;&#x20;&#x69;&#x73;&#x5f;&#x62;&#x73;&#x74;&#x28;&#x63;&#x31;&#x29;&#x20;&#x61;&#x6e;&#x64;&#x20;&#x69;&#x73;&#x5f;&#x62;&#x73;&#x74;&#x28;&#x63;&#x32;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x76;&#x61;&#x6c;&#x69;&#x64;&#x5f;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x20;&#x61;&#x6e;&#x64;&#x20;&#x62;&#x73;&#x74;&#x5f;&#x6d;&#x61;&#x78;&#x28;&#x63;&#x31;&#x29;&#x20;&#x3c;&#x3d;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x20;&#x61;&#x6e;&#x64;&#x20;&#x62;&#x73;&#x74;&#x5f;&#x6d;&#x69;&#x6e;&#x28;&#x63;&#x32;&#x29;&#x20;&#x3e;&#x20;&#x74;&#x2e;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#xa;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x73;&#x65;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x46;&#x61;&#x6c;&#x73;&#x65;</div></code></pre>
+
+
+        <button id='solution-4' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q is_bst</code></pre>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="index.html#required-questions">Required Questions</a></li>
+  <ul>
+    <li><a href="index.html#what-would-python-display">What Would Python Display?</a></li>
+    <ul>
+      <li><a href="index.html#q1">Q1: WWPD: Linked Lists</a></li>
+      <li><a href="index.html#q2">Q2: WWPD: Trees</a></li>
+    </ul>
+    <li><a href="index.html#generators">Generators</a></li>
+    <ul>
+      <li><a href="index.html#q3">Q3: Scale</a></li>
+    </ul>
+    <li><a href="index.html#linked-lists">Linked Lists</a></li>
+    <ul>
+      <li><a href="index.html#q4">Q4: Link to List</a></li>
+    </ul>
+    <li><a href="index.html#trees">Trees</a></li>
+    <ul>
+      <li><a href="index.html#q5">Q5: Cumulative Sum</a></li>
+      <li><a href="index.html#q6">Q6: Is BST</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about.html#assignments">Assignments</a></li>
+            <li><a href="../../articles/about.html#exams">Exams</a></li>
+            <li><a href="../../articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    console.log(target);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      // window.scrollTo(0, 0);
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    event.preventDefault();
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    } else {
+      window.open(this.href);
+    }
+  });
+</script>
+
+
+<script type="text/javascript" src="../../assets/js/config.js"></script>
+<script>
+$(function() {
+    var staging_domains = ['staging.cs61a.org', 'solutions.cs61a.org', 'localhost', '127.0.0.1'];
+    var host = window.location.hostname;
+    var staging = staging_domains.indexOf(host) != -1;
+    staging = staging || (host.endsWith('.pullrequests.cs61a.org') && !host.startsWith('last-build.'));
+
+    var after_due_date = new Date(1571554799999) < new Date();
+    var before_end_date = new Date() <= new Date(endDate);
+    var release_solutions = (staging || after_due_date) && before_end_date;
+
+    if (release_solutions) {
+      $('.solutiontoggle').css('display', 'inline-block');
+      $('.solutiontoggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+});
+</script>
+
+
+  </body>
+</html>

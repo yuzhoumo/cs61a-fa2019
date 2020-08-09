@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS" />
+    <meta name="author" content ="John DeNero" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/hw.css">
+
+
+    <title>
+Homework 2 | CS 61A Fall 2019
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="index.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="../../instructor.html">Instructors</a></li>
+                <li><a href="../../TAs.html">TAs</a></li>
+                <li><a href="../../tutors.html">Tutors</a></li>
+                <li><a href="../../academic-interns.html">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li><a href="../../resources.html">Resources</a></li>
+            <li><a href="../../articles/about.html">Syllabus</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2019/cs61a" target="_blank">Piazza</a></li>
+            <li><a href="../../extra.html">Extra</a></li>
+            <!-- <li><a href="https://scheme.cs61a.org">Scheme</a></li> -->
+            <!-- <li><a href="https://sql.cs61a.org">SQL</a></li> -->
+            <li><a href="https://code.cs61a.org">Code</a></li>
+            <li><a href="http://tutor.cs61a.org">Tutor</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Homework 2: Higher Order Functions
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw02.zip" class="label label-outline">hw02.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><em>Due by 11:59pm on Thursday, September 12</em></p>
+
+
+
+
+
+<h2>Instructions</h2>
+
+<p>Download <a href="hw02.zip">hw02.zip</a>. Inside the archive, you will find a file called
+<a href="hw02.py">hw02.py</a>, along with a copy of the <code>ok</code> autograder.</p>
+
+<p><strong>Submission:</strong> When you are done, submit with <code>python3 ok
+  --submit</code>.  You may submit more than once before the deadline; only the
+final submission will be scored. Check that you have successfully submitted
+your code on <a href="https://okpy.org/">okpy.org</a>.  See <a
+  href="../../lab/lab00/index.html#submitting-the-assignment">Lab 0</a> for more instructions on
+submitting assignments.</p>
+
+<p><strong>Using Ok:</strong> If you have any questions about using Ok, please
+refer to <a href="../../articles/using-ok.html">this guide.</a>
+
+
+  <p><strong>Readings:</strong> You might find the following references
+  useful:</p>
+  <ul>
+  <li><a href="http://composingprograms.com/pages/16-higher-order-functions.html">Section 1.6</a></li>
+</ul>
+  
+
+<p><strong>Grading:</strong> Homework is graded based on effort, not
+correctness.  However, there is no partial credit; you must show substantial
+effort on every problem to receive any points.
+<strong>This homework is out of 2 points.</strong>
+
+
+
+
+    
+<p>The <code>construct_check</code> module is used in this assignment, which defines the
+function <code>check</code>.  For example, a call such as</p>
+
+<pre><code>check(&quot;foo.py&quot;, &quot;func1&quot;, [&quot;While&quot;, &quot;For&quot;, &quot;Recursion&quot;])</code></pre>
+
+<p>checks that the function <code>func1</code> in file <code>foo.py</code> does <em>not</em> contain
+any <code>while</code> or <code>for</code> constructs, and is not an overtly recursive function (i.e.,
+one in which a function contains a call to itself by name.) Note that this restriction does not apply to all problems in this assignment. If this restriction applies, you will see a call to <code>check</code> somewhere in the problem's doctests.</p>
+
+
+<h2 id="required-questions">Required questions</h2>
+
+
+<p>Several doctests refer to these functions:</p>
+
+<pre><code>from operator import add, mul, sub
+
+square = lambda x: x * x
+
+identity = lambda x: x
+
+triple = lambda x: 3 * x
+
+increment = lambda x: x + 1</code></pre>
+
+<h3 class="question" id="q1">Q1: Product</h3>
+
+<p>The <code>summation(n, term)</code> function from the higher-order functions lecture adds
+up <code>term(1) + ... + term(n)</code>.  Write a similar function called <code>product</code> that
+returns <code>term(1) * ... * term(n)</code>.</p>
+
+<pre><code>def product(n, term):
+    &quot;&quot;&quot;Return the product of the first n terms in a sequence.
+    n    &#x2d;&#x2d; a positive integer
+    term &#x2d;&#x2d; a function that takes one argument
+
+    &gt;&gt;&gt; product(3, identity)  # 1 * 2 * 3
+    6
+    &gt;&gt;&gt; product(5, identity)  # 1 * 2 * 3 * 4 * 5
+    120
+    &gt;&gt;&gt; product(3, square)    # 1^2 * 2^2 * 3^2
+    36
+    &gt;&gt;&gt; product(5, square)    # 1^2 * 2^2 * 3^2 * 4^2 * 5^2
+    14400
+    &gt;&gt;&gt; product(3, increment) # (1+1) * (2+1) * (3+1)
+    24
+    &gt;&gt;&gt; product(3, triple)    # 1*3 * 2*3 * 3*3
+    162
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q product</code></pre>
+
+
+<h3 class="question" id="q2">Q2: Accumulate</h3>
+
+<p>Let's take a look at how <code>summation</code> and <code>product</code> are instances of a more
+general function called <code>accumulate</code>:</p>
+
+<pre><code>def accumulate(combiner, base, n, term):
+    &quot;&quot;&quot;Return the result of combining the first n terms in a sequence and base.
+    The terms to be combined are term(1), term(2), ..., term(n).  combiner is a
+    two&#x2d;argument commutative, associative function.
+
+    &gt;&gt;&gt; accumulate(add, 0, 5, identity)  # 0 + 1 + 2 + 3 + 4 + 5
+    15
+    &gt;&gt;&gt; accumulate(add, 11, 5, identity) # 11 + 1 + 2 + 3 + 4 + 5
+    26
+    &gt;&gt;&gt; accumulate(add, 11, 0, identity) # 11
+    11
+    &gt;&gt;&gt; accumulate(add, 11, 3, square)   # 11 + 1^2 + 2^2 + 3^2
+    25
+    &gt;&gt;&gt; accumulate(mul, 2, 3, square)    # 2 * 1^2 * 2^2 * 3^2
+    72
+    &gt;&gt;&gt; accumulate(lambda x, y: x + y + 1, 2, 3, square)
+    19
+    &gt;&gt;&gt; accumulate(lambda x, y: 2 * (x + y), 2, 3, square)
+    58
+    &gt;&gt;&gt; accumulate(lambda x, y: (x + y) % 17, 19, 20, square)
+    16
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p><code>accumulate</code> has the following parameters:</p>
+
+<ul>
+  <li><code>term</code> and <code>n</code>: the same parameters as in <code>summation</code> and <code>product</code></li>
+  <li><code>combiner</code>: a two-argument function that specifies how the current term
+  is combined with the previously accumulated terms.</li>
+  <li><code>base</code>: value at which to start the accumulation.</li>
+</ul>
+
+<p>For example, the result of <code>accumulate(add, 11, 3, square)</code> is</p>
+
+<pre><code>11 + square(1) + square(2) + square(3) = 25</code></pre>
+
+<blockquote><p>Note: You may assume that <code>combiner</code> is associative and commutative.
+That is, <code>combiner(a, combiner(b, c)) == combiner(combiner(a, b), c)</code>
+and <code>combiner(a, b) == combiner(b, a)</code> for all <code>a</code>, <code>b</code>, and <code>c</code>.
+However, you may not assume <code>combiner</code> is chosen from a fixed function set
+and hard-code the solution.</p></blockquote>
+
+<p>After implementing <code>accumulate</code>, show how <code>summation</code> and <code>product</code> can both be
+defined as simple calls to <code>accumulate</code>:</p>
+
+<pre><code>def summation_using_accumulate(n, term):
+    &quot;&quot;&quot;Returns the sum of term(1) + ... + term(n). The implementation
+    uses accumulate.
+
+    &gt;&gt;&gt; summation_using_accumulate(5, square)
+    55
+    &gt;&gt;&gt; summation_using_accumulate(5, triple)
+    45
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban iteration and recursion
+    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#x27;summation_using_accumulate&#x27;,
+    ...       [&#x27;Recursion&#x27;, &#x27;For&#x27;, &#x27;While&#x27;])
+    True
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+
+def product_using_accumulate(n, term):
+    &quot;&quot;&quot;An implementation of product using accumulate.
+
+    &gt;&gt;&gt; product_using_accumulate(4, square)
+    576
+    &gt;&gt;&gt; product_using_accumulate(6, triple)
+    524880
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban iteration and recursion
+    &gt;&gt;&gt; check(HW_SOURCE_FILE, &#x27;product_using_accumulate&#x27;,
+    ...       [&#x27;Recursion&#x27;, &#x27;For&#x27;, &#x27;While&#x27;])
+    True
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q accumulate
+python3 ok -q summation_using_accumulate
+python3 ok -q product_using_accumulate</code></pre>
+
+
+
+<h3 class="question" id="q3">Q3: Make Repeater</h3>
+
+<p>Implement the function <code>make_repeater</code> so that <code>make_repeater(f, n)(x)</code> returns
+<code>f(f(...f(x)...))</code>, where <code>f</code> is applied <code>n</code> times. That is,
+<code>make_repeater(f, n)</code> returns another function that can then be applied to
+another argument. For example, <code>make_repeater(square, 3)(42)</code> evaluates to
+<code>square(square(square(42)))</code>.</p>
+
+<pre><code>def make_repeater(f, n):
+    &quot;&quot;&quot;Return the function that computes the nth application of f.
+
+    &gt;&gt;&gt; add_three = make_repeater(increment, 3)
+    &gt;&gt;&gt; add_three(5)
+    8
+    &gt;&gt;&gt; make_repeater(triple, 5)(1) # 3 * 3 * 3 * 3 * 3 * 1
+    243
+    &gt;&gt;&gt; make_repeater(square, 2)(5) # square(square(5))
+    625
+    &gt;&gt;&gt; make_repeater(square, 4)(5) # square(square(square(square(5))))
+    152587890625
+    &gt;&gt;&gt; make_repeater(square, 0)(5) # Yes, it makes sense to apply the function zero times! 
+    5
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<blockquote><p>For an extra challenge, try defining <code>make_repeater</code> using <code>compose1</code> and
+your <code>accumulate</code> function in a single one-line return statement.</p></blockquote>
+
+<pre><code>def compose1(f, g):
+    &quot;&quot;&quot;Return a function h, such that h(x) = f(g(x)).&quot;&quot;&quot;
+    def h(x):
+        return f(g(x))
+    return h</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q make_repeater</code></pre>
+
+
+
+
+<h1 id="just-for-fun-question">Just for fun Question</h1>
+
+
+<blockquote><p><em>This question is out of scope for 61a. Do it if you want an extra challenge or some
+practice with HOF and abstraction!</em></p></blockquote>
+
+<h3 class="question" id="q4">Q4: Church numerals</h3>
+
+<p>The logician Alonzo Church invented a system of representing non-negative
+integers entirely using functions. The purpose was to show that functions are
+sufficient to describe all of number theory: if we have functions, we do not
+need to assume that numbers exist, but instead we can invent them.</p>
+
+<p>Your goal in this problem is to rediscover this representation known as <em>Church
+numerals</em>. Here are the definitions of <code>zero</code>, as well as a function that
+returns one more than its argument:</p>
+
+<pre><code>def zero(f):
+    return lambda x: x
+
+def successor(n):
+    return lambda f: lambda x: f(n(f)(x))</code></pre>
+
+<p>First, define functions <code>one</code> and <code>two</code> such that they have the same behavior
+as <code>successor(zero)</code> and <code>successsor(successor(zero))</code> respectively, but <em>do
+not call <code>successor</code> in your implementation</em>.</p>
+
+<p>Next, implement a function <code>church_to_int</code> that converts a church numeral
+argument to a regular Python integer.</p>
+
+<p>Finally, implement functions <code>add_church</code>, <code>mul_church</code>, and <code>pow_church</code> that
+perform addition, multiplication, and exponentiation on church numerals.</p>
+
+<pre><code>def one(f):
+    &quot;&quot;&quot;Church numeral 1: same as successor(zero)&quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+
+def two(f):
+    &quot;&quot;&quot;Church numeral 2: same as successor(successor(zero))&quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+
+three = successor(two)
+
+def church_to_int(n):
+    &quot;&quot;&quot;Convert the Church numeral n to a Python integer.
+
+    &gt;&gt;&gt; church_to_int(zero)
+    0
+    &gt;&gt;&gt; church_to_int(one)
+    1
+    &gt;&gt;&gt; church_to_int(two)
+    2
+    &gt;&gt;&gt; church_to_int(three)
+    3
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+
+def add_church(m, n):
+    &quot;&quot;&quot;Return the Church numeral for m + n, for Church numerals m and n.
+
+    &gt;&gt;&gt; church_to_int(add_church(two, three))
+    5
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+
+def mul_church(m, n):
+    &quot;&quot;&quot;Return the Church numeral for m * n, for Church numerals m and n.
+
+    &gt;&gt;&gt; four = successor(three)
+    &gt;&gt;&gt; church_to_int(mul_church(two, three))
+    6
+    &gt;&gt;&gt; church_to_int(mul_church(three, four))
+    12
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+
+def pow_church(m, n):
+    &quot;&quot;&quot;Return the Church numeral m ** n, for Church numerals m and n.
+
+    &gt;&gt;&gt; church_to_int(pow_church(two, three))
+    8
+    &gt;&gt;&gt; church_to_int(pow_church(three, two))
+    9
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q church_to_int
+python3 ok -q add_church
+python3 ok -q mul_church
+python3 ok -q pow_church</code></pre>
+
+
+
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="index.html#required-questions">Required questions</a></li>
+  <ul>
+    <li><a href="index.html#q1">Q1: Product</a></li>
+    <li><a href="index.html#q2">Q2: Accumulate</a></li>
+    <li><a href="index.html#q3">Q3: Make Repeater</a></li>
+  </ul>
+  <li><a href="index.html#just-for-fun-question">Just for fun Question</a></li>
+  <ul>
+    <li><a href="index.html#q4">Q4: Church numerals</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about.html#assignments">Assignments</a></li>
+            <li><a href="../../articles/about.html#exams">Exams</a></li>
+            <li><a href="../../articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    console.log(target);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      // window.scrollTo(0, 0);
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    event.preventDefault();
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    } else {
+      window.open(this.href);
+    }
+  });
+</script>
+
+  </body>
+</html>

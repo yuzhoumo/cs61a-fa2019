@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS" />
+    <meta name="author" content ="John DeNero" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/hw.css">
+
+
+    <title>
+Extra Homework 2 | CS 61A Fall 2019
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="index.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="../../instructor.html">Instructors</a></li>
+                <li><a href="../../TAs.html">TAs</a></li>
+                <li><a href="../../tutors.html">Tutors</a></li>
+                <li><a href="../../academic-interns.html">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li><a href="../../resources.html">Resources</a></li>
+            <li><a href="../../articles/about.html">Syllabus</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2019/cs61a" target="_blank">Piazza</a></li>
+            <li><a href="../../extra.html">Extra</a></li>
+            <!-- <li><a href="https://scheme.cs61a.org">Scheme</a></li> -->
+            <!-- <li><a href="https://sql.cs61a.org">SQL</a></li> -->
+            <li><a href="https://code.cs61a.org">Code</a></li>
+            <li><a href="http://tutor.cs61a.org">Tutor</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Extra Homework 2
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="extra02.zip" class="label label-outline">extra02.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<p><em>Due by 11:59pm on Wednesday, November 6</em></p>
+
+
+
+<h2>Instructions</h2>
+
+<p>Download <a href="extra02.zip">extra02.zip</a>.  Inside the archive, you will
+find a file called <a href="index.html">
+  </a>, along with a copy
+of the <a href="ok.html">Ok</a> autograder.</p>
+
+<p><strong>Submission:</strong> When you are done, submit with
+<code>python3 ok --submit</code>. You may submit more than once before
+the deadline; only the final submission will be scored.</p>
+
+<h2>Using Ok</h2>
+
+<p>The <code>ok</code> program helps you test your code and track your progress.
+The first time you run the autograder, you will be asked to log in with your
+@berkeley.edu account using your web browser. Please do so. Each time you run
+ok, it will back up your work and progress on our servers.
+
+You can run all the doctests with the following command:</p>
+
+<pre><code>python3 ok</code></pre>
+
+<p>To test a specific question, use the <code>-q</code> option with the
+name of the function:</p>
+
+<pre><code>python3 ok -q &lt;function&gt;</code></pre>
+
+<p>By default, only tests that <strong>fail</strong> will appear. If you
+want to see how you did on all tests, you can use the <code>-v</code>
+option:</p>
+
+<pre><code>python3 ok -v</code></pre>
+
+<p>If you do not want to send your progress to our server or you have any
+problems logging in, add the <code>--local</code> flag to block all
+communication:</p>
+
+<pre><code>python3 ok --local</code></pre>
+
+<p>When you are ready to submit, run <code>ok</code> with the
+<code>--submit</code> option:</p>
+
+<pre><code>python3 ok --submit</code></pre>
+
+<p><strong>Readings:</strong> You might find the following references
+useful:</p>
+<ul>
+  <li><a href="http://composingprograms.com/pages/24-mutable-data.html#propagating-constraints">Section 2.4.9</a></li>
+</ul>
+
+
+
+    
+<h2 id="more-newton-s-method">More Newton's Method</h2>
+
+
+<h3 class="question" id="q1">Q1: Cycles</h3>
+
+<p>Newton's method is not guaranteed to find a zero. One way that it can fail is due to a cycle: after applying <code>k</code> newton updates from an initial guess <code>x</code>,  the result is <code>x</code> again.</p>
+
+<p>Implement <code>cycle</code>, which returns an <code>x</code> near the given <code>guess</code> for which applying <code>k</code> Newton updates for the provided function <code>f</code> and its derivative <code>df</code> results in <code>x</code>. The doctests use a function <code>print_updates</code> which prints out the result of applying <code>k</code> Newton updates.</p>
+
+<p><em>Hint</em>: Part of your solution will involve computing the result of applying <code>k</code> updates from a starting point.</p>
+
+<p><em>Hint</em>: The provided <code>differentiate</code> function will find the derivative of a function automatically. The result is approximate, but good enough for this problem.</p>
+
+<pre><code>def print_updates(f, df, x, k, digits=4):
+    &quot;&quot;&quot;Print the first k Newton guesses for a zero of f, starting at x.
+
+    &gt;&gt;&gt; print_updates(lambda x: x*x &#x2d; 2, lambda x: 2*x, 1, 4)
+    1, 1.5, 1.4167, 1.4142, 1.4142
+    &quot;&quot;&quot;
+    update = newton_update(f, df)
+    guesses = [x]
+    for _ in range(k):
+        guesses.append(update(guesses[&#x2d;1]))
+    print(*[round(guess, digits) for guess in guesses], sep=&#x27;, &#x27;)
+
+def cycle(f, df, k, guess):
+    &quot;&quot;&quot;Find a k&#x2d;step cycle in Newton&#x27;s method starting near guess.
+
+    &gt;&gt;&gt; f = lambda x: x*x*x &#x2d; 8*x*x + 17*x &#x2d; 3
+    &gt;&gt;&gt; df = lambda x: 3*x*x &#x2d; 16*x + 17
+    &gt;&gt;&gt; f(find_zero(f, df, 1)) # Starting at a guess of 1 finds a zero
+    0.0
+    &gt;&gt;&gt; print_cycle = lambda k, x: print_updates(f, df, cycle(f, df, k, x), k)
+    &gt;&gt;&gt; print_cycle(3, 4.2)  # A 3&#x2d;step cycle starting near 4.2
+    4.2123, 3.7175, 4.7112, 4.2123
+    &gt;&gt;&gt; print_cycle(3, 3.7)  # A 3&#x2d;step cycle starting near 3.7 (the same cycle)
+    3.7175, 4.7112, 4.2123, 3.7175
+    &gt;&gt;&gt; print_cycle(5, 4)    # A 5&#x2d;step cycle starting near 4
+    4.003, 3.0234, 3.7591, 5.0564, 4.4548, 4.003
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q cycle</code></pre>
+
+
+<h2 id="constraints">Constraints</h2>
+
+
+<h3 class="question" id="q2">Q2: Squarer</h3>
+
+<p>The <code>multiplier</code> constraint from the readings is insufficient to model
+equations that include squared quantities because constraint networks
+must not include loops.  Implement a new constraint <code>squarer</code> that
+represents the squaring relation:</p>
+
+<pre><code>def squarer(a, b):
+    &quot;&quot;&quot;The constraint that a*a=b.
+
+    &gt;&gt;&gt; x, y = connector(&#x27;X&#x27;), connector(&#x27;Y&#x27;)
+    &gt;&gt;&gt; s = squarer(x, y)
+    &gt;&gt;&gt; x[&#x27;set_val&#x27;](&#x27;user&#x27;, 10)
+    X = 10
+    Y = 100
+    &gt;&gt;&gt; x[&#x27;forget&#x27;](&#x27;user&#x27;)
+    X is forgotten
+    Y is forgotten
+    &gt;&gt;&gt; y[&#x27;set_val&#x27;](&#x27;user&#x27;, 16)
+    Y = 16
+    X = 4.0
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q squarer</code></pre>
+
+<h3 class="question" id="q3">Q3: Pythagorean Theorem</h3>
+
+<p>Use your <code>squarer</code> constraint to build a constraint network for the
+Pythagorean theorem: <code>a</code> squared plus <code>b</code> squared equals <code>c</code> squared:</p>
+
+<pre><code>def pythagorean(a, b, c):
+    &quot;&quot;&quot;Connect a, b, and c into a network for the Pythagorean theorem:
+    a*a + b*b = c*c
+
+    &gt;&gt;&gt; a, b, c = [connector(name) for name in (&#x27;A&#x27;, &#x27;B&#x27;, &#x27;C&#x27;)]
+    &gt;&gt;&gt; pythagorean(a, b, c)
+    &gt;&gt;&gt; a[&#x27;set_val&#x27;](&#x27;user&#x27;, 5)
+    A = 5
+    &gt;&gt;&gt; c[&#x27;set_val&#x27;](&#x27;user&#x27;, 13)
+    C = 13
+    B = 12.0
+    &quot;&quot;&quot;
+    "*** YOUR CODE HERE ***"
+</code></pre>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q pythagorean</code></pre>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="index.html#more-newton-s-method">More Newton's Method</a></li>
+  <ul>
+    <li><a href="index.html#q1">Q1: Cycles</a></li>
+  </ul>
+  <li><a href="index.html#constraints">Constraints</a></li>
+  <ul>
+    <li><a href="index.html#q2">Q2: Squarer</a></li>
+    <li><a href="index.html#q3">Q3: Pythagorean Theorem</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about.html#assignments">Assignments</a></li>
+            <li><a href="../../articles/about.html#exams">Exams</a></li>
+            <li><a href="../../articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    console.log(target);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      // window.scrollTo(0, 0);
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    event.preventDefault();
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    } else {
+      window.open(this.href);
+    }
+  });
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS" />
+    <meta name="author" content ="John DeNero" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 5: Data Abstraction, Trees | CS 61A Fall 2019
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="index.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="../../instructor.html">Instructors</a></li>
+                <li><a href="../../TAs.html">TAs</a></li>
+                <li><a href="../../tutors.html">Tutors</a></li>
+                <li><a href="../../academic-interns.html">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li><a href="../../resources.html">Resources</a></li>
+            <li><a href="../../articles/about.html">Syllabus</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2019/cs61a" target="_blank">Piazza</a></li>
+            <li><a href="../../extra.html">Extra</a></li>
+            <!-- <li><a href="https://scheme.cs61a.org">Scheme</a></li> -->
+            <!-- <li><a href="https://sql.cs61a.org">SQL</a></li> -->
+            <li><a href="https://code.cs61a.org">Code</a></li>
+            <li><a href="http://tutor.cs61a.org">Tutor</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Lab 5: Data Abstraction, Trees
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab05.zip" class="label label-outline">lab05.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due by 11:59pm on Friday, October 4.</i></p>
+
+
+
+
+<h2 id='starter-files'>Starter Files</h2>
+
+<p>Download <a href="lab05.zip">lab05.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="ok.html">Ok</a> autograder.</p>
+
+
+<h2 id='submission'>Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+
+
+
+
+    
+<h1 id="topics">Topics</h1>
+
+
+<p>Consult this section if you need a refresher on the material for this lab. It's
+okay to skip directly to <a href="index.html#required-questions">the questions</a> and refer back
+here should you get stuck.</p>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Data Abstraction<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<h2 id="data-abstraction">Data Abstraction</h2>
+
+
+<p>Data abstraction is a powerful concept in computer science that
+allows programmers to treat code as objects -- for example,
+car objects, chair objects, people objects, etc. That way,
+programmers don't have to worry about <em>how</em> code is
+implemented -- they just have to know <em>what</em> it does.</p>
+
+<p>Data abstraction mimics how we think about the world. When you want to
+drive a car, you don't need to know how the
+engine was built or what kind of material the tires are made of.
+You just have to know how to turn the wheel and press the gas pedal.</p>
+
+<p>An abstract data type consists of two types of functions:</p>
+
+<ul>
+  <li><strong>Constructors</strong>: functions that build the abstract data type.</li>
+  <li><strong>Selectors</strong>: functions that retrieve information from the data type.</li>
+</ul>
+
+<p>Programmers design ADTs to abstract away how information is stored and
+calculated such that the end user does <em>not</em> need to know how constructors and
+selectors are implemented. The nature of <em>abstract</em> data types allows
+whoever uses them to assume that the functions have been written correctly and
+work as described.
+</div>
+<br>
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Trees<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2"></p>
+
+<h2 id="trees">Trees</h2>
+
+
+<p>A <code>tree</code> is a data structure that represents a hierarchy of information. A file system is a good example of a tree structure. For example, within your <code>cs61a</code> folder, you have folders separating your <code>projects</code>, <code>lab</code> assignments, and <code>homework</code>. The next level is folders that separate different assignments, <code>hw01</code>, <code>lab01</code>, <code>hog</code>, etc., and inside those are the files themselves, including the starter files and <code>ok</code>. Below is an incomplete diagram of what your <code>cs61a</code> directory might look like.</p>
+
+<p><img class="img-responsive center-block" src="assets/cs61a-tree.png" alt="cs61a_tree"></p>
+
+<p>As you can see, unlike trees in nature, the tree abstract data type is drawn with the root at the top and the leaves at the bottom.</p>
+
+<p>Some tree terminology:</p>
+
+<ul>
+  <li><strong>root</strong>: the node at the top of the tree</li>
+  <li><strong>label</strong>: the value in a node, selected by the <code>label</code> function</li>
+  <li><strong>branches</strong>: a list of trees directly under the tree's root, selected by the <code>branches</code> function</li>
+  <li><strong>leaf</strong>: a tree with zero branches</li>
+  <li><strong>node</strong>: any location within the tree (e.g., root node, leaf nodes, etc.)</li>
+</ul>
+
+<p>Our <code>tree</code> abstract data type consists of a root and a list of its
+<code>branches</code>. To create a tree and access its root value and branches, use the
+following constructor and selectors:</p>
+
+<ul>
+  <li><p>Constructor</p>
+
+  <ul>
+    <li><code>tree(label, branches=[])</code>: creates a tree object with the given <code>label</code>
+    value at its root node and list of <code>branches</code>. Notice that the second argument
+    to this constructor, <code>branches</code>, is optional - if you want to make a tree with
+    no branches, leave this argument empty.</li>
+  </ul></li>
+  <li><p>Selectors</p>
+
+  <ul>
+    <li><code>label(tree)</code>: returns the value in the root node of <code>tree</code>.</li>
+    <li><code>branches(tree)</code>: returns the list of branches of the given <code>tree</code>.</li>
+  </ul></li>
+  <li><p>Convenience function</p>
+
+  <ul>
+    <li><code>is_leaf(tree)</code>: returns <code>True</code> if <code>tree</code>'s list of <code>branches</code> is empty, and
+    <code>False</code> otherwise.</li>
+  </ul></li>
+</ul>
+
+<p>For example, the tree generated by</p>
+
+<pre><code>number_tree = tree(1,
+         [tree(2),
+          tree(3,
+               [tree(4),
+                tree(5)]),
+          tree(6,
+               [tree(7)])])</code></pre>
+
+<p>would look like this:</p>
+
+<pre><code>   1
+ / | \
+2  3  6
+  / \  \
+ 4   5  7</code></pre>
+
+<p>To extract the number <code>3</code> from this tree, which is the label of the root of its second branch, we would do this:</p>
+
+<pre><code>label(branches(number_tree)[1])</code></pre>
+
+<p>The <code>print_tree</code> function prints out a tree in a
+human-readable form. The exact form follows the pattern illustrated
+above, where the root is unindented, and each of its branches is
+indented one level further.</p>
+
+<pre><code>def print_tree(t, indent=0):
+    &quot;&quot;&quot;Print a representation of this tree in which each node is
+    indented by two spaces times its depth from the root.
+
+    &gt;&gt;&gt; print_tree(tree(1))
+    1
+    &gt;&gt;&gt; print_tree(tree(1, [tree(2)]))
+    1
+      2
+    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+    &gt;&gt;&gt; print_tree(numbers)
+    1
+      2
+      3
+        4
+        5
+      6
+        7
+    &quot;&quot;&quot;
+    print(&#x27;  &#x27; * indent + str(label(t)))
+    for b in branches(t):
+        print_tree(b, indent + 1)</code></pre>
+
+</div>
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h2 id="city-data-abstraction">City Data Abstraction</h2>
+
+
+<p>Say we have an abstract data type for cities. A city has a name, a latitude
+coordinate, and a longitude coordinate.</p>
+
+<p>Our ADT has one <strong>constructor</strong>:</p>
+
+<ul>
+  <li><code>make_city(name, lat, lon)</code>: Creates a city object with the given name, latitude,
+  and longitude.</li>
+</ul>
+
+<p>We also have the following <strong>selectors</strong> in order to get the information for each city:</p>
+
+<ul>
+  <li><code>get_name(city)</code>: Returns the city's name</li>
+  <li><code>get_lat(city)</code>: Returns the city's latitude</li>
+  <li><code>get_lon(city)</code>: Returns the city's longitude</li>
+</ul>
+
+<p>Here is how we would use the constructor and selectors to create cities and
+extract their information:</p>
+
+<pre><code>&gt;&gt;&gt; berkeley = make_city(&#x27;Berkeley&#x27;, 122, 37)
+&gt;&gt;&gt; get_name(berkeley)
+&#x27;Berkeley&#x27;
+&gt;&gt;&gt; get_lat(berkeley)
+122
+&gt;&gt;&gt; new_york = make_city(&#x27;New York City&#x27;, 74, 40)
+&gt;&gt;&gt; get_lon(new_york)
+40</code></pre>
+
+<p>All of the selector and constructor functions can be found in the lab file, if you
+are curious to see how they are implemented. However, the point of data
+abstraction is that we do not need to know how an abstract data type is
+implemented, but rather just how we can interact with and use the data type.</p>
+
+<h3 class="question" id="q1">Q1: Distance</h3>
+
+<p>We will now implement the function <code>distance</code>, which computes the
+distance between two city objects. Recall that the distance between two
+coordinate pairs <code>(x1, y1)</code> and <code>(x2, y2)</code> can be found by calculating
+the <code>sqrt</code> of <code>(x1 &#x2d; x2)**2 + (y1 &#x2d; y2)**2</code>. We have already imported
+<code>sqrt</code> for your convenience. Use the latitude and longitude of a city as
+its coordinates; you'll need to use the selectors to access this info!</p>
+
+
+
+<pre><code>from math import sqrt
+def distance(city1, city2):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; city1 = make_city(&#x27;city1&#x27;, 0, 1)
+    &gt;&gt;&gt; city2 = make_city(&#x27;city2&#x27;, 0, 2)
+    &gt;&gt;&gt; distance(city1, city2)
+    1.0
+    &gt;&gt;&gt; city3 = make_city(&#x27;city3&#x27;, 6.5, 12)
+    &gt;&gt;&gt; city4 = make_city(&#x27;city4&#x27;, 2.5, 15)
+    &gt;&gt;&gt; distance(city3, city4)
+    5.0
+    &quot;&quot;&quot;
+<div class="alt solution-1">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-1">&#x20;&#x20;&#x20;&#x20;&#x6c;&#x61;&#x74;&#x5f;&#x31;&#x2c;&#x20;&#x6c;&#x6f;&#x6e;&#x5f;&#x31;&#x20;&#x3d;&#x20;&#x67;&#x65;&#x74;&#x5f;&#x6c;&#x61;&#x74;&#x28;&#x63;&#x69;&#x74;&#x79;&#x31;&#x29;&#x2c;&#x20;&#x67;&#x65;&#x74;&#x5f;&#x6c;&#x6f;&#x6e;&#x28;&#x63;&#x69;&#x74;&#x79;&#x31;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x6c;&#x61;&#x74;&#x5f;&#x32;&#x2c;&#x20;&#x6c;&#x6f;&#x6e;&#x5f;&#x32;&#x20;&#x3d;&#x20;&#x67;&#x65;&#x74;&#x5f;&#x6c;&#x61;&#x74;&#x28;&#x63;&#x69;&#x74;&#x79;&#x32;&#x29;&#x2c;&#x20;&#x67;&#x65;&#x74;&#x5f;&#x6c;&#x6f;&#x6e;&#x28;&#x63;&#x69;&#x74;&#x79;&#x32;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x73;&#x71;&#x72;&#x74;&#x28;&#x28;&#x6c;&#x61;&#x74;&#x5f;&#x31;&#x20;&#x2d;&#x20;&#x6c;&#x61;&#x74;&#x5f;&#x32;&#x29;&#x2a;&#x2a;&#x32;&#x20;&#x2b;&#x20;&#x28;&#x6c;&#x6f;&#x6e;&#x5f;&#x31;&#x20;&#x2d;&#x20;&#x6c;&#x6f;&#x6e;&#x5f;&#x32;&#x29;&#x2a;&#x2a;&#x32;&#x29;&#xa;&#xa;&#x23;&#x20;&#x56;&#x69;&#x64;&#x65;&#x6f;&#x20;&#x77;&#x61;&#x6c;&#x6b;&#x74;&#x68;&#x72;&#x6f;&#x75;&#x67;&#x68;&#x3a;&#x20;&#x68;&#x74;&#x74;&#x70;&#x73;&#x3a;&#x2f;&#x2f;&#x79;&#x6f;&#x75;&#x74;&#x75;&#x2e;&#x62;&#x65;&#x2f;&#x34;&#x76;&#x42;&#x30;&#x36;&#x59;&#x6d;&#x72;&#x69;&#x63;&#x6f;</div></code></pre>
+
+
+        <button id='solution-1' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q distance</code></pre>
+
+<h3 class="question" id="q2">Q2: Closer city</h3>
+
+<p>Next, implement <code>closer_city</code>, a function that takes a latitude,
+longitude, and two cities, and returns the name of the city that is
+relatively closer to the provided latitude and longitude.</p>
+
+<p>You may only use the selectors and constructors introduced above and the
+<code>distance</code> function you just defined for this question.</p>
+
+<blockquote><p><strong>Hint</strong>: How can use your <code>distance</code> function to find the distance between
+the given location and each of the given cities?</p></blockquote>
+
+
+
+<pre><code>def closer_city(lat, lon, city1, city2):
+    &quot;&quot;&quot;
+    Returns the name of either city1 or city2, whichever is closest to
+    coordinate (lat, lon).
+
+    &gt;&gt;&gt; berkeley = make_city(&#x27;Berkeley&#x27;, 37.87, 112.26)
+    &gt;&gt;&gt; stanford = make_city(&#x27;Stanford&#x27;, 34.05, 118.25)
+    &gt;&gt;&gt; closer_city(38.33, 121.44, berkeley, stanford)
+    &#x27;Stanford&#x27;
+    &gt;&gt;&gt; bucharest = make_city(&#x27;Bucharest&#x27;, 44.43, 26.10)
+    &gt;&gt;&gt; vienna = make_city(&#x27;Vienna&#x27;, 48.20, 16.37)
+    &gt;&gt;&gt; closer_city(41.29, 174.78, bucharest, vienna)
+    &#x27;Bucharest&#x27;
+    &quot;&quot;&quot;
+<div class="alt solution-2">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-2">&#x20;&#x20;&#x20;&#x20;&#x6e;&#x65;&#x77;&#x5f;&#x63;&#x69;&#x74;&#x79;&#x20;&#x3d;&#x20;&#x6d;&#x61;&#x6b;&#x65;&#x5f;&#x63;&#x69;&#x74;&#x79;&#x28;&#x27;&#x61;&#x72;&#x62;&#x27;&#x2c;&#x20;&#x6c;&#x61;&#x74;&#x2c;&#x20;&#x6c;&#x6f;&#x6e;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x64;&#x69;&#x73;&#x74;&#x31;&#x20;&#x3d;&#x20;&#x64;&#x69;&#x73;&#x74;&#x61;&#x6e;&#x63;&#x65;&#x28;&#x63;&#x69;&#x74;&#x79;&#x31;&#x2c;&#x20;&#x6e;&#x65;&#x77;&#x5f;&#x63;&#x69;&#x74;&#x79;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x64;&#x69;&#x73;&#x74;&#x32;&#x20;&#x3d;&#x20;&#x64;&#x69;&#x73;&#x74;&#x61;&#x6e;&#x63;&#x65;&#x28;&#x63;&#x69;&#x74;&#x79;&#x32;&#x2c;&#x20;&#x6e;&#x65;&#x77;&#x5f;&#x63;&#x69;&#x74;&#x79;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x64;&#x69;&#x73;&#x74;&#x31;&#x20;&#x3c;&#x20;&#x64;&#x69;&#x73;&#x74;&#x32;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x67;&#x65;&#x74;&#x5f;&#x6e;&#x61;&#x6d;&#x65;&#x28;&#x63;&#x69;&#x74;&#x79;&#x31;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x67;&#x65;&#x74;&#x5f;&#x6e;&#x61;&#x6d;&#x65;&#x28;&#x63;&#x69;&#x74;&#x79;&#x32;&#x29;&#xa;&#xa;&#x23;&#x20;&#x56;&#x69;&#x64;&#x65;&#x6f;&#x20;&#x77;&#x61;&#x6c;&#x6b;&#x74;&#x68;&#x72;&#x6f;&#x75;&#x67;&#x68;&#x3a;&#x20;&#x68;&#x74;&#x74;&#x70;&#x73;&#x3a;&#x2f;&#x2f;&#x79;&#x6f;&#x75;&#x74;&#x75;&#x2e;&#x62;&#x65;&#x2f;&#x4f;&#x77;&#x77;&#x64;&#x7a;&#x5f;&#x4b;&#x6d;&#x38;&#x37;&#x67;</div></code></pre>
+
+
+        <button id='solution-2' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q closer_city</code></pre>
+
+<h3 class="question" id="q3">Q3: Don't violate the abstraction barrier!</h3>
+
+<blockquote><p>Note: this question has no code-writing component (if you implemented <code>distance</code>
+and <code>closer_city</code> correctly!)</p></blockquote>
+
+<p>When writing functions that use an ADT, we should use the constructor(s) and
+selector(s) whenever possible instead of assuming the ADT's implementation.
+Relying on a data abstraction's underlying implementation is known as
+<em>violating the abstraction barrier</em>, and we never want to do this!</p>
+
+<p>It's possible that you passed the doctests for <code>distance</code> and <code>closer_city</code>
+even if you violated the abstraction barrier. To check whether or not you
+did so, run the following command:</p>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q check_abstraction</code></pre>
+
+<p>The <code>make_check_abstraction</code> function exists only for the doctest, which swaps
+out the implementations of the <code>city</code> abstraction with something else, runs
+the tests from the previous two parts, then restores the original abstraction.</p>
+
+<p>The nature of the abstraction barrier guarantees that changing the implementation of an ADT
+shouldn't affect the functionality of any programs that use that ADT, as long
+as the constructors and selectors were used properly.</p>
+
+<p>If you passed the Ok tests for the previous questions but not this one,
+the fix is simple!  Just replace any code that violates the abstraction
+barrier, i.e. creating a city with a new list object or indexing into a city,
+with the appropriate constructor or selector.</p>
+
+<p>Make sure that your functions pass the tests with both the first and the second
+implementations of the City ADT and that you understand why they should work
+for both before moving on.</p>
+
+
+<h2 id="trees">Trees</h2>
+
+
+<h3 class="question" id="q4">Q4: Acorn Finder</h3>
+
+<p>The squirrels on campus need your help! There are a lot of trees on campus and
+the squirrels would like to know which ones contain acorns. Define the function
+<code>acorn_finder</code>, which takes in a tree and returns <code>True</code> if the tree contains a
+node with the value <code>&#x27;acorn&#x27;</code> and <code>False</code> otherwise.</p>
+
+
+
+<pre><code>def acorn_finder(t):
+    &quot;&quot;&quot;Returns True if t contains a node with the value &#x27;acorn&#x27; and
+    False otherwise.
+
+    &gt;&gt;&gt; scrat = tree(&#x27;acorn&#x27;)
+    &gt;&gt;&gt; acorn_finder(scrat)
+    True
+    &gt;&gt;&gt; sproul = tree(&#x27;roots&#x27;, [tree(&#x27;branch1&#x27;, [tree(&#x27;leaf&#x27;), tree(&#x27;acorn&#x27;)]), tree(&#x27;branch2&#x27;)])
+    &gt;&gt;&gt; acorn_finder(sproul)
+    True
+    &gt;&gt;&gt; numbers = tree(1, [tree(2), tree(3, [tree(4), tree(5)]), tree(6, [tree(7)])])
+    &gt;&gt;&gt; acorn_finder(numbers)
+    False
+    &gt;&gt;&gt; t = tree(1, [tree(&#x27;acorn&#x27;,[tree(&#x27;not acorn&#x27;)])])
+    &gt;&gt;&gt; acorn_finder(t)
+    True
+    &quot;&quot;&quot;
+<div class="alt solution-3">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-3">&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x28;&#x74;&#x29;&#x20;&#x3d;&#x3d;&#x20;&#x27;&#x61;&#x63;&#x6f;&#x72;&#x6e;&#x27;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x54;&#x72;&#x75;&#x65;&#xa;&#x20;&#x20;&#x20;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x62;&#x20;&#x69;&#x6e;&#x20;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x28;&#x74;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x61;&#x63;&#x6f;&#x72;&#x6e;&#x5f;&#x66;&#x69;&#x6e;&#x64;&#x65;&#x72;&#x28;&#x62;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x54;&#x72;&#x75;&#x65;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x46;&#x61;&#x6c;&#x73;&#x65;&#xa;&#xa;&#x23;&#x20;&#x41;&#x6c;&#x74;&#x65;&#x72;&#x6e;&#x61;&#x74;&#x69;&#x76;&#x65;&#x20;&#x73;&#x6f;&#x6c;&#x75;&#x74;&#x69;&#x6f;&#x6e;&#xa;&#x64;&#x65;&#x66;&#x20;&#x61;&#x63;&#x6f;&#x72;&#x6e;&#x5f;&#x66;&#x69;&#x6e;&#x64;&#x65;&#x72;&#x28;&#x74;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x28;&#x74;&#x29;&#x20;&#x3d;&#x3d;&#x20;&#x27;&#x61;&#x63;&#x6f;&#x72;&#x6e;&#x27;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x54;&#x72;&#x75;&#x65;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x54;&#x72;&#x75;&#x65;&#x20;&#x69;&#x6e;&#x20;&#x5b;&#x61;&#x63;&#x6f;&#x72;&#x6e;&#x5f;&#x66;&#x69;&#x6e;&#x64;&#x65;&#x72;&#x28;&#x62;&#x29;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x62;&#x20;&#x69;&#x6e;&#x20;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x28;&#x74;&#x29;&#x5d;</div></code></pre>
+
+
+        <button id='solution-3' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q acorn_finder</code></pre>
+
+<h3 class="question" id="q5">Q5: Sprout leaves</h3>
+
+<p>Define a function <code>sprout_leaves</code> that takes in a tree, <code>t</code>, and a list of
+values, <code>vals</code>. It produces a new tree that is identical to <code>t</code>, but where each
+old leaf node has new branches, one for each value in <code>vals</code>.</p>
+
+<p>For example, say we have the tree <code>t = tree(1, [tree(2), tree(3, [tree(4)])])</code>:</p>
+
+<pre><code>  1
+ / \
+2   3
+    |
+    4</code></pre>
+
+<p>If we call <code>sprout_leaves(t, [5, 6])</code>, the result is the following tree:</p>
+
+<pre><code>       1
+     /   \
+    2     3
+   / \    |
+  5   6   4
+         / \
+        5   6</code></pre>
+
+
+
+<pre><code>def sprout_leaves(t, vals):
+    &quot;&quot;&quot;Sprout new leaves containing the data in vals at each leaf in
+    the original tree t and return the resulting tree.
+
+    &gt;&gt;&gt; t1 = tree(1, [tree(2), tree(3)])
+    &gt;&gt;&gt; print_tree(t1)
+    1
+      2
+      3
+    &gt;&gt;&gt; new1 = sprout_leaves(t1, [4, 5])
+    &gt;&gt;&gt; print_tree(new1)
+    1
+      2
+        4
+        5
+      3
+        4
+        5
+
+    &gt;&gt;&gt; t2 = tree(1, [tree(2, [tree(3)])])
+    &gt;&gt;&gt; print_tree(t2)
+    1
+      2
+        3
+    &gt;&gt;&gt; new2 = sprout_leaves(t2, [6, 1, 2])
+    &gt;&gt;&gt; print_tree(new2)
+    1
+      2
+        3
+          6
+          1
+          2
+    &quot;&quot;&quot;
+<div class="alt solution-4">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-4">&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x69;&#x73;&#x5f;&#x6c;&#x65;&#x61;&#x66;&#x28;&#x74;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x72;&#x65;&#x65;&#x28;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x28;&#x74;&#x29;&#x2c;&#x20;&#x5b;&#x74;&#x72;&#x65;&#x65;&#x28;&#x76;&#x29;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x76;&#x20;&#x69;&#x6e;&#x20;&#x76;&#x61;&#x6c;&#x73;&#x5d;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x72;&#x65;&#x65;&#x28;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x28;&#x74;&#x29;&#x2c;&#x20;&#x5b;&#x73;&#x70;&#x72;&#x6f;&#x75;&#x74;&#x5f;&#x6c;&#x65;&#x61;&#x76;&#x65;&#x73;&#x28;&#x73;&#x2c;&#x20;&#x76;&#x61;&#x6c;&#x73;&#x29;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x73;&#x20;&#x69;&#x6e;&#x20;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x28;&#x74;&#x29;&#x5d;&#x29;</div></code></pre>
+
+
+        <button id='solution-4' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q sprout_leaves</code></pre>
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+<blockquote><p>While "Add Characters" is optional, it is good practice for the Cats project and is
+thus highly recommended!</p></blockquote>
+
+<h3 class="question" id="q6">Q6: Add Characters</h3>
+
+<p>Given two words, <code>w1</code> and <code>w2</code>, we say <code>w1</code> is a subsequence of <code>w2</code>
+if all the letters in <code>w1</code> appear in <code>w2</code> in the same order (but 
+not necessarily all together). That is, you can add letters to any position in
+<code>w1</code> to get <code>w2</code>.
+For example, "sing" is a substring of "ab<strong>s</strong>orb<strong>ing</strong>" and "cat" is a substring of 
+"<strong>c</strong>ontr<strong>a</strong>s<strong>t</strong>".</p>
+
+<p>Implement <code>add_chars</code>, which takes in <code>w1</code> and <code>w2</code>, where <code>w1</code> is a substring of <code>w2</code>. It should
+return a string containing the characters you need to add to <code>w1</code> to get <code>w2</code>. <strong>Your solution 
+must use recursion</strong>.</p>
+
+<p>In the example above, you need to add the characters "aborb" to "sing" to get "absorbing", 
+and you need to add "ontrs" to "cat" to get "contrast".</p>
+
+<p>The letters in the string you return should be in the order you have to add them from left to right.
+If there are multiple characters in the <code>w2</code> that could correspond to characters in <code>w1</code>, use the
+leftmost one. For example, <code>add_words(&quot;coy&quot;, &quot;cacophony&quot;)</code> should return "acphon", not "caphon" 
+because the first "c" in "coy" corresponds to the first "c" in "<strong>c</strong>ac<strong>o</strong>phon<strong>y</strong>".</p>
+
+
+
+<pre><code>def add_chars(w1, w2):
+    &quot;&quot;&quot;
+    Return a string containing the characters you need to add to w1 to get w2.
+
+    You may assume that w1 is a subsequence of w2.
+
+    &gt;&gt;&gt; add_chars(&quot;owl&quot;, &quot;howl&quot;)
+    &#x27;h&#x27;
+    &gt;&gt;&gt; add_chars(&quot;want&quot;, &quot;wanton&quot;)
+    &#x27;on&#x27;
+    &gt;&gt;&gt; add_chars(&quot;rat&quot;, &quot;radiate&quot;)
+    &#x27;diae&#x27;
+    &gt;&gt;&gt; add_chars(&quot;a&quot;, &quot;prepare&quot;)
+    &#x27;prepre&#x27;
+    &gt;&gt;&gt; add_chars(&quot;resin&quot;, &quot;recursion&quot;)
+    &#x27;curo&#x27;
+    &gt;&gt;&gt; add_chars(&quot;fin&quot;, &quot;effusion&quot;)
+    &#x27;efuso&#x27;
+    &gt;&gt;&gt; add_chars(&quot;coy&quot;, &quot;cacophony&quot;)
+    &#x27;acphon&#x27;
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban iteration and sets
+    &gt;&gt;&gt; check(LAB_SOURCE_FILE, &#x27;add_chars&#x27;,
+    ...       [&#x27;For&#x27;, &#x27;While&#x27;, &#x27;Set&#x27;, &#x27;SetComp&#x27;]) # Must use recursion
+    True
+    &quot;&quot;&quot;
+<div class="alt solution-5">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-5">&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x6f;&#x74;&#x20;&#x77;&#x31;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x77;&#x32;&#xa;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x69;&#x66;&#x20;&#x77;&#x31;&#x5b;&#x30;&#x5d;&#x20;&#x3d;&#x3d;&#x20;&#x77;&#x32;&#x5b;&#x30;&#x5d;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x61;&#x64;&#x64;&#x5f;&#x63;&#x68;&#x61;&#x72;&#x73;&#x28;&#x77;&#x31;&#x5b;&#x31;&#x3a;&#x5d;&#x2c;&#x20;&#x77;&#x32;&#x5b;&#x31;&#x3a;&#x5d;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x77;&#x32;&#x5b;&#x30;&#x5d;&#x20;&#x2b;&#x20;&#x61;&#x64;&#x64;&#x5f;&#x63;&#x68;&#x61;&#x72;&#x73;&#x28;&#x77;&#x31;&#x2c;&#x20;&#x77;&#x32;&#x5b;&#x31;&#x3a;&#x5d;&#x29;</div></code></pre>
+
+
+        <button id='solution-5' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q add_chars</code></pre>
+
+<h3 class="question" id="q7">Q7: Add trees</h3>
+
+<p>Define the function <code>add_trees</code>, which takes in two trees and returns a new
+tree where each corresponding node from the first tree is added with the node
+from the second tree. If a node at any particular position is present in one
+tree but not the other, it should be present in the new tree as well.</p>
+
+<blockquote><p><em>Hint</em>: You may want to use the built-in zip function to iterate over
+multiple sequences at once.</p>
+
+<p><em>Note</em>: If you feel that this one's a lot harder than the previous tree
+problems, that's totally fine! This is a pretty difficult problem, but you
+can do it! Talk about it with other students, and come back to it if you need
+to.</p></blockquote>
+
+
+
+<pre><code>def add_trees(t1, t2):
+    &quot;&quot;&quot;
+    &gt;&gt;&gt; numbers = tree(1,
+    ...                [tree(2,
+    ...                      [tree(3),
+    ...                       tree(4)]),
+    ...                 tree(5,
+    ...                      [tree(6,
+    ...                            [tree(7)]),
+    ...                       tree(8)])])
+    &gt;&gt;&gt; print_tree(add_trees(numbers, numbers))
+    2
+      4
+        6
+        8
+      10
+        12
+          14
+        16
+    &gt;&gt;&gt; print_tree(add_trees(tree(2), tree(3, [tree(4), tree(5)])))
+    5
+      4
+      5
+    &gt;&gt;&gt; print_tree(add_trees(tree(2, [tree(3)]), tree(2, [tree(3), tree(4)])))
+    4
+      6
+      4
+    &gt;&gt;&gt; print_tree(add_trees(tree(2, [tree(3, [tree(4), tree(5)])]), \
+    tree(2, [tree(3, [tree(4)]), tree(5)])))
+    4
+      6
+        8
+        5
+      5
+    &quot;&quot;&quot;
+<div class="alt solution-6">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-6">&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x6f;&#x74;&#x20;&#x74;&#x31;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x32;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x6f;&#x74;&#x20;&#x74;&#x32;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x31;&#xa;&#x20;&#x20;&#x20;&#x20;&#x6e;&#x65;&#x77;&#x5f;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x20;&#x3d;&#x20;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x28;&#x74;&#x31;&#x29;&#x20;&#x2b;&#x20;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x28;&#x74;&#x32;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x74;&#x31;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x2c;&#x20;&#x74;&#x32;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x20;&#x3d;&#x20;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x28;&#x74;&#x31;&#x29;&#x2c;&#x20;&#x62;&#x72;&#x61;&#x6e;&#x63;&#x68;&#x65;&#x73;&#x28;&#x74;&#x32;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x6c;&#x65;&#x6e;&#x67;&#x74;&#x68;&#x5f;&#x74;&#x31;&#x2c;&#x20;&#x6c;&#x65;&#x6e;&#x67;&#x74;&#x68;&#x5f;&#x74;&#x32;&#x20;&#x3d;&#x20;&#x6c;&#x65;&#x6e;&#x28;&#x74;&#x31;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x29;&#x2c;&#x20;&#x6c;&#x65;&#x6e;&#x28;&#x74;&#x32;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6c;&#x65;&#x6e;&#x67;&#x74;&#x68;&#x5f;&#x74;&#x31;&#x20;&#x3c;&#x20;&#x6c;&#x65;&#x6e;&#x67;&#x74;&#x68;&#x5f;&#x74;&#x32;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x74;&#x31;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x20;&#x2b;&#x3d;&#x20;&#x5b;&#x4e;&#x6f;&#x6e;&#x65;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x5f;&#x20;&#x69;&#x6e;&#x20;&#x72;&#x61;&#x6e;&#x67;&#x65;&#x28;&#x6c;&#x65;&#x6e;&#x67;&#x74;&#x68;&#x5f;&#x74;&#x31;&#x2c;&#x20;&#x6c;&#x65;&#x6e;&#x67;&#x74;&#x68;&#x5f;&#x74;&#x32;&#x29;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x69;&#x66;&#x20;&#x6c;&#x65;&#x6e;&#x28;&#x74;&#x31;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x29;&#x20;&#x3e;&#x20;&#x6c;&#x65;&#x6e;&#x28;&#x74;&#x32;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x74;&#x32;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x20;&#x2b;&#x3d;&#x20;&#x5b;&#x4e;&#x6f;&#x6e;&#x65;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x5f;&#x20;&#x69;&#x6e;&#x20;&#x72;&#x61;&#x6e;&#x67;&#x65;&#x28;&#x6c;&#x65;&#x6e;&#x67;&#x74;&#x68;&#x5f;&#x74;&#x32;&#x2c;&#x20;&#x6c;&#x65;&#x6e;&#x67;&#x74;&#x68;&#x5f;&#x74;&#x31;&#x29;&#x5d;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x72;&#x65;&#x65;&#x28;&#x6e;&#x65;&#x77;&#x5f;&#x6c;&#x61;&#x62;&#x65;&#x6c;&#x2c;&#x20;&#x5b;&#x61;&#x64;&#x64;&#x5f;&#x74;&#x72;&#x65;&#x65;&#x73;&#x28;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x31;&#x2c;&#x20;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x32;&#x29;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x31;&#x2c;&#x20;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x32;&#x20;&#x69;&#x6e;&#x20;&#x7a;&#x69;&#x70;&#x28;&#x74;&#x31;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x2c;&#x20;&#x74;&#x32;&#x5f;&#x63;&#x68;&#x69;&#x6c;&#x64;&#x72;&#x65;&#x6e;&#x29;&#x5d;&#x29;</div></code></pre>
+
+
+        <button id='solution-6' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q add_trees</code></pre>
+
+
+<h2 id="fun-question">Fun Question!</h2>
+
+
+
+<h2 id="shakespeare-and-dictionaries">Shakespeare and Dictionaries</h2>
+
+
+<p>We will use dictionaries to approximate the entire works of
+Shakespeare! We're going to use a bigram language model. Here's the
+idea: We start with some word -- we'll use "The" as an example. Then we
+look through all of the texts of Shakespeare and for every instance of
+"The" we record the word that follows "The" and add it to a list, known
+as the <em>successors</em> of "The".  Now suppose we've done this for every
+word Shakespeare has used, ever.</p>
+
+<p>Let's go back to "The". Now, we randomly choose a word from this list,
+say "cat". Then we look up the successors of "cat" and randomly choose
+a word from that list, and we continue this process. This eventually
+will terminate in a period (".") and we will have generated a
+Shakespearean sentence!</p>
+
+<p>The object that we'll be looking things up in is called a "successor
+table", although really it's just a dictionary. The keys in this
+dictionary are words, and the values are lists of successors to those
+words.</p>
+
+<h3 class="question" id="q8">Q8: Successor Tables</h3>
+Here's an incomplete definition of the <code>build_successors_table</code>
+function. The input is a list of words (corresponding to a
+Shakespearean text), and the output is a successors table. (By default,
+the first word is a successor to "."). See the example below.
+
+<blockquote><p>Note: there are two places where you need to write code, denoted by the two
+<code>&quot;*** YOUR CODE HERE ***&quot;</code></p></blockquote>
+
+
+
+<pre><code>def build_successors_table(tokens):
+    &quot;&quot;&quot;Return a dictionary: keys are words; values are lists of successors.
+
+    &gt;&gt;&gt; text = [&#x27;We&#x27;, &#x27;came&#x27;, &#x27;to&#x27;, &#x27;investigate&#x27;, &#x27;,&#x27;, &#x27;catch&#x27;, &#x27;bad&#x27;, &#x27;guys&#x27;, &#x27;and&#x27;, &#x27;to&#x27;, &#x27;eat&#x27;, &#x27;pie&#x27;, &#x27;.&#x27;]
+    &gt;&gt;&gt; table = build_successors_table(text)
+    &gt;&gt;&gt; sorted(table)
+    [&#x27;,&#x27;, &#x27;.&#x27;, &#x27;We&#x27;, &#x27;and&#x27;, &#x27;bad&#x27;, &#x27;came&#x27;, &#x27;catch&#x27;, &#x27;eat&#x27;, &#x27;guys&#x27;, &#x27;investigate&#x27;, &#x27;pie&#x27;, &#x27;to&#x27;]
+    &gt;&gt;&gt; table[&#x27;to&#x27;]
+    [&#x27;investigate&#x27;, &#x27;eat&#x27;]
+    &gt;&gt;&gt; table[&#x27;pie&#x27;]
+    [&#x27;.&#x27;]
+    &gt;&gt;&gt; table[&#x27;.&#x27;]
+    [&#x27;We&#x27;]
+    &quot;&quot;&quot;
+    table = {}
+    prev = &#x27;.&#x27;
+    for word in tokens:
+        if prev not in table:
+<div class="alt solution-7">            "*** YOUR CODE HERE ***"
+</div><div class="solution solution-7">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x74;&#x61;&#x62;&#x6c;&#x65;&#x5b;&#x70;&#x72;&#x65;&#x76;&#x5d;&#x20;&#x3d;&#x20;&#x5b;&#x5d;</div><div class="alt solution-7">        "*** YOUR CODE HERE ***"
+</div><div class="solution solution-7">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x74;&#x61;&#x62;&#x6c;&#x65;&#x5b;&#x70;&#x72;&#x65;&#x76;&#x5d;&#x20;&#x2b;&#x3d;&#x20;&#x5b;&#x77;&#x6f;&#x72;&#x64;&#x5d;</div>        prev = word
+    return table</code></pre>
+
+
+        <button id='solution-7' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q build_successors_table</code></pre>
+
+<h3 class="question" id="q9">Q9: Construct the Sentence</h3>
+
+<p>Let's generate some sentences! Suppose we're given a starting word. We
+can look up this word in our table to find its list of successors, and
+then randomly select a word from this list to be the next word in the
+sentence. Then we just repeat until we reach some ending punctuation.</p>
+
+<blockquote><p><em>Hint</em>: to randomly select from a list, import the Python random library with
+<code>import random</code> and use the expression <code>random.choice(my_list)</code></p></blockquote>
+
+<p>This might not be a bad time to play around with adding strings
+together as well. Let's fill in the <code>construct_sent</code> function!</p>
+
+
+
+<pre><code>def construct_sent(word, table):
+    &quot;&quot;&quot;Prints a random sentence starting with word, sampling from
+    table.
+
+    &gt;&gt;&gt; table = {&#x27;Wow&#x27;: [&#x27;!&#x27;], &#x27;Sentences&#x27;: [&#x27;are&#x27;], &#x27;are&#x27;: [&#x27;cool&#x27;], &#x27;cool&#x27;: [&#x27;.&#x27;]}
+    &gt;&gt;&gt; construct_sent(&#x27;Wow&#x27;, table)
+    &#x27;Wow!&#x27;
+    &gt;&gt;&gt; construct_sent(&#x27;Sentences&#x27;, table)
+    &#x27;Sentences are cool.&#x27;
+    &quot;&quot;&quot;
+    import random
+    result = &#x27;&#x27;
+    while word not in [&#x27;.&#x27;, &#x27;!&#x27;, &#x27;?&#x27;]:
+<div class="alt solution-8">        "*** YOUR CODE HERE ***"
+</div><div class="solution solution-8">&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x20;&#x2b;&#x3d;&#x20;&#x77;&#x6f;&#x72;&#x64;&#x20;&#x2b;&#x20;&#x27;&#x20;&#x27;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x77;&#x6f;&#x72;&#x64;&#x20;&#x3d;&#x20;&#x72;&#x61;&#x6e;&#x64;&#x6f;&#x6d;&#x2e;&#x63;&#x68;&#x6f;&#x69;&#x63;&#x65;&#x28;&#x74;&#x61;&#x62;&#x6c;&#x65;&#x5b;&#x77;&#x6f;&#x72;&#x64;&#x5d;&#x29;</div>    return result.strip() + word</code></pre>
+
+
+        <button id='solution-8' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q construct_sent</code></pre>
+
+
+<h3 id="putting-it-all-together">Putting it all together</h3>
+
+
+<p>Great! Now let's try to run our functions with some actual data. The following
+snippet included in the skeleton code will return a list containing the words
+in all of the works of Shakespeare.</p>
+
+<blockquote><p><em>Warning</em>: Do <strong>NOT</strong> try to print the return result of this function.</p></blockquote>
+
+<pre><code>def shakespeare_tokens(path=&#x27;shakespeare.txt&#x27;, url=&#x27;http://composingprograms.com/shakespeare.txt&#x27;):
+    &quot;&quot;&quot;Return the words of Shakespeare&#x27;s plays as a list.&quot;&quot;&quot;
+    import os
+    from urllib.request import urlopen
+    if os.path.exists(path):
+        return open(&#x27;shakespeare.txt&#x27;, encoding=&#x27;ascii&#x27;).read().split()
+    else:
+        shakespeare = urlopen(url)
+        return shakespeare.read().decode(encoding=&#x27;ascii&#x27;).split()</code></pre>
+
+<p>Uncomment the following two lines to run the above function and build the
+successors table from those tokens.</p>
+
+<pre><code># Uncomment the following two lines
+# tokens = shakespeare_tokens()
+# table = build_successors_table(tokens)</code></pre>
+
+<p>Next, let's define a utility function that constructs sentences from this
+successors table:</p>
+
+<pre><code>&gt;&gt;&gt; def sent():
+...     return construct_sent(&#x27;The&#x27;, table)
+&gt;&gt;&gt; sent()
+&quot; The plebeians have done us must be news&#x2d;cramm&#x27;d.&quot;
+
+&gt;&gt;&gt; sent()
+&quot; The ravish&#x27;d thee , with the mercy of beauty!&quot;
+
+&gt;&gt;&gt; sent()
+&quot; The bird of Tunis , or two white and plucker down with better ; that&#x27;s God&#x27;s sake.&quot;</code></pre>
+
+<p>Notice that all the sentences start with the word "The". With a few
+modifications, we can make our sentences start with a random word. The
+following <code>random_sent</code> function (defined in your starter file) will
+do the trick:</p>
+
+<pre><code>def random_sent():
+    import random
+    return construct_sent(random.choice(table[&#x27;.&#x27;]), table)</code></pre>
+
+<p>Go ahead and load your file into Python (be sure to use the <code>&#x2d;i</code> flag).
+You can now call the <code>random_sent</code> function to generate random
+Shakespearean sentences!</p>
+
+<pre><code>&gt;&gt;&gt; random_sent()
+&#x27; Long live by thy name , then , Dost thou more angel , good Master Deep&#x2d;vow , And tak&#x27;st more ado but following her , my sight Of speaking false!&#x27;
+
+&gt;&gt;&gt; random_sent()
+&#x27; Yes , why blame him , as is as I shall find a case , That plays at the public weal or the ghost.&#x27;</code></pre>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="index.html#topics">Topics</a></li>
+  <ul>
+    <li><a href="index.html#data-abstraction">Data Abstraction</a></li>
+    <li><a href="index.html#trees">Trees</a></li>
+  </ul>
+  <li><a href="index.html#required-questions">Required Questions</a></li>
+  <ul>
+    <li><a href="index.html#city-data-abstraction">City Data Abstraction</a></li>
+    <ul>
+      <li><a href="index.html#q1">Q1: Distance</a></li>
+      <li><a href="index.html#q2">Q2: Closer city</a></li>
+      <li><a href="index.html#q3">Q3: Don't violate the abstraction barrier!</a></li>
+    </ul>
+    <li><a href="index.html#trees">Trees</a></li>
+    <ul>
+      <li><a href="index.html#q4">Q4: Acorn Finder</a></li>
+      <li><a href="index.html#q5">Q5: Sprout leaves</a></li>
+    </ul>
+  </ul>
+  <li><a href="index.html#optional-questions">Optional Questions</a></li>
+  <ul>
+    <li><a href="index.html#q6">Q6: Add Characters</a></li>
+    <li><a href="index.html#q7">Q7: Add trees</a></li>
+  </ul>
+  <ul>
+    <li><a href="index.html#fun-question">Fun Question!</a></li>
+    <li><a href="index.html#shakespeare-and-dictionaries">Shakespeare and Dictionaries</a></li>
+    <ul>
+      <li><a href="index.html#q8">Q8: Successor Tables</a></li>
+      <li><a href="index.html#q9">Q9: Construct the Sentence</a></li>
+      <li><a href="index.html#putting-it-all-together">Putting it all together</a></li>
+    </ul>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about.html#assignments">Assignments</a></li>
+            <li><a href="../../articles/about.html#exams">Exams</a></li>
+            <li><a href="../../articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    console.log(target);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      // window.scrollTo(0, 0);
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    event.preventDefault();
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    } else {
+      window.open(this.href);
+    }
+  });
+</script>
+
+
+<script type="text/javascript" src="../../assets/js/config.js"></script>
+<script>
+$(function() {
+    var staging_domains = ['staging.cs61a.org', 'solutions.cs61a.org', 'localhost', '127.0.0.1'];
+    var host = window.location.hostname;
+    var staging = staging_domains.indexOf(host) != -1;
+    staging = staging || (host.endsWith('.pullrequests.cs61a.org') && !host.startsWith('last-build.'));
+
+    var after_due_date = new Date(1570345199999) < new Date();
+    var before_end_date = new Date() <= new Date(endDate);
+    var release_solutions = (staging || after_due_date) && before_end_date;
+
+    if (release_solutions) {
+      $('.solutiontoggle').css('display', 'inline-block');
+      $('.solutiontoggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+});
+</script>
+
+
+  </body>
+</html>

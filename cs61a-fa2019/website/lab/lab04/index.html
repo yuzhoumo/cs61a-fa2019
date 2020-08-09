@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS" />
+    <meta name="author" content ="John DeNero" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+    <title>
+Lab 4: Recursion and Lists | CS 61A Fall 2019
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="index.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="../../instructor.html">Instructors</a></li>
+                <li><a href="../../TAs.html">TAs</a></li>
+                <li><a href="../../tutors.html">Tutors</a></li>
+                <li><a href="../../academic-interns.html">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li><a href="../../resources.html">Resources</a></li>
+            <li><a href="../../articles/about.html">Syllabus</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2019/cs61a" target="_blank">Piazza</a></li>
+            <li><a href="../../extra.html">Extra</a></li>
+            <!-- <li><a href="https://scheme.cs61a.org">Scheme</a></li> -->
+            <!-- <li><a href="https://sql.cs61a.org">SQL</a></li> -->
+            <li><a href="https://code.cs61a.org">Code</a></li>
+            <li><a href="http://tutor.cs61a.org">Tutor</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Lab 4: Recursion and Lists
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="lab04.zip" class="label label-outline">lab04.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><i>Due by 11:59pm on Friday, September 27.</i></p>
+
+
+
+
+<h2 id='starter-files'>Starter Files</h2>
+
+<p>Download <a href="lab04.zip">lab04.zip</a>.
+Inside the archive, you will find starter files for the questions in this lab,
+  along with a copy of the <a href="ok.html">Ok</a> autograder.</p>
+
+
+<h2 id='submission'>Submission</h2>
+
+<p>By the end of this lab, you should have submitted the lab with
+<code>python3 ok --submit</code>. You may submit more than once before the
+deadline; only the final submission will be graded.
+Check that you have successfully submitted your code on
+<a href="https://okpy.org/">okpy.org</a>.</p>
+
+
+
+
+
+    
+<h1 id="topics">Topics</h1>
+
+
+<p>Consult this section if you need a refresher on the material for this lab. It's
+okay to skip directly to <a href="index.html#required-questions">the questions</a> and refer back
+here should you get stuck.</p>
+
+
+        <button id='toggle-1' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        Recursion<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-1">
+
+<h2 id="recursion">Recursion</h2>
+
+<p>A recursive function is a function that calls itself in its body,
+either directly or indirectly. Recursive functions have three important
+components:</p>
+
+<ol>
+  <li>Base case(s), the simplest possible form of the problem you're trying to solve.</li>
+  <li>Recursive case(s), where the function calls itself with a <em>simpler
+  argument</em> as part of the computation.</li>
+  <li>Using the recursive calls to solve the full problem.</li>
+</ol>
+
+<p>Let's look at the canonical example, <code>factorial</code>.</p>
+
+<blockquote><p>Factorial, denoted with the <code>!</code> operator, is defined as:</p>
+
+<pre><code>n! = n * (n&#x2d;1) * ... * 1</code></pre>
+
+<p>For example, <code>5! = 5 * 4 * 3 * 2 * 1 = 120</code></p></blockquote>
+
+<p>The recursive implementation for factorial is as follows:</p>
+
+<pre><code>def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n &#x2d; 1)</code></pre>
+
+<p>We know from its definition that 0! is 1. So we choose <code>n == 0</code> as our base case.
+The recursive step also follows from the definition of factorial, i.e., <code>n! =
+n * (n&#x2d;1)!</code>.</p>
+
+<p>The next few questions in lab will have you writing recursive
+functions.  Here are some general tips:</p>
+
+<ul>
+  <li>Paradoxically, to write a recursive function, you must assume that the function
+  is fully functional before you finish writing it; this is called the
+  <em>recursive leap of faith</em>.</li>
+  <li>Consider how you can solve the current problem using the solution to
+  a simpler version of the problem. The amount of work done in a recursive function
+  can be deceptively little: remember to take the leap of faith and <em>trust the recursion</em>
+  to solve the slightly smaller problem without worrying about how.</li>
+  <li>Think about what the answer would be in the simplest possible
+  case(s). These will be your base cases - the stopping points for your
+  recursive calls. Make sure to consider the possibility that you're
+  missing base cases (this is a common way recursive solutions fail).</li>
+  <li>It may help to write the iterative version first.</li>
+</ul>
+
+<!-- <table class='table table-bordered'>
+
+<pre><code>&lt;tr&gt;
+    &lt;th&gt;Function Type:&lt;/th&gt;
+    &lt;th&gt;Recusive&lt;/th&gt;
+    &lt;th&gt;Iterative&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Function&lt;/td&gt;
+    &lt;td&gt;&lt;pre&gt; def factorial(n):
+    if n == 0:
+        return 1
+    return n * factorial(n &#x2d; 1)&lt;pre&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;pre&gt; def factorial(n):
+    total = 1
+    while n &gt; 0:
+        total *= n
+        n &#x2d;= 1
+    return total
+    &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Ends calculations&lt;/td&gt;
+    &lt;td&gt;When it hits the base case&lt;/td&gt;
+    &lt;td&gt;When n !&gt; 0, it will end.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+    &lt;td&gt;Means of traversal&lt;/td&gt;
+    &lt;td&gt;&lt;code&gt;factorial(&lt;strong&gt;n &#x2d; 1&lt;/strong&gt;&lt;/code&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;code&gt;&lt;strong&gt;n &#x2d;= 1&lt;/strong&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;/tr&gt;</code></pre>
+
+</table> -->
+</div>
+<br>
+
+        <button id='toggle-2' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        List Introduction<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-2">
+
+<h2 id="lists">Lists</h2>
+
+<p>Lists are Python data structures that can store multiple values. Each value
+can be any type and can even be another list! A list is written as a comma
+separated list of expressions within square brackets:</p>
+
+<pre><code>&gt;&gt;&gt; list_of_nums = [1, 2, 3, 4]
+&gt;&gt;&gt; list_of_bools = [True, True, False, False]
+&gt;&gt;&gt; nested_lists = [1, [2, 3], [4, [5]]]</code></pre>
+
+<p>Each element in a list is assigned an index. Lists are <em>zero-indexed</em>, meaning
+their indices start at <code>0</code> and increase in sequential order. To retrieve an element
+from a list, use list indexing:</p>
+
+<pre><code>&gt;&gt;&gt; lst = [6, 5, 4, 3, 2, 1]
+&gt;&gt;&gt; lst[0]
+6
+&gt;&gt;&gt; lst[3]
+3</code></pre>
+
+<p>Often times we need to know how long a list is when we're working with it. To find
+the length of a list, call the function <code>len</code> on it:</p>
+
+<pre><code>&gt;&gt;&gt; len([])
+0
+&gt;&gt;&gt; len([2, 4, 6, 8, 10])
+5</code></pre>
+
+<blockquote><p><strong>Tip:</strong> Recall that empty lists, <code>[]</code>, are false-y values. Therefore, you
+can use an if statement like the following if you only want to do operations on
+non-empty lists:</p>
+
+<pre><code>if lst:
+    # Do stuff with the elements of list</code></pre>
+
+<p>This is equivalent to:</p>
+
+<pre><code>if len(lst) &gt; 0:
+    # Do stuff</code></pre></blockquote>
+
+<p>You can also create a copy of some portion of the list using list slicing. To slice
+a list, use this syntax: <code>lst[&lt;start index&gt;:&lt;end index&gt;]</code>. This expression
+evaluates to a new list containing the elements of <code>lst</code> starting at and including
+the element at <code>&lt;start index&gt;</code> up to but not including the element at <code>end index</code>.</p>
+
+<pre><code>&gt;&gt;&gt; lst = [True, False, True, True, False]
+&gt;&gt;&gt; lst[1:4]
+[False, True, True]
+&gt;&gt;&gt; lst[:3]  # Start index defaults to 0
+[True, False, True]
+&gt;&gt;&gt; lst[3:]  # End index defaults to len(lst)
+[True, False]
+&gt;&gt;&gt; lst[:]  # Creates a copy of the whole list
+[True, False, True, True, False]</code></pre>
+
+</div>
+
+<br>
+
+        <button id='toggle-3' class='btn btn-outline btn-lg alwaystoggle toggle'>
+        List Comprehensions<noscript> (enable JavaScript)</noscript>
+        </button>
+        <div class="solution toggle-3">
+
+<h2 id="list-comprehensions">List Comprehensions</h2>
+
+<p>List comprehensions are a compact and powerful way of creating new lists
+out of sequences. The general syntax for a list comprehension is the following:</p>
+
+<pre><code>[&lt;expression&gt; for &lt;element&gt; in &lt;sequence&gt; if &lt;conditional&gt;]</code></pre>
+
+<p>The syntax is designed to read like English: <em>"Compute the expression for each
+element in the sequence if the conditional is true for that element."</em></p>
+
+<p>Let's see it in action:</p>
+
+<pre><code>&gt;&gt;&gt; [i**2 for i in [1, 2, 3, 4] if i % 2 == 0]
+[4, 16]</code></pre>
+
+<p>Here, for each element <code>i</code> in <code>[1, 2, 3, 4]</code> that satisfies <code>i % 2 == 0</code>, we
+evaluate the expression <code>i**2</code> and insert the resulting values into a new list.
+In other words, this list comprehension will create a new list that contains
+the square of each of the even elements of the original list.</p>
+
+<p>If we were to write this using a for statement, it would look like this:</p>
+
+<pre><code>&gt;&gt;&gt; lst = []
+&gt;&gt;&gt; for i in [1, 2, 3, 4]:
+...     if i % 2 == 0:
+...         lst = lst + [i**2]
+&gt;&gt;&gt; lst
+[4, 16]</code></pre>
+
+<blockquote><p><strong>Note:</strong> The <code>if</code> clause in a list comprehension is optional.
+For example, you can just say:</p>
+
+<pre><code>&gt;&gt;&gt; [i**2 for i in [1, 2, 3, 4]]
+[1, 4, 9, 16]</code></pre>
+
+</div></blockquote>
+
+
+<h1 id="required-questions">Required Questions</h1>
+
+
+
+<h2 id="recursion">Recursion</h2>
+
+
+<h3 class="question" id="q1">Q1: Skip Add</h3>
+
+<p>Write a function <code>skip_add</code> that takes a single argument <code>n</code> and computes the
+sum of every other integer between <code>0</code> and <code>n</code>. Assume <code>n</code> is non-negative.</p>
+
+
+
+<pre><code>this_file = __file__
+
+def skip_add(n):
+    &quot;&quot;&quot; Takes a number n and returns n + n&#x2d;2 + n&#x2d;4 + n&#x2d;6 + ... + 0.
+
+    &gt;&gt;&gt; skip_add(5)  # 5 + 3 + 1 + 0
+    9
+    &gt;&gt;&gt; skip_add(10) # 10 + 8 + 6 + 4 + 2 + 0
+    30
+    &gt;&gt;&gt; # Do not use while/for loops!
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; check(this_file, &#x27;skip_add&#x27;,
+    ...       [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+<div class="alt solution-1">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-1">&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x20;&#x3c;&#x3d;&#x20;&#x30;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x30;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x6e;&#x20;&#x2b;&#x20;&#x73;&#x6b;&#x69;&#x70;&#x5f;&#x61;&#x64;&#x64;&#x28;&#x6e;&#x20;&#x2d;&#x20;&#x32;&#x29;</div></code></pre>
+
+
+        <button id='solution-1' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q skip_add</code></pre>
+
+<h3 class="question" id="q2">Q2: Summation</h3>
+
+<p>Now, write a recursive implementation of <code>summation</code>, which takes a positive
+integer <code>n</code> and a function <code>term</code>. It applies <code>term</code> to every number from <code>1</code>
+to <code>n</code> including <code>n</code> and returns the sum of the results.</p>
+
+
+
+<pre><code>def summation(n, term):
+
+    &quot;&quot;&quot;Return the sum of the first n terms in the sequence defined by term.
+    Implement using recursion!
+
+    &gt;&gt;&gt; summation(5, lambda x: x * x * x) # 1^3 + 2^3 + 3^3 + 4^3 + 5^3
+    225
+    &gt;&gt;&gt; summation(9, lambda x: x + 1) # 2 + 3 + 4 + 5 + 6 + 7 + 8 + 9 + 10
+    54
+    &gt;&gt;&gt; summation(5, lambda x: 2**x) # 2^1 + 2^2 + 2^3 + 2^4 + 2^5
+    62
+    &gt;&gt;&gt; # Do not use while/for loops!
+    &gt;&gt;&gt; from construct_check import check
+    &gt;&gt;&gt; # ban iteration
+    &gt;&gt;&gt; check(this_file, &#x27;summation&#x27;,
+    ...       [&#x27;While&#x27;, &#x27;For&#x27;])
+    True
+    &quot;&quot;&quot;
+    assert n &gt;= 1
+<div class="alt solution-2">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-2">&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x20;&#x3d;&#x3d;&#x20;&#x31;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x65;&#x72;&#x6d;&#x28;&#x6e;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x73;&#x65;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x65;&#x72;&#x6d;&#x28;&#x6e;&#x29;&#x20;&#x2b;&#x20;&#x73;&#x75;&#x6d;&#x6d;&#x61;&#x74;&#x69;&#x6f;&#x6e;&#x28;&#x6e;&#x20;&#x2d;&#x20;&#x31;&#x2c;&#x20;&#x74;&#x65;&#x72;&#x6d;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x23;&#x20;&#x42;&#x61;&#x73;&#x65;&#x20;&#x63;&#x61;&#x73;&#x65;&#x3a;&#x20;&#x6f;&#x6e;&#x6c;&#x79;&#x20;&#x6f;&#x6e;&#x65;&#x20;&#x69;&#x74;&#x65;&#x6d;&#x20;&#x74;&#x6f;&#x20;&#x73;&#x75;&#x6d;&#x2c;&#x20;&#x73;&#x6f;&#x20;&#x77;&#x65;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x68;&#x61;&#x74;&#x20;&#x69;&#x74;&#x65;&#x6d;&#x2e;&#xa;&#x20;&#x20;&#x20;&#x20;&#x23;&#x20;&#x52;&#x65;&#x63;&#x75;&#x72;&#x73;&#x69;&#x76;&#x65;&#x20;&#x63;&#x61;&#x6c;&#x6c;&#x3a;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x73;&#x20;&#x74;&#x68;&#x65;&#x20;&#x72;&#x65;&#x73;&#x75;&#x6c;&#x74;&#x20;&#x6f;&#x66;&#x20;&#x73;&#x75;&#x6d;&#x6d;&#x69;&#x6e;&#x67;&#x20;&#x74;&#x68;&#x65;&#x20;&#x6e;&#x75;&#x6d;&#x62;&#x65;&#x72;&#x73;&#x20;&#x75;&#x70;&#x20;&#x74;&#x6f;&#x20;&#x6e;&#x2d;&#x31;&#x20;&#x75;&#x73;&#x69;&#x6e;&#x67;&#xa;&#x20;&#x20;&#x20;&#x20;&#x23;&#x20;&#x74;&#x65;&#x72;&#x6d;&#x2e;&#x20;&#x41;&#x6c;&#x6c;&#x20;&#x74;&#x68;&#x61;&#x74;&#x27;&#x73;&#x20;&#x6d;&#x69;&#x73;&#x73;&#x69;&#x6e;&#x67;&#x20;&#x69;&#x73;&#x20;&#x74;&#x65;&#x72;&#x6d;&#x20;&#x61;&#x70;&#x70;&#x6c;&#x69;&#x65;&#x64;&#x20;&#x74;&#x6f;&#x20;&#x74;&#x68;&#x65;&#x20;&#x63;&#x75;&#x72;&#x72;&#x65;&#x6e;&#x74;&#x20;&#x76;&#x61;&#x6c;&#x75;&#x65;&#x20;&#x6e;&#x2e;</div></code></pre>
+
+
+        <button id='solution-2' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q summation</code></pre>
+
+<h3 class="question" id="q3">Q3: GCD</h3>
+
+<p>The greatest common divisor of two positive integers <code>a</code> and <code>b</code> is the
+largest integer which evenly divides both numbers (with no remainder).
+Euclid, a Greek mathematician in 300 B.C., realized that the greatest
+common divisor of <code>a</code> and <code>b</code> is one of the following:</p>
+
+<ul>
+  <li>the smaller value if it evenly divides the larger value, or</li>
+  <li>the greatest common divisor of the smaller value and the remainder of
+  the larger value divided by the smaller value</li>
+</ul>
+
+<p>In other words, if <code>a</code> is greater than <code>b</code> and <code>a</code> is not divisible by
+<code>b</code>, then</p>
+
+<pre><code>gcd(a, b) = gcd(b, a % b)</code></pre>
+
+<p>Write the <code>gcd</code> function recursively using Euclid's algorithm.</p>
+
+
+
+<pre><code>def gcd(a, b):
+    &quot;&quot;&quot;Returns the greatest common divisor of a and b.
+    Should be implemented using recursion.
+
+    &gt;&gt;&gt; gcd(34, 19)
+    1
+    &gt;&gt;&gt; gcd(39, 91)
+    13
+    &gt;&gt;&gt; gcd(20, 30)
+    10
+    &gt;&gt;&gt; gcd(40, 40)
+    40
+    &quot;&quot;&quot;
+<div class="alt solution-3">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-3">&#x20;&#x20;&#x20;&#x20;&#x61;&#x2c;&#x20;&#x62;&#x20;&#x3d;&#x20;&#x6d;&#x61;&#x78;&#x28;&#x61;&#x2c;&#x20;&#x62;&#x29;&#x2c;&#x20;&#x6d;&#x69;&#x6e;&#x28;&#x61;&#x2c;&#x20;&#x62;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x61;&#x20;&#x25;&#x20;&#x62;&#x20;&#x3d;&#x3d;&#x20;&#x30;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x62;&#xa;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x73;&#x65;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x67;&#x63;&#x64;&#x28;&#x62;&#x2c;&#x20;&#x61;&#x20;&#x25;&#x20;&#x62;&#x29;&#xa;&#xa;&#x23;&#x20;&#x49;&#x74;&#x65;&#x72;&#x61;&#x74;&#x69;&#x76;&#x65;&#x20;&#x73;&#x6f;&#x6c;&#x75;&#x74;&#x69;&#x6f;&#x6e;&#x2c;&#x20;&#x69;&#x66;&#x20;&#x79;&#x6f;&#x75;&#x27;&#x72;&#x65;&#x20;&#x63;&#x75;&#x72;&#x69;&#x6f;&#x75;&#x73;&#xa;&#x64;&#x65;&#x66;&#x20;&#x67;&#x63;&#x64;&#x5f;&#x69;&#x74;&#x65;&#x72;&#x28;&#x61;&#x2c;&#x20;&#x62;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x22;&#x22;&#x22;&#x52;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x73;&#x20;&#x74;&#x68;&#x65;&#x20;&#x67;&#x72;&#x65;&#x61;&#x74;&#x65;&#x73;&#x74;&#x20;&#x63;&#x6f;&#x6d;&#x6d;&#x6f;&#x6e;&#x20;&#x64;&#x69;&#x76;&#x69;&#x73;&#x6f;&#x72;&#x20;&#x6f;&#x66;&#x20;&#x61;&#x20;&#x61;&#x6e;&#x64;&#x20;&#x62;&#x2c;&#x20;&#x75;&#x73;&#x69;&#x6e;&#x67;&#x20;&#x69;&#x74;&#x65;&#x72;&#x61;&#x74;&#x69;&#x6f;&#x6e;&#x2e;&#xa;&#xa;&#x20;&#x20;&#x20;&#x20;&#x3e;&#x3e;&#x3e;&#x20;&#x67;&#x63;&#x64;&#x5f;&#x69;&#x74;&#x65;&#x72;&#x28;&#x33;&#x34;&#x2c;&#x20;&#x31;&#x39;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x31;&#xa;&#x20;&#x20;&#x20;&#x20;&#x3e;&#x3e;&#x3e;&#x20;&#x67;&#x63;&#x64;&#x5f;&#x69;&#x74;&#x65;&#x72;&#x28;&#x33;&#x39;&#x2c;&#x20;&#x39;&#x31;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x31;&#x33;&#xa;&#x20;&#x20;&#x20;&#x20;&#x3e;&#x3e;&#x3e;&#x20;&#x67;&#x63;&#x64;&#x5f;&#x69;&#x74;&#x65;&#x72;&#x28;&#x32;&#x30;&#x2c;&#x20;&#x33;&#x30;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x31;&#x30;&#xa;&#x20;&#x20;&#x20;&#x20;&#x3e;&#x3e;&#x3e;&#x20;&#x67;&#x63;&#x64;&#x5f;&#x69;&#x74;&#x65;&#x72;&#x28;&#x34;&#x30;&#x2c;&#x20;&#x34;&#x30;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x34;&#x30;&#xa;&#x20;&#x20;&#x20;&#x20;&#x22;&#x22;&#x22;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x61;&#x20;&#x3c;&#x20;&#x62;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x67;&#x63;&#x64;&#x5f;&#x69;&#x74;&#x65;&#x72;&#x28;&#x62;&#x2c;&#x20;&#x61;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x77;&#x68;&#x69;&#x6c;&#x65;&#x20;&#x61;&#x20;&#x3e;&#x20;&#x62;&#x20;&#x61;&#x6e;&#x64;&#x20;&#x6e;&#x6f;&#x74;&#x20;&#x61;&#x20;&#x25;&#x20;&#x62;&#x20;&#x3d;&#x3d;&#x20;&#x30;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x61;&#x2c;&#x20;&#x62;&#x20;&#x3d;&#x20;&#x62;&#x2c;&#x20;&#x61;&#x20;&#x25;&#x20;&#x62;&#xa;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x62;&#xa;&#xa;&#x20;&#x20;&#x20;&#x20;&#x23;&#x20;&#x56;&#x69;&#x64;&#x65;&#x6f;&#x20;&#x57;&#x61;&#x6c;&#x6b;&#x74;&#x68;&#x72;&#x6f;&#x75;&#x67;&#x68;&#x3a;&#x20;&#x68;&#x74;&#x74;&#x70;&#x73;&#x3a;&#x2f;&#x2f;&#x79;&#x6f;&#x75;&#x74;&#x75;&#x2e;&#x62;&#x65;&#x2f;&#x79;&#x42;&#x68;&#x68;&#x66;&#x42;&#x4f;&#x62;&#x4e;&#x78;&#x73;</div></code></pre>
+
+
+        <button id='solution-3' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q gcd</code></pre>
+
+
+<h2 id="lists-practice">Lists Practice</h2>
+
+
+<h3 class="question" id="q4">Q4: List Indexing</h3>
+
+<blockquote><p>Use Ok to test your knowledge with the following "List Indexing"
+questions:</p>
+
+<pre><code>python3 ok &#x2d;q list&#x2d;indexing &#x2d;u</code></pre></blockquote>
+
+<p>For each of the following lists, what is the list indexing expression that evaluates to
+<code>7</code>? For example, if <code>x = [7]</code>, then the answer would be <code>x[0]</code>. You can use the
+interpreter or Python Tutor to experiment with your answers.</p>
+
+<pre><code>&gt;&gt;&gt; x = [1, 3, [5, 7], 9]
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x78;&#x5b;&#x32;&#x5d;&#x5b;&#x31;&#x5d;</div>
+&gt;&gt;&gt; x = [[3, [5, 7], 9]]
+<div class="alt prompt-1">______</div><div class="solution prompt-1">&#x78;&#x5b;&#x30;&#x5d;&#x5b;&#x31;&#x5d;&#x5b;&#x31;&#x5d;</div></code></pre>
+        <button id='prompt-1' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>What would Python display? If you get stuck, try it out in the Python interpreter!</p>
+
+<pre><code>&gt;&gt;&gt; lst = [3, 2, 7, [84, 83, 82]]
+&gt;&gt;&gt; lst[4]
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x45;&#x72;&#x72;&#x6f;&#x72;</div>
+&gt;&gt;&gt; lst[3][0]
+<div class="alt prompt-2">______</div><div class="solution prompt-2">&#x38;&#x34;</div></code></pre>
+        <button id='prompt-2' class='btn btn-outline btn-lg solutiontoggle prompt'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<h3 class="question" id="q5">Q5: Couple</h3>
+
+<p>Implement the function <code>couple</code>, which takes in two lists and
+returns a list that contains lists with i-th elements of two sequences
+coupled together. You can assume the lengths of two sequences are the same.
+Try using a list comprehension.</p>
+
+<blockquote><p><em>Hint</em>: You may find the built in <a href="https://www.w3schools.com/python/ref_func_range.asp">range</a> function helpful.</p></blockquote>
+
+
+
+<pre><code>def couple(s1, s2):
+    &quot;&quot;&quot;Return a list that contains lists with i&#x2d;th elements of two sequences
+    coupled together.
+    &gt;&gt;&gt; s1 = [1, 2, 3]
+    &gt;&gt;&gt; s2 = [4, 5, 6]
+    &gt;&gt;&gt; couple(s1, s2)
+    [[1, 4], [2, 5], [3, 6]]
+    &gt;&gt;&gt; s3 = [&#x27;c&#x27;, 6]
+    &gt;&gt;&gt; s4 = [&#x27;s&#x27;, &#x27;1&#x27;]
+    &gt;&gt;&gt; couple(s3, s4)
+    [[&#x27;c&#x27;, &#x27;s&#x27;], [6, &#x27;1&#x27;]]
+    &quot;&quot;&quot;
+    assert len(s1) == len(s2)
+<div class="alt solution-4">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-4">&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x5b;&#x5b;&#x73;&#x31;&#x5b;&#x69;&#x5d;&#x2c;&#x20;&#x73;&#x32;&#x5b;&#x69;&#x5d;&#x5d;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x69;&#x20;&#x69;&#x6e;&#x20;&#x72;&#x61;&#x6e;&#x67;&#x65;&#x28;&#x30;&#x2c;&#x20;&#x6c;&#x65;&#x6e;&#x28;&#x73;&#x31;&#x29;&#x29;&#x5d;</div></code></pre>
+
+
+        <button id='solution-4' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q couple</code></pre>
+
+<h3 class="question" id="q6">Q6: Enumerate</h3>
+
+<p>Implement <code>enumerate</code>, which pairs the elements of a sequence with their indices,
+offset by a starting value. <code>enumerate</code> takes a sequence <code>s</code> and a starting value
+<code>start</code>. It returns a list of pairs, in whichthe i-th element is <code>i + start</code>
+paired with the i-th element of <code>s</code>. For example:</p>
+
+<pre><code>&gt;&gt;&gt; enumerate([&#x27;maps&#x27;, 21, 47], start=1)
+&gt;&gt;&gt; [[1, &#x27;maps&#x27;], [2, 21], [3, 47]]</code></pre>
+
+<blockquote><p><em>Hint</em>: Consider using <code>couple</code>!</p>
+
+<p><em>Hint 2</em>: You may find the built in <a href="https://www.w3schools.com/python/ref_func_range.asp">range</a> function helpful.</p></blockquote>
+
+
+
+<pre><code>def enumerate(s, start=0):
+    &quot;&quot;&quot;Returns a list of lists, where the i&#x2d;th list contains i+start and
+    the i&#x2d;th element of s.
+    &gt;&gt;&gt; enumerate([6, 1, &#x27;a&#x27;])
+    [[0, 6], [1, 1], [2, &#x27;a&#x27;]]
+    &gt;&gt;&gt; enumerate(&#x27;five&#x27;, 5)
+    [[5, &#x27;f&#x27;], [6, &#x27;i&#x27;], [7, &#x27;v&#x27;], [8, &#x27;e&#x27;]]
+    &quot;&quot;&quot;
+<div class="alt solution-5">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-5">&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x63;&#x6f;&#x75;&#x70;&#x6c;&#x65;&#x28;&#x72;&#x61;&#x6e;&#x67;&#x65;&#x28;&#x73;&#x74;&#x61;&#x72;&#x74;&#x2c;&#x20;&#x73;&#x74;&#x61;&#x72;&#x74;&#x2b;&#x6c;&#x65;&#x6e;&#x28;&#x73;&#x29;&#x29;&#x2c;&#x20;&#x73;&#x29;</div></code></pre>
+
+
+        <button id='solution-5' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q enumerate</code></pre>
+
+
+<h1 id="optional-questions">Optional Questions</h1>
+
+
+<h3 class="question" id="q7">Q7: Ten-pairs</h3>
+
+<p>Write a function that takes a positive integer <code>n</code> and returns the
+number of ten-pairs it contains.  A ten-pair is a pair of digits
+within <code>n</code> that sums to 10.   <em>Do not use any assignment statements.</em></p>
+
+<p>The number 7,823,952 has 3 ten-pairs. The first and fourth digits sum
+to 7+3=10, the second and third digits sum to 8+2=10, and the second
+and last digit sum to 8+2=10. Note that a digit can be part of more than
+one ten-pair.</p>
+
+<blockquote><p><em>Hint</em>: Use a helper function to calculate how many times a digit
+appears in n.</p></blockquote>
+
+
+
+<pre><code>def ten_pairs(n):
+    &quot;&quot;&quot;Return the number of ten&#x2d;pairs within positive integer n.
+
+    &gt;&gt;&gt; ten_pairs(7823952)
+    3
+    &gt;&gt;&gt; ten_pairs(55055)
+    6
+    &gt;&gt;&gt; ten_pairs(9641469)
+    6
+    &quot;&quot;&quot;
+<div class="alt solution-6">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-6">&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x20;&#x3c;&#x20;&#x31;&#x30;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x30;&#xa;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x73;&#x65;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x74;&#x65;&#x6e;&#x5f;&#x70;&#x61;&#x69;&#x72;&#x73;&#x28;&#x6e;&#x2f;&#x2f;&#x31;&#x30;&#x29;&#x20;&#x2b;&#x20;&#x63;&#x6f;&#x75;&#x6e;&#x74;&#x5f;&#x64;&#x69;&#x67;&#x69;&#x74;&#x28;&#x6e;&#x2f;&#x2f;&#x31;&#x30;&#x2c;&#x20;&#x31;&#x30;&#x20;&#x2d;&#x20;&#x6e;&#x25;&#x31;&#x30;&#x29;&#xa;&#xa;&#x64;&#x65;&#x66;&#x20;&#x63;&#x6f;&#x75;&#x6e;&#x74;&#x5f;&#x64;&#x69;&#x67;&#x69;&#x74;&#x28;&#x6e;&#x2c;&#x20;&#x64;&#x69;&#x67;&#x69;&#x74;&#x29;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x22;&#x22;&#x22;&#x52;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x68;&#x6f;&#x77;&#x20;&#x6d;&#x61;&#x6e;&#x79;&#x20;&#x74;&#x69;&#x6d;&#x65;&#x73;&#x20;&#x64;&#x69;&#x67;&#x69;&#x74;&#x20;&#x61;&#x70;&#x70;&#x65;&#x61;&#x72;&#x73;&#x20;&#x69;&#x6e;&#x20;&#x6e;&#x2e;&#xa;&#xa;&#x20;&#x20;&#x20;&#x20;&#x3e;&#x3e;&#x3e;&#x20;&#x63;&#x6f;&#x75;&#x6e;&#x74;&#x5f;&#x64;&#x69;&#x67;&#x69;&#x74;&#x28;&#x35;&#x35;&#x30;&#x35;&#x35;&#x2c;&#x20;&#x35;&#x29;&#xa;&#x20;&#x20;&#x20;&#x20;&#x34;&#xa;&#x20;&#x20;&#x20;&#x20;&#x22;&#x22;&#x22;&#xa;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x20;&#x3d;&#x3d;&#x20;&#x30;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x30;&#xa;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x73;&#x65;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x25;&#x31;&#x30;&#x20;&#x3d;&#x3d;&#x20;&#x64;&#x69;&#x67;&#x69;&#x74;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x63;&#x6f;&#x75;&#x6e;&#x74;&#x5f;&#x64;&#x69;&#x67;&#x69;&#x74;&#x28;&#x6e;&#x2f;&#x2f;&#x31;&#x30;&#x2c;&#x20;&#x64;&#x69;&#x67;&#x69;&#x74;&#x29;&#x20;&#x2b;&#x20;&#x31;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x65;&#x6c;&#x73;&#x65;&#x3a;&#xa;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x63;&#x6f;&#x75;&#x6e;&#x74;&#x5f;&#x64;&#x69;&#x67;&#x69;&#x74;&#x28;&#x6e;&#x2f;&#x2f;&#x31;&#x30;&#x2c;&#x20;&#x64;&#x69;&#x67;&#x69;&#x74;&#x29;</div></code></pre>
+
+
+        <button id='solution-6' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q ten_pairs</code></pre>
+
+<h3 class="question" id="q8">Q8: Squares only</h3>
+
+<p>Implement the function <code>squares</code>, which takes in a list of positive integers.
+It returns a list that contains the square roots of the elements of the original
+list that are perfect squares. Try using a list comprehension.</p>
+
+<blockquote><p>You may find the <code>round</code> function useful.</p>
+
+<pre><code>&gt;&gt;&gt; round(10.5)
+10
+&gt;&gt;&gt; round(10.51)
+11</code></pre></blockquote>
+
+
+
+<pre><code>def squares(s):
+    &quot;&quot;&quot;Returns a new list containing square roots of the elements of the
+    original list that are perfect squares.
+
+    &gt;&gt;&gt; seq = [8, 49, 8, 9, 2, 1, 100, 102]
+    &gt;&gt;&gt; squares(seq)
+    [7, 3, 1, 10]
+    &gt;&gt;&gt; seq = [500, 30]
+    &gt;&gt;&gt; squares(seq)
+    []
+    &quot;&quot;&quot;
+<div class="alt solution-7">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-7">&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x5b;&#x72;&#x6f;&#x75;&#x6e;&#x64;&#x28;&#x6e;&#x20;&#x2a;&#x2a;&#x20;&#x30;&#x2e;&#x35;&#x29;&#x20;&#x66;&#x6f;&#x72;&#x20;&#x6e;&#x20;&#x69;&#x6e;&#x20;&#x73;&#x20;&#x69;&#x66;&#x20;&#x6e;&#x20;&#x3d;&#x3d;&#x20;&#x72;&#x6f;&#x75;&#x6e;&#x64;&#x28;&#x6e;&#x20;&#x2a;&#x2a;&#x20;&#x30;&#x2e;&#x35;&#x29;&#x20;&#x2a;&#x2a;&#x20;&#x32;&#x5d;</div></code></pre>
+
+<div class="solution solution-7">
+
+<p>It might be helpful to construct a skeleton list comprehension to begin
+with:</p>
+
+<pre><code>[sqrt(x) for x in s if is_perfect_square(x)]</code></pre>
+
+<p>This is great, but it requires that we have an <code>is_perfect_square</code>
+function. How might we check if something is a perfect square?</p>
+
+<ul>
+  <li>If the square root of a number is a whole number, then it is a perfect
+  square. For example, <code>sqrt(61) = 7.81024...</code> (not a perfect square) and
+  <code>sqrt(49) = 7</code> (perfect square).</li>
+  <li><p>Once we obtain the square root of the number, we just need to check if
+  something is a whole number. The <code>is_perfect_square</code> function might
+  look like:</p>
+
+<pre><code>def is_perfect_square(x):
+    return is_whole(sqrt(x))</code></pre></li>
+  <li>One last piece of the puzzle: to check if a number is whole, we just
+  need to see if it has a decimal or not. The way we've chosen to do it in
+  the solution is to compare the original number to the round version
+  (thus removing all decimals), but a technique employing floor division
+  (<code>//</code>) or something else entirely could work too.</li>
+</ul>
+
+<p>We've written all these helper functions to solve this problem, but they
+are actually all very short. Therefore, we can just copy the body of each
+into the original list comprehension, arriving at the solution we finally
+present.</p>
+
+<p>Video walkthrough: <a href="https://youtu.be/YwLFB9paET0">https://youtu.be/YwLFB9paET0</a></p>
+
+</div>
+
+        <button id='solution-7' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q squares</code></pre>
+
+<h3 class="question" id="q9">Q9: Key of Min Value</h3>
+
+<p>The built-in <code>min</code> function takes a collection of elements (such as a list or a
+dictionary) and returns the collection's smallest element. The <code>min</code> function
+also takes in an optional keyword argument called <code>key</code>, which must be a
+one-argument function. The <code>key</code> function is called on each element of the
+collection, and the return values are used for comparison. For example:</p>
+
+<pre><code>&gt;&gt;&gt; min([&#x2d;1, 0, 1])                    # no key argument; return smallest input
+&#x2d;1
+&gt;&gt;&gt; min([&#x2d;1, 0, 1], key=lambda x: x*x) # return input with the smallest square
+0</code></pre>
+
+<p>Implement <code>key_of_min_value</code>, which takes in a dictionary <code>d</code> and returns the
+key that corresponds to the minimum value in <code>d</code>. This behavior differs from
+just calling <code>min</code> on a dictionary, which would return the smallest key. <em>Make
+sure your solution is only one line and uses the <code>min</code> function.</em></p>
+
+
+
+<pre><code>def key_of_min_value(d):
+    &quot;&quot;&quot;Returns the key in a dict d that corresponds to the minimum value of d.
+    &gt;&gt;&gt; letters = {&#x27;a&#x27;: 6, &#x27;b&#x27;: 5, &#x27;c&#x27;: 4, &#x27;d&#x27;: 5}
+    &gt;&gt;&gt; min(letters)
+    &#x27;a&#x27;
+    &gt;&gt;&gt; key_of_min_value(letters)
+    &#x27;c&#x27;
+    &quot;&quot;&quot;
+<div class="alt solution-8">    "*** YOUR CODE HERE ***"
+</div><div class="solution solution-8">&#x20;&#x20;&#x20;&#x20;&#x72;&#x65;&#x74;&#x75;&#x72;&#x6e;&#x20;&#x6d;&#x69;&#x6e;&#x28;&#x64;&#x2c;&#x20;&#x6b;&#x65;&#x79;&#x3d;&#x6c;&#x61;&#x6d;&#x62;&#x64;&#x61;&#x20;&#x78;&#x3a;&#x20;&#x64;&#x5b;&#x78;&#x5d;&#x29;</div></code></pre>
+
+
+        <button id='solution-8' class='btn btn-outline btn-lg solutiontoggle solution'>
+        Toggle Solution<noscript> (enable JavaScript)</noscript>
+        </button>
+        
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q key_of_min_value</code></pre>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="index.html#topics">Topics</a></li>
+  <ul>
+    <li><a href="index.html#recursion">Recursion</a></li>
+    <li><a href="index.html#lists">Lists</a></li>
+    <li><a href="index.html#list-comprehensions">List Comprehensions</a></li>
+  </ul>
+  <li><a href="index.html#required-questions">Required Questions</a></li>
+  <ul>
+    <li><a href="index.html#recursion">Recursion</a></li>
+    <ul>
+      <li><a href="index.html#q1">Q1: Skip Add</a></li>
+      <li><a href="index.html#q2">Q2: Summation</a></li>
+      <li><a href="index.html#q3">Q3: GCD</a></li>
+    </ul>
+    <li><a href="index.html#lists-practice">Lists Practice</a></li>
+    <ul>
+      <li><a href="index.html#q4">Q4: List Indexing</a></li>
+      <li><a href="index.html#q5">Q5: Couple</a></li>
+      <li><a href="index.html#q6">Q6: Enumerate</a></li>
+    </ul>
+  </ul>
+  <li><a href="index.html#optional-questions">Optional Questions</a></li>
+  <ul>
+    <li><a href="index.html#q7">Q7: Ten-pairs</a></li>
+    <li><a href="index.html#q8">Q8: Squares only</a></li>
+    <li><a href="index.html#q9">Q9: Key of Min Value</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about.html#assignments">Assignments</a></li>
+            <li><a href="../../articles/about.html#exams">Exams</a></li>
+            <li><a href="../../articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    console.log(target);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      // window.scrollTo(0, 0);
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    event.preventDefault();
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    } else {
+      window.open(this.href);
+    }
+  });
+</script>
+
+
+<script type="text/javascript" src="../../assets/js/config.js"></script>
+<script>
+$(function() {
+    var staging_domains = ['staging.cs61a.org', 'solutions.cs61a.org', 'localhost', '127.0.0.1'];
+    var host = window.location.hostname;
+    var staging = staging_domains.indexOf(host) != -1;
+    staging = staging || (host.endsWith('.pullrequests.cs61a.org') && !host.startsWith('last-build.'));
+
+    var after_due_date = new Date(1569740399999) < new Date();
+    var before_end_date = new Date() <= new Date(endDate);
+    var release_solutions = (staging || after_due_date) && before_end_date;
+
+    if (release_solutions) {
+      $('.solutiontoggle').css('display', 'inline-block');
+      $('.solutiontoggle').click(function() {
+        var solution_id = $(this).attr('id');
+        $('div.' + solution_id).slideToggle(600);
+      });
+    }
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+});
+</script>
+
+
+  </body>
+</html>

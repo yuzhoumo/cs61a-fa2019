@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS" />
+    <meta name="author" content ="John DeNero" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link rel="stylesheet" type="text/css" href="../../assets/css/hw.css">
+
+
+    <title>
+Homework 8 | CS 61A Fall 2019
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="index.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="../../instructor.html">Instructors</a></li>
+                <li><a href="../../TAs.html">TAs</a></li>
+                <li><a href="../../tutors.html">Tutors</a></li>
+                <li><a href="../../academic-interns.html">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li><a href="../../resources.html">Resources</a></li>
+            <li><a href="../../articles/about.html">Syllabus</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2019/cs61a" target="_blank">Piazza</a></li>
+            <li><a href="../../extra.html">Extra</a></li>
+            <!-- <li><a href="https://scheme.cs61a.org">Scheme</a></li> -->
+            <!-- <li><a href="https://sql.cs61a.org">SQL</a></li> -->
+            <li><a href="https://code.cs61a.org">Code</a></li>
+            <li><a href="http://tutor.cs61a.org">Tutor</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Homework 8: 
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="hw08.zip" class="label label-outline">hw08.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+
+<p><em>Due by 11:59pm on Thursday, November 14</em></p>
+
+
+
+
+
+<h2>Instructions</h2>
+
+
+
+<p><strong>Submission:</strong> When you are done, submit with <code>python3 ok
+  --submit</code>.  You may submit more than once before the deadline; only the
+final submission will be scored. Check that you have successfully submitted
+your code on <a href="https://okpy.org/">okpy.org</a>.  See <a
+  href="../../lab/lab00/index.html#submitting-the-assignment">Lab 0</a> for more instructions on
+submitting assignments.</p>
+
+<p><strong>Using Ok:</strong> If you have any questions about using Ok, please
+refer to <a href="../../articles/using-ok.html">this guide.</a>
+
+
+
+<p><strong>Grading:</strong> Homework is graded based on effort, not
+correctness.  However, there is no partial credit; you must show substantial
+effort on every problem to receive any points.
+<strong>This homework is out of 2 points.</strong>
+
+
+
+
+    
+<h2 id="macros">Macros</h2>
+
+
+<h3 class="question" id="q1">Q1: List Comprehensions</h3>
+
+<p>Recall that list comprehensions in Python allow us to create lists out of
+iterables:</p>
+
+<pre><code>[&lt;map&#x2d;expression&gt; for &lt;name&gt; in &lt;iterable&gt; if &lt;conditional&#x2d;expression&gt;]</code></pre>
+
+<p>Use a macro to implement list comprehensions in Scheme that can create lists
+out of lists. Specifically, we want a <code>list&#x2d;of</code> macro that can be called as
+follows:</p>
+
+<pre><code>(list&#x2d;of &lt;map&#x2d;expression&gt; for &lt;name&gt; in &lt;list&gt; if &lt;conditional&#x2d;expression&gt;)</code></pre>
+
+<p>Calling <code>list&#x2d;of</code> will return a new list constructed by doing the following for
+each element in <code>&lt;list&gt;</code>:</p>
+
+<ul>
+  <li>Bind <code>&lt;name&gt;</code> to the element.</li>
+  <li>If <code>&lt;conditional&#x2d;expression&gt;</code> evaluates to a truth-y value, evaluate
+  <code>&lt;map&#x2d;expression&gt;</code> and add it to the result list.</li>
+</ul>
+
+<p>Here are some examples:</p>
+
+<pre><code>scm&gt; (list&#x2d;of (* x x) for x in &#x27;(3 4 5) if (odd? x))
+(9 25)
+scm&gt; (list&#x2d;of &#x27;hi for x in &#x27;(1 2 3 4 5 6) if (= (modulo x 3) 0))
+(hi hi)
+scm&gt; (list&#x2d;of (car e) for e in &#x27;((10) 11 (12) 13 (14 15)) if (list? e))
+(10 12 14)</code></pre>
+
+<blockquote><p><em>Hint:</em> You may use the built-in <code>map</code> and <code>filter</code> procedures. Check out the
+<a href="../../articles/scheme-builtins.html">Scheme Built-ins</a> reference for more
+information.</p>
+
+<p>You may find it helpful to refer to the <code>for</code> loop macro introduced in
+lecture. The filter expression should be transformed using a <code>lambda</code> in a
+similar way to the map expression in the example.</p></blockquote>
+
+<solution>
+
+<pre><code>(define&#x2d;macro (list&#x2d;of map&#x2d;expr for var in lst if filter&#x2d;expr)
+  'YOUR-CODE-HERE
+)</code></pre>
+
+</solution>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q list-comp</code></pre>
+
+<p><strong>Optional (not graded):</strong> Recall also that the <code>if &lt;conditional&gt;</code> portion of
+the Python list comprehension was optional. Modify your macro so that the
+Scheme list comprehension does not require a conditional expression.</p>
+
+<p>Refer to the <a href="../../articles/scheme-spec.html#define-x2d-macro">macro form</a> in the
+Scheme Specification for an explanation of how to do optional macro parameters.</p>
+
+
+
+
+<h1 id="just-for-fun-question">Just For Fun Question</h1>
+
+
+<blockquote><p>These questions are neither required nor in scope. They are just for fun!</p></blockquote>
+
+<h3 class="question" id="q2">Q2: Quine</h3>
+
+<p>Write a one-line program that prints itself, using only the following features
+of the Python language:</p>
+
+<ul>
+  <li>Number literals</li>
+  <li>Assignment statements</li>
+  <li>String literals that can be expressed using single or double quotes</li>
+  <li>The arithmetic operators <code>+</code>, <code>&#x2d;</code>, <code>*</code>, and <code>/</code></li>
+  <li>The built-in <code>print</code> function</li>
+  <li>The built-in <code>eval</code> function, which evaluates a string as a Python expression</li>
+  <li>The built-in <code>repr</code> function, which returns an expression that evaluates to its argument</li>
+</ul>
+
+<p>You can concatenate two strings by adding them together with <code>+</code> and repeat a
+string by multipying it by an integer. Semicolons can be used to separate
+multiple statements on the same line. E.g.,</p>
+
+<pre><code>&gt;&gt;&gt; c=&#x27;c&#x27;;print(&#x27;a&#x27;);print(&#x27;b&#x27; + c * 2)
+a
+bcc</code></pre>
+
+<blockquote><p><strong>Hint</strong>: Explore the relationship between single quotes, double quotes, and the
+<code>repr</code> function applied to strings.</p></blockquote>
+
+<p>A program that prints itself is called a Quine. Place your solution in the multi-line string named <code>quine</code>.</p>
+
+<p>Use Ok to test your code:</p><pre><code class="nohighlight">python3 ok -q quine_test</code></pre>
+
+<script>
+    $('.alwaystoggle').css('display', 'inline-block');
+    $('.alwaystoggle').click(function() {
+      var solution_id = $(this).attr('id');
+      $('div.' + solution_id).slideToggle(600);
+    });
+</script>
+
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="index.html#macros">Macros</a></li>
+  <ul>
+    <li><a href="index.html#q1">Q1: List Comprehensions</a></li>
+  </ul>
+  <li><a href="index.html#just-for-fun-question">Just For Fun Question</a></li>
+  <ul>
+    <li><a href="index.html#q2">Q2: Quine</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about.html#assignments">Assignments</a></li>
+            <li><a href="../../articles/about.html#exams">Exams</a></li>
+            <li><a href="../../articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    console.log(target);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      // window.scrollTo(0, 0);
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    event.preventDefault();
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    } else {
+      window.open(this.href);
+    }
+  });
+</script>
+
+  </body>
+</html>

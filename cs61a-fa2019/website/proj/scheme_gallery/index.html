@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="description" content ="CS 61A: Structure and Interpretation of Computer Programs" />
+    <meta name="keywords" content ="CS 61A, Computer Science, CS, 61A, Programming, John DeNero, Berkeley, EECS" />
+    <meta name="author" content ="John DeNero" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../assets/js/dark-mode.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Roboto:300,400,500|Work+Sans:400,700">
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/mono-blue.css">
+    <link rel="icon" href="../../assets/images/favicon.ico">
+
+    
+
+<link href="../../assets/css/project.css" rel="stylesheet" type="text/css">
+<style>
+  img {
+    max-height:500px;
+  }
+</style>
+
+
+    <title>
+Scheme Art Gallery | CS 61A Fall 2019
+</title>
+  </head>
+
+  <body id="index" class="home">
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container noselect">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-section">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="../../index.html">
+            <img style="max-width:60px; margin-top: -20px;" class="logo" src="../../assets/images/logo.png"/>
+          </a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbar-collapse-section">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="index.html#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Staff
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li><a href="../../instructor.html">Instructors</a></li>
+                <li><a href="../../TAs.html">TAs</a></li>
+                <li><a href="../../tutors.html">Tutors</a></li>
+                <li><a href="../../academic-interns.html">Academic Interns</a></li>
+              </ul>
+            </li>
+            <li><a href="../../resources.html">Resources</a></li>
+            <li><a href="../../articles/about.html">Syllabus</a></li>
+            <li><a href="https://piazza.com/berkeley/fall2019/cs61a" target="_blank">Piazza</a></li>
+            <li><a href="../../extra.html">Extra</a></li>
+            <!-- <li><a href="https://scheme.cs61a.org">Scheme</a></li> -->
+            <!-- <li><a href="https://sql.cs61a.org">SQL</a></li> -->
+            <li><a href="https://code.cs61a.org">Code</a></li>
+            <li><a href="http://tutor.cs61a.org">Tutor</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main id="content" class="container">
+      
+<div class='row'>
+  <div class='col-md-9'>
+    <header>
+      <h1>
+        
+Scheme Art Gallery
+
+        
+        
+        <ul class="inline-block list-inline">
+          <li><a href="https://inst.eecs.berkeley.edu/~cs61a/fa19/proj/scheme_gallery/scheme_gallery.zip" class="label label-outline">scheme_gallery.zip</a></li>
+        </ul>
+        
+        
+      </h1>
+    </header>
+    
+<div class="haiku">
+  <blockquote><cite>
+The output is art,<br>
+But what about its source code?<br>
+It's just as abstract.
+
+</cite></blockquote>
+</div>
+
+    
+<p>Please vote for your favorite entry in this semester's CS 61A Scheme Art
+Contest. The winner should exemplify the principles of elegance, beauty, and
+abstraction that are prized in the Berkeley computer science curriculum. As an
+academic community, we should strive to recognize and reward merit and
+achievement (in other words, please don't just vote for your friends).</p>
+
+<p><a href="https://docs.google.com/forms/d/e/1FAIpQLSeub3LVfytTWiVA0EVk5gm5CfdXC-FHNv6euctxvrDZIhnu8w/viewform">Cast your vote by submitting this form</a>. Voting is due <strong>11:59 PM
+on Friday, December 13th</strong>.</p>
+
+
+<h1 id="featherweight-division">Featherweight Division</h1>
+
+
+
+<h2 id="spinny-insanity">Spinny Insanity</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/0141fc52/artwork.png">
+  <blockquote>Started making it<br> Had a breakdown<br> Bon appétit.</blockquote>
+  <p>Tokens: 318</p>
+</div>
+
+<a class="btn" href="entries/0141fc52/contest.scm">View Code</a>
+
+
+<h2 id="boxing-day">Boxing Day</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/0eebcad0/artwork.png">
+  <blockquote>Beepity boop beep<br>Staring at my code blankly<br>Hoping something works</blockquote>
+  <p>Tokens: 228</p>
+</div>
+
+<a class="btn" href="entries/0eebcad0/contest.scm">View Code</a>
+
+
+<h2 id="stay-warm-amp-toasty-view-source">stay warm &amp; toasty (view source)</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/275b94d6/artwork.png">
+  <blockquote>fear not, for we are<br>Enlightened by Denero<br>let us get this Bread.</blockquote>
+  <p>Tokens: 303</p>
+</div>
+
+<a class="btn" href="entries/275b94d6/contest.scm">View Code</a>
+
+
+<h2 id="hk-peace">HK Peace</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/2c99af7e/artwork.png">
+  <blockquote>Hong Kong is part of China but using violence to solve the problem is not necessary. Hope Hong Kong people and the Beijing government can deal with the problem in peace so soldiers and people do not bleed.</blockquote>
+  <p>Tokens: 252</p>
+</div>
+
+<a class="btn" href="entries/2c99af7e/contest.scm">View Code</a>
+
+
+<h2 id="sea-s-61λ">Sea-S 61λ</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/3c4d9190/artwork.png">
+  <blockquote>A vast and wide sea <br> Lambdas are all you can see <br> Oh look it's a shark</blockquote>
+  <p>Tokens: 507</p>
+</div>
+
+<a class="btn" href="entries/3c4d9190/contest.scm">View Code</a>
+
+
+<h2 id="myself-a-poet-not-a-schemer">Myself a poet, not a Schemer</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/43f68365/artwork.png">
+  <blockquote>In front of you, I am just a Function,<br>No matter how much Arguments we have, <br>I always Return my love for you. <br><br>Behind you, I am the largest Integer, <br>No matter how much you Mod ten and Floor Divi. <br>I am always positive for you. <br><br>We will go on trips, sitting in my Car, and my car's name is Cddr<br>We will travel everywhere, <br>we will see all the imaginary Cons-streams in New Zealand<br>We will see all the T.branches() in Amazon.<br>You can go down the car and ask if what's in your hand Is_leaf() . <br>If we ever get lost, please guide me with your Environment Diagram. <br><br>I ask me if I have time for a call, I would never Raise an Error<br>I will be straightforward as a Boolean <br>“Do you love me”, my answer Evals to True and True <br>“Did I gain weight?”, I say that will be seven equal equal two.  <br><br>Our love is broad, we can define some-Macros. <br>Our love story is endless, we will never write a line of SeQuL. <br><br>I am not strong, I can't always perform Higher Order Functions.<br>But like a Lambda, getting jobs done without my name mentioned. <br><br>I don't have high EQ, some Announcements you make, <br>I have to do Lists of comprehension. <br>I will try my best to understand, <br>I will make some Repr() and Str() representation. <br>I may misunderstand you, <br>as I imprudently violate your Data Abstraction. <br>If you blame me, <br>my excuses wouldn't have Recursion. <br><br>If my life were a Link list, I'd love to spend my link.rest with you.<br>If my love has an expiration date, it will the end of eternity,<br>Until every circular linked lists have reached their Link.empty.<br><br>Just a confessional poem from John to All made CS61A to its endgame. </blockquote>
+  <p>Tokens: 407</p>
+</div>
+
+<a class="btn" href="entries/43f68365/contest.scm">View Code</a>
+
+
+<h2 id="riding-the-bart-at-scheme-s-speed">Riding the BART at Scheme's Speed</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/45950160/artwork.png">
+  <blockquote>The most efficient Bay Area public transportation ever.</blockquote>
+  <p>Tokens: 465</p>
+</div>
+
+<a class="btn" href="entries/45950160/contest.scm">View Code</a>
+
+
+<h2 id="the-process-of-humility">The Process of Humility</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/4abf3f36/artwork.png">
+  <blockquote>There's no "god" or "king" <br> of a place for helping out <br> I'm just being kind</blockquote>
+  <p>Tokens: 511</p>
+</div>
+
+<a class="btn" href="entries/4abf3f36/contest.scm">View Code</a>
+
+
+<h2 id="a-flat-circle">A Flat Circle</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/648c3f5a/artwork.png">
+  <blockquote>It is infinite, <br> <br>without beginning or end. <br> <br>It's just a circle.</blockquote>
+  <p>Tokens: 27</p>
+</div>
+
+<a class="btn" href="entries/648c3f5a/contest.scm">View Code</a>
+
+
+<h2 id="pg-amp-e-bad">pg&amp;e bad</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/64c77946/artwork.png">
+  <blockquote>pg&e bad <br> cal good <br> why use many word when few word do trick</blockquote>
+  <p>Tokens: 206</p>
+</div>
+
+<a class="btn" href="entries/64c77946/contest.scm">View Code</a>
+
+
+<h2 id="leaves-within-leaves">Leaves Within Leaves</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/6b5212ab/artwork.png">
+  <blockquote>Look at these green leaves, <br> Why are they so similar? <br> Oh my, a fractal!</blockquote>
+  <p>Tokens: 423</p>
+</div>
+
+<a class="btn" href="entries/6b5212ab/contest.scm">View Code</a>
+
+
+<h2 id="lt-redacted-gt">&lt;REDACTED&gt;</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/78d91a36/artwork.png">
+  <blockquote>leaving my mark here <br> how long will this be around <br> maybe forever</blockquote>
+  <p>Tokens: 77</p>
+</div>
+
+<a class="btn" href="entries/78d91a36/contest.scm">View Code</a>
+
+
+<h2 id="i-hope-this-makes-you-happy">I hope this makes you happy</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/8dcd1972/artwork.png">
+  <blockquote>Life is hard. <br> Smile. <br> You are sweet : ) </blockquote>
+  <p>Tokens: 235</p>
+</div>
+
+<a class="btn" href="entries/8dcd1972/contest.scm">View Code</a>
+
+
+<h2 id="polynova">PolyNova</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/93a56102/artwork.png">
+  <blockquote>Polys and Gons<br>Making the journey around<br>Saluntant solis.</blockquote>
+  <p>Tokens: 156</p>
+</div>
+
+<a class="btn" href="entries/93a56102/contest.scm">View Code</a>
+
+
+<h2 id="blackout">Blackout</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/9f462374/artwork.png">
+  <blockquote>The power is out<br>P G and E is at fault<br>My dead week is gone</blockquote>
+  <p>Tokens: 16</p>
+</div>
+
+<a class="btn" href="entries/9f462374/contest.scm">View Code</a>
+
+
+<h2 id="epstein-didn-t-kill-himself">Epstein didn't kill himself</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/a540092b/artwork.png">
+  <blockquote>The Truth: <br> I probably spent more effort on this contest than Epstein did on his death <br> Bottom Text</blockquote>
+  <p>Tokens: 293</p>
+</div>
+
+<a class="btn" href="entries/a540092b/contest.scm">View Code</a>
+
+
+<h2 id="not-creative-enough-to-make-a-good-title">Not Creative Enough To Make A Good Title</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/a6f57127/artwork.png">
+  <blockquote>Never full alone <br> One's void's filled by another <br> Insert Third Line Here</blockquote>
+  <p>Tokens: 310</p>
+</div>
+
+<a class="btn" href="entries/a6f57127/contest.scm">View Code</a>
+
+
+<h2 id="hope-in-uncertainty-a-lesson-from-uncle-iroh">Hope in Uncertainty, a lesson from Uncle Iroh</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/a721fa17/artwork.png">
+  <blockquote>Even in the dark<br>    keep moving forward; you shall<br>    reach a better place</blockquote>
+  <p>Tokens: 510</p>
+</div>
+
+<a class="btn" href="entries/a721fa17/contest.scm">View Code</a>
+
+
+<h2 id="gonna-tell-my-kids-this-won-the-scheme-recursive-art-contest">Gonna tell my kids this won the Scheme Recursive Art Contest</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/a80936d7/artwork.png">
+  <blockquote>Vote for this as<br>abstraction is key <br>to battling complexity</blockquote>
+  <p>Tokens: 380</p>
+</div>
+
+<a class="btn" href="entries/a80936d7/contest.scm">View Code</a>
+
+
+<h2 id="cs61a-final-exam-problems">CS61A Final Exam Problems</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/ac69ba81/artwork.png">
+  <blockquote>First scene it looks fancy<br>Second scene you then wanna ask what?<br>Final scene I don't know!</blockquote>
+  <p>Tokens: 497</p>
+</div>
+
+<a class="btn" href="entries/ac69ba81/contest.scm">View Code</a>
+
+
+<h2 id="i-like-em-curves">I like em curves</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/ac6a6279/artwork.png">
+  <blockquote>Gonna tell my kids<br>I got first place in the cs scheme contest<br>cuz of this drawing</blockquote>
+  <p>Tokens: 71</p>
+</div>
+
+<a class="btn" href="entries/ac6a6279/contest.scm">View Code</a>
+
+
+<h2 id="sunflower">Sunflower</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/b54b4b34/artwork.png">
+  <blockquote>"It's a leap of faith. <br> That's all it is, Miles. <br> A leap of faith." -Peter Parker</blockquote>
+  <p>Tokens: 211</p>
+</div>
+
+<a class="btn" href="entries/b54b4b34/contest.scm">View Code</a>
+
+
+<h2 id="bear-territory">Bear Territory</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/d9ed9519/artwork.png">
+  <blockquote>Day and night<br>From Soda to Cory<br>Infinite is Bear Territory.</blockquote>
+  <p>Tokens: 494</p>
+</div>
+
+<a class="btn" href="entries/d9ed9519/contest.scm">View Code</a>
+
+
+<h2 id="a-web-amp-farewell-to-dear-kiwi">A Web (&amp; Farewell to dear Kiwi)</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/bccb0da9/artwork.png">
+  <blockquote>Webs of good and bad.<br>Sunrise; won back the axe! But<br>for Kiwi I'm sad.</blockquote>
+  <p>Tokens: 425</p>
+</div>
+
+<a class="btn" href="entries/bccb0da9/contest.scm">View Code</a>
+
+
+<h2 id="help-me-oski-sensei">help me oski sensei</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/bd71a3d8/artwork.png">
+  <blockquote>oski my good friend<br>have mercy on my gpa<br>i have flex dollars</blockquote>
+  <p>Tokens: 670</p>
+</div>
+
+<a class="btn" href="entries/bd71a3d8/contest.scm">View Code</a>
+
+
+<h2 id="rooftop-view-of-an-urban-sunset">Rooftop View of an Urban Sunset</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/c49f2333/artwork.png">
+  <blockquote>In the western sky, <br> A splendid star, waving bye. <br> Time to eat my pie.</blockquote>
+  <p>Tokens: 511</p>
+</div>
+
+<a class="btn" href="entries/c49f2333/contest.scm">View Code</a>
+
+
+<h2 id="happy-x-5">Happy x 5</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/c734927a/artwork.png">
+  <blockquote>(let ((param1 happiness)<br>         (param2 exam-score))<br>(eq? param1 param2)) -> #f</blockquote>
+  <p>Tokens: 228</p>
+</div>
+
+<a class="btn" href="entries/c734927a/contest.scm">View Code</a>
+
+
+<h2 id="spherical-object">Spherical Object</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/d17c608d/artwork.png">
+  <blockquote>Friends: you can't win with<br>that. It's not even 3D.<br>Me: okay boomer</blockquote>
+  <p>Tokens: 127</p>
+</div>
+
+<a class="btn" href="entries/d17c608d/contest.scm">View Code</a>
+
+
+<h2 id="colorful-notes">Colorful Notes</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/d4424f22/artwork.png">
+  <blockquote></blockquote>
+  <p>Tokens: 161</p>
+</div>
+
+<a class="btn" href="entries/d4424f22/contest.scm">View Code</a>
+
+
+<h2 id="denero-s-big-hairy-ball-theorem">Denero's Big Hairy Ball (Theorem)</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/e51a8778/artwork.png">
+  <blockquote>Our big hairy ball <br> Looks a lot like a skittle. <br> Token count: lol, nice.</blockquote>
+  <p>Tokens: 69</p>
+</div>
+
+<a class="btn" href="entries/e51a8778/contest.scm">View Code</a>
+
+
+<h2 id="make-this-spiral-go-viral">Make This Spiral Go Viral</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/f2db8fe1/artwork.png">
+  <blockquote>CREATE TABLE Smartest_Students AS<br>SELECT name FROM 61A_Students<br>WHERE contest_vote = "This Entry".</blockquote>
+  <p>Tokens: 348</p>
+</div>
+
+<a class="btn" href="entries/f2db8fe1/contest.scm">View Code</a>
+
+
+<h2 id="filling-space">Filling space</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/a/artwork.png">
+  <blockquote>I have found<br>the most efficient way<br>to draw a square.</blockquote>
+  <p>Tokens: 523</p>
+</div>
+
+<a class="btn" href="entries/a/contest.scm">View Code</a>
+
+
+<h2 id="tree-fractals">Tree Fractals</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/xcf3MUG.png">
+  <blockquote>Recursion rampant<br>Scheme seems so scintillating<br>Combined they form art</blockquote>
+</div>
+
+
+<h1 id="heavyweight-division">Heavyweight Division</h1>
+
+
+
+<h2 id="the-axe-is-back">The Axe is Back!!!</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/00084dbe/artwork.png">
+  <blockquote>Eighty seconds left...<br>Chase Garbers with the touchdown!<br>The axe is ours!!!</blockquote>
+  <p>Tokens: 870</p>
+</div>
+
+<a class="btn" href="entries/00084dbe/contest.scm">View Code</a>
+
+
+<h2 id="cs-61a-t-shirts">CS 61A T-shirts!</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/260eafd1/artwork.png">
+  <blockquote>What about "I FAILED CS 61A" t-shirt? I "hard-coded" the t-shirt:)</blockquote>
+  <p>Tokens: 702</p>
+</div>
+
+<a class="btn" href="entries/260eafd1/contest.scm">View Code</a>
+
+
+<h2 id="the-sad-and-sudden-death-of-kiwibot">the sad and sudden death of kiwibot</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/33870c80/artwork.png">
+  <blockquote>why did you leave us? <br> here alone in the darkness <br> dying of hunger</blockquote>
+  <p>Tokens: 607</p>
+</div>
+
+<a class="btn" href="entries/33870c80/contest.scm">View Code</a>
+
+
+<h2 id="d-d-denero-s-sempai">D-D-Denero s-sempai</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/40f80a72/artwork.png">
+  <blockquote>Daddy Denero,<br>I must know. Of you is there<br>a rule 34</blockquote>
+  <p>Tokens: 590</p>
+</div>
+
+<a class="btn" href="entries/40f80a72/contest.scm">View Code</a>
+
+
+<h2 id="fibonacci-in-bloom">Fibonacci in Bloom</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/4277a579/artwork.png">
+  <blockquote>A pleasant river <br> Spirals in the sky and trees <br> Sit and rest awhile</blockquote>
+  <p>Tokens: 1954</p>
+</div>
+
+<a class="btn" href="entries/4277a579/contest.scm">View Code</a>
+
+
+<h2 id="i-wasted-too-much-time-on-this">i wasted too much time on this</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/58d86705/artwork.png">
+  <blockquote>i rue not spending<br>my time studying instead');<br>DROP TABLE students;--</blockquote>
+  <p>Tokens: 1692</p>
+</div>
+
+<a class="btn" href="entries/58d86705/contest.scm">View Code</a>
+
+
+<h2 id="cs61a-tree">CS61A Tree</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/6d042854/artwork.png">
+  <blockquote>Real tree recusion <br> Denero is root<br> We are leaves</blockquote>
+  <p>Tokens: 535</p>
+</div>
+
+<a class="btn" href="entries/6d042854/contest.scm">View Code</a>
+
+
+<h2 id="nice-bridge-you-got-there-california">Nice bridge you got there, California!</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/7a7ca1ad/artwork.png">
+  <blockquote>Would be a shame if <br> Something were to...happen to it.... <br>  – Love, PG&E</blockquote>
+  <p>Tokens: 790</p>
+</div>
+
+<a class="btn" href="entries/7a7ca1ad/contest.scm">View Code</a>
+
+
+<h2 id="the-great-rhombicosidodecahedron">The Great Rhombicosidodecahedron</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/7adb61e2/artwork.png">
+  <blockquote>One begets Two,<br>    Two beget Three,<br>    and Three beget everything.</blockquote>
+  <p>Tokens: 4194</p>
+</div>
+
+<a class="btn" href="entries/7adb61e2/contest.scm">View Code</a>
+
+
+<h2 id="a-daily-dose-of-nezuko-for-final-szn">A daily dose of Nezuko for final szn</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/7f51d0dc/artwork.png">
+  <blockquote>Like title. <br> Vote.</blockquote>
+  <p>Tokens: 882</p>
+</div>
+
+<a class="btn" href="entries/7f51d0dc/contest.scm">View Code</a>
+
+
+<h2 id="i-m-sorry-jon">I'm sorry, Jon.</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/869b18ab/artwork.png">
+  <blockquote>I just checked the fridge,<br>and I see no lasagna.<br>I'm so sorry, Jon.</blockquote>
+  <p>Tokens: 3101</p>
+</div>
+
+<a class="btn" href="entries/869b18ab/contest.scm">View Code</a>
+
+
+<h2 id="the-impossible-block-chain">The Impossible Block Chain</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/8cee955f/artwork.png">
+  <blockquote>[CS61A: Computer] Science and art sometimes can touch one another, like two pieces of the jigsaw puzzle which is our human life...<br>--M. C. Escher</blockquote>
+  <p>Tokens: 3893</p>
+</div>
+
+<a class="btn" href="entries/8cee955f/contest.scm">View Code</a>
+
+
+<h2 id="the-back-of-the-back-of-the-back-of-the-of-the-turtle">The back of the back of the back of the ...  of the turtle</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/8db7b142/artwork.png">
+  <blockquote>Summon a turtle <br> Matters collide  Earth shatters <br> And multiverse born</blockquote>
+  <p>Tokens: 1517</p>
+</div>
+
+<a class="btn" href="entries/8db7b142/contest.scm">View Code</a>
+
+
+<h2 id="christmas-decorating">Christmas Decorating</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/947a6a28/artwork.png">
+  <blockquote>Season's greetings<br>from PG&E<br>Fiat Lux...oops.</blockquote>
+  <p>Tokens: 755</p>
+</div>
+
+<a class="btn" href="entries/947a6a28/contest.scm">View Code</a>
+
+
+<h2 id="haha-just-kidding-unless">Haha, just kidding...unless?</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/97603f18/artwork.png">
+  <blockquote>What if Denero<br>passed you in 61A?<br>Just kidding...unless?</blockquote>
+  <p>Tokens: 3363</p>
+</div>
+
+<a class="btn" href="entries/97603f18/contest.scm">View Code</a>
+
+
+<h2 id="6-9">6 9</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/98a8a363/artwork.png">
+  <blockquote>A number which is<br>divisible by thirteen.<br>Innocent value.</blockquote>
+  <p>Tokens: 713</p>
+</div>
+
+<a class="btn" href="entries/98a8a363/contest.scm">View Code</a>
+
+
+<h2 id="customizeable-fireworks-see-code">Customizeable Fireworks (see code!)</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/a2942d51/artwork.png">
+  <blockquote>Scheme turtle graphics, <br> while slow, can still animate <br> pretty fireworks :)</blockquote>
+  <p>Tokens: 1723</p>
+</div>
+
+<a class="btn" href="entries/a2942d51/contest.scm">View Code</a>
+
+
+<h2 id="cs61acs61a-com">cs61acs61a.com</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/a2d6e279/artwork.gif">
+  <blockquote>By the request of Professor John Denero, <br> We have  ̶r̶e̶d̶a̶c̶t̶e̶d̶  changed certain lyrics. <br> Please take a look at the code.</blockquote>
+  <p>Tokens: 1750</p>
+</div>
+
+<a class="btn" href="entries/a2d6e279/contest.scm">View Code</a>
+
+
+<h2 id="water-surface-slash-that-final">Water Surface Slash That Final</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/aeca8523/artwork.png">
+  <blockquote>Tanjiro-sama<br>wishes you the best of luck<br>on CS final.</blockquote>
+  <p>Tokens: 1804</p>
+</div>
+
+<a class="btn" href="entries/aeca8523/contest.scm">View Code</a>
+
+
+<h2 id="high-five-me-mr-meseeks">High-five Me, Mr. Meseeks!</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/b54d64bf/artwork.png">
+  <blockquote>Existence is pain <br> but at least we have our friends <br> smiled the shy blue guy</blockquote>
+  <p>Tokens: 2671</p>
+</div>
+
+<a class="btn" href="entries/b54d64bf/contest.scm">View Code</a>
+
+
+<h2 id="nobody-likes-the-cybertruck-and-no-one-likes-me">nobody likes the cybertruck and no one likes me :(</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/c1ce98a8/artwork.png">
+  <blockquote>after midterm 1 and 2, i can no longer declare cs, boo-hoo<br>the window, shattered like my hopes and dreams<br>denero make the final easier, please?</blockquote>
+  <p>Tokens: 1041</p>
+</div>
+
+<a class="btn" href="entries/c1ce98a8/contest.scm">View Code</a>
+
+
+<h2 id="daddydenero2020">#daddydenero2020</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/ca7e72a9/artwork.png">
+  <blockquote>What if Sierpinski <br> Made DeNero's Triangle? <br> Daddy would be proud.</blockquote>
+  <p>Tokens: 1226</p>
+</div>
+
+<a class="btn" href="entries/ca7e72a9/contest.scm">View Code</a>
+
+
+<h2 id="elon-musk-s-cybertruck">elon musk's CYBERTRUCK</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/d6fea53d/artwork.png">
+  <blockquote>I spent as much time<br>drawing this truck as Elon<br>spent on the windows</blockquote>
+  <p>Tokens: 666</p>
+</div>
+
+<a class="btn" href="entries/d6fea53d/contest.scm">View Code</a>
+
+
+<h2 id="big-sad">Big Sad</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/eb9b2edc/artwork.png">
+  <blockquote>This is the big sad<br>It is representative<br>*PLEASE FILL IN THIS LINE*</blockquote>
+  <p>Tokens: 553</p>
+</div>
+
+<a class="btn" href="entries/eb9b2edc/contest.scm">View Code</a>
+
+
+<h2 id="balls-balls-balls">BALLS BALLS BALLS</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/f40fa051/artwork.png">
+  <blockquote>Take a careful look. <br> This piece features many balls. <br> Hmm, yes. Balls balls balls.</blockquote>
+  <p>Tokens: 1984</p>
+</div>
+
+<a class="btn" href="entries/f40fa051/contest.scm">View Code</a>
+
+
+<h2 id="revolt">Revolt.</h2>
+
+
+<div class="haiku">
+  <img class="img-responsive center-block" src="entries/f5810faa/artwork.png">
+  <blockquote></blockquote>
+  <p>Tokens: 1622</p>
+</div>
+
+<a class="btn" href="entries/f5810faa/contest.scm">View Code</a>
+
+  </div>
+
+  <div class='col-md-3 sticky'>
+    <nav class='hidden-print hidden-sm hidden-xs sidebar'>
+      <ul>
+  <li><a href="index.html#featherweight-division">Featherweight Division</a></li>
+  <ul>
+    <li><a href="index.html#spinny-insanity">Spinny Insanity</a></li>
+    <li><a href="index.html#boxing-day">Boxing Day</a></li>
+    <li><a href="index.html#stay-warm-amp-toasty-view-source">stay warm &amp; toasty (view source)</a></li>
+    <li><a href="index.html#hk-peace">HK Peace</a></li>
+    <li><a href="index.html#sea-s-61λ">Sea-S 61λ</a></li>
+    <li><a href="index.html#myself-a-poet-not-a-schemer">Myself a poet, not a Schemer</a></li>
+    <li><a href="index.html#riding-the-bart-at-scheme-s-speed">Riding the BART at Scheme's Speed</a></li>
+    <li><a href="index.html#the-process-of-humility">The Process of Humility</a></li>
+    <li><a href="index.html#a-flat-circle">A Flat Circle</a></li>
+    <li><a href="index.html#pg-amp-e-bad">pg&amp;e bad</a></li>
+    <li><a href="index.html#leaves-within-leaves">Leaves Within Leaves</a></li>
+    <li><a href="index.html#lt-redacted-gt">&lt;REDACTED&gt;</a></li>
+    <li><a href="index.html#i-hope-this-makes-you-happy">I hope this makes you happy</a></li>
+    <li><a href="index.html#polynova">PolyNova</a></li>
+    <li><a href="index.html#blackout">Blackout</a></li>
+    <li><a href="index.html#epstein-didn-t-kill-himself">Epstein didn't kill himself</a></li>
+    <li><a href="index.html#not-creative-enough-to-make-a-good-title">Not Creative Enough To Make A Good Title</a></li>
+    <li><a href="index.html#hope-in-uncertainty-a-lesson-from-uncle-iroh">Hope in Uncertainty, a lesson from Uncle Iroh</a></li>
+    <li><a href="index.html#gonna-tell-my-kids-this-won-the-scheme-recursive-art-contest">Gonna tell my kids this won the Scheme Recursive Art Contest</a></li>
+    <li><a href="index.html#cs61a-final-exam-problems">CS61A Final Exam Problems</a></li>
+    <li><a href="index.html#i-like-em-curves">I like em curves</a></li>
+    <li><a href="index.html#sunflower">Sunflower</a></li>
+    <li><a href="index.html#bear-territory">Bear Territory</a></li>
+    <li><a href="index.html#a-web-amp-farewell-to-dear-kiwi">A Web (&amp; Farewell to dear Kiwi)</a></li>
+    <li><a href="index.html#help-me-oski-sensei">help me oski sensei</a></li>
+    <li><a href="index.html#rooftop-view-of-an-urban-sunset">Rooftop View of an Urban Sunset</a></li>
+    <li><a href="index.html#happy-x-5">Happy x 5</a></li>
+    <li><a href="index.html#spherical-object">Spherical Object</a></li>
+    <li><a href="index.html#colorful-notes">Colorful Notes</a></li>
+    <li><a href="index.html#denero-s-big-hairy-ball-theorem">Denero's Big Hairy Ball (Theorem)</a></li>
+    <li><a href="index.html#make-this-spiral-go-viral">Make This Spiral Go Viral</a></li>
+    <li><a href="index.html#filling-space">Filling space</a></li>
+    <li><a href="index.html#tree-fractals">Tree Fractals</a></li>
+  </ul>
+  <li><a href="index.html#heavyweight-division">Heavyweight Division</a></li>
+  <ul>
+    <li><a href="index.html#the-axe-is-back">The Axe is Back!!!</a></li>
+    <li><a href="index.html#cs-61a-t-shirts">CS 61A T-shirts!</a></li>
+    <li><a href="index.html#the-sad-and-sudden-death-of-kiwibot">the sad and sudden death of kiwibot</a></li>
+    <li><a href="index.html#d-d-denero-s-sempai">D-D-Denero s-sempai</a></li>
+    <li><a href="index.html#fibonacci-in-bloom">Fibonacci in Bloom</a></li>
+    <li><a href="index.html#i-wasted-too-much-time-on-this">i wasted too much time on this</a></li>
+    <li><a href="index.html#cs61a-tree">CS61A Tree</a></li>
+    <li><a href="index.html#nice-bridge-you-got-there-california">Nice bridge you got there, California!</a></li>
+    <li><a href="index.html#the-great-rhombicosidodecahedron">The Great Rhombicosidodecahedron</a></li>
+    <li><a href="index.html#a-daily-dose-of-nezuko-for-final-szn">A daily dose of Nezuko for final szn</a></li>
+    <li><a href="index.html#i-m-sorry-jon">I'm sorry, Jon.</a></li>
+    <li><a href="index.html#the-impossible-block-chain">The Impossible Block Chain</a></li>
+    <li><a href="index.html#the-back-of-the-back-of-the-back-of-the-of-the-turtle">The back of the back of the back of the ...  of the turtle</a></li>
+    <li><a href="index.html#christmas-decorating">Christmas Decorating</a></li>
+    <li><a href="index.html#haha-just-kidding-unless">Haha, just kidding...unless?</a></li>
+    <li><a href="index.html#6-9">6 9</a></li>
+    <li><a href="index.html#customizeable-fireworks-see-code">Customizeable Fireworks (see code!)</a></li>
+    <li><a href="index.html#cs61acs61a-com">cs61acs61a.com</a></li>
+    <li><a href="index.html#water-surface-slash-that-final">Water Surface Slash That Final</a></li>
+    <li><a href="index.html#high-five-me-mr-meseeks">High-five Me, Mr. Meseeks!</a></li>
+    <li><a href="index.html#nobody-likes-the-cybertruck-and-no-one-likes-me">nobody likes the cybertruck and no one likes me :(</a></li>
+    <li><a href="index.html#daddydenero2020">#daddydenero2020</a></li>
+    <li><a href="index.html#elon-musk-s-cybertruck">elon musk's CYBERTRUCK</a></li>
+    <li><a href="index.html#big-sad">Big Sad</a></li>
+    <li><a href="index.html#balls-balls-balls">BALLS BALLS BALLS</a></li>
+    <li><a href="index.html#revolt">Revolt.</a></li>
+  </ul>
+</ul>
+    </nav>
+  </div>
+</div>
+
+    </main>
+
+    <footer class="container">
+      <div class="row text-center">
+        <div class="col col-sm-4">
+          <h3><a href="../../index.html">CS 61A</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../weekly.html">Weekly Schedule</a></li>
+            <li><a href="../../office-hours.html">Office Hours</a></li>
+            <li><a href="../../staff.html">Staff</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../resources.html">Resources</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/studying.html">Studying Guide</a></li>
+            <li><a href="../../articles/debugging.html">Debugging Guide</a></li>
+            <li><a href="../../articles/composition.html">Composition Guide</a></li>
+          </ul>
+        </div>
+        <div class="col col-sm-4">
+          <h3><a href="../../articles/about.html">Policies</a></h3>
+          <ul class="nav nav-pills nav-stacked">
+            <li><a href="../../articles/about.html#assignments">Assignments</a></li>
+            <li><a href="../../articles/about.html#exams">Exams</a></li>
+            <li><a href="../../articles/about.html#grading">Grading</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    
+
+<script>
+  $('.sidebar ul').addClass('nav nav-stacked noselect');
+  $('body').scrollspy({
+    target: '.sidebar',
+    offset: 40
+  });
+
+  function goToId(id) {
+    var target = $(id);
+    console.log(target);
+    target.parent().show();
+    $('html,body').animate({
+      scrollTop: target.offset().top,
+    }, 100);
+    $("body").scrollspy('refresh');
+  }
+
+  if (location.hash) {
+    setTimeout(function() {
+      // window.scrollTo(0, 0);
+      if (location.hash) {
+        goToId(location.hash);
+      }
+    }, 1);
+  }
+
+  $("a").click(function(event) {
+    event.preventDefault();
+    var urlBeforeHashRegEx = new RegExp("^"+window.location.href.split("#")[0]);
+    if (/^#/.test(this.hash) && urlBeforeHashRegEx.test(this.href)) {
+      goToId(this.hash);
+      document.location.hash = this.hash;
+    } else {
+      window.open(this.href);
+    }
+  });
+</script>
+
+  </body>
+</html>
