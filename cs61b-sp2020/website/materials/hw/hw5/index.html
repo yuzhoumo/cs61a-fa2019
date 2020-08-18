@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework 5 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-bit-manipulation">A. Bit Manipulation</a></li>
+  <li><a href="index.html#b-implementing-a-packed-array-nybbles-java">B. Implementing a Packed Array: Nybbles.java</a></li>
+  <li><a href="index.html#c-asymptotic-analysis-and-a-bit-twiddling-puzzle">C. Asymptotic Analysis and A Bit-Twiddling Puzzle</a></li>
+  <li><a href="index.html#d-submission">D. Submission</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Homework 5: Bit Operations and Asymptotic Analysis</header>
+        
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-bit-manipulation">A. Bit Manipulation</a></li>
+  <li><a href="index.html#b-implementing-a-packed-array-nybblesjava">B. Implementing a Packed Array: Nybbles.java</a></li>
+  <li><a href="index.html#c-asymptotic-analysis-and-a-bit-twiddling-puzzle">C. Asymptotic Analysis and A Bit-Twiddling Puzzle</a></li>
+  <li><a href="index.html#d-submission">D. Submission</a></li>
+</ul>
+
+
+<h2 id="a-bit-manipulation">A. Bit Manipulation</h2>
+
+<p>For this section, open <code>BitExercise.java</code>.
+You will be completing three functions: <code>lastBit(int x)</code>, <code>powerOfTwo(int x)</code>, and <code>absolute(int x)</code>. Their behavior (and examples) are in the documentation. You only have to complete two out of three for full credit, but we recommend working on all of them.
+Do <em>not</em> use for, while, switch, or if cases. Do <em>not</em> import any new libraries or use functionality provided in Math. Your solution should <em>only</em> use Java arithmetic, logical, and bitwise operations (<code>&amp;</code>, <code>|</code>, <code>^</code>, <code>&amp;&amp;</code>, etc.).</p>
+
+<p><em>Hint:</em> If you are feeling confused, look into how two's compliment is done in Java. This will give you a head start in CS61C!</p>
+
+<p>Note that all numbers are represented in our code as bits under the hood. For example, int mask = 15; is exactly equivalent to specifying the bits int mask = 0b1111;
+Also Ints are 32 bits, Shorts are 16 bits, Longs are 64 bits, and (as always) Bytes are 8 bits!</p>
+
+
+<h2 id="b-implementing-a-packed-array-nybbles-java">B. Implementing a Packed Array: Nybbles.java</h2>
+
+
+<p>Let's suppose we have an application that strains our
+computer's primary memory capacity and need to fit large arrays of
+small integers into as little space as possible.
+We want a data type that provides an array of integers that are
+limited in range to $-8$ to $7$.  Such integers are representable in
+4&nbsp;bits (half a byte, also known as a <em>nybble</em>).
+So in principle, it ought to be possible to 
+store $N$ integers in an $N/8$-integer array (packing 8 4-bit integers into each int, as an int is 32 bits).  For example, if you wanted the zeroth nybble, you would want bits 0-4 of the 0th int. To get the ninth nybble, you would want bits 4-7 of the 1st int.</p>
+
+<p>Here is a visual of how the underlying <code>int[]</code> is related to the Nybbles object:</p>
+
+<center>
+<img src="NybblesPic.png" alt="Nybbles image">
+</center>
+
+<p>Here, the top array <code>[39, 42290814, &#x2d;35]</code> is the underlying <code>int[]</code>, and the bottom array is contents of the Nybbles object. So a client
+of the Nybbles class would only know about the bottom array which holds the actual nybbles. The middle array is just the top array with
+each integer expanded into its binary representation.</p>
+
+<p>In this case, if we called <code>get(13)</code> on this object, then we'd first want to figure out the corresponding index in the <code>int[]</code> and then 
+isolate the nybble we care about. In this case, the corresponding index is 1, and the corresponding nybble is 5. Remember that nybbles in 
+an integer, just like bits, are indexed from right to left, so the nybble at index 0 of an integer is the rightmost 4 bits. So calling 
+<code>get(13)</code> in this example will return the nybble <code>0b1000</code> which is -8.</p>
+
+<p>Fill in the skeleton to provide a suitable small-int array type.  Do <em>not</em>
+perform any additional <strong>new</strong> operations in the implementation (you may
+include as many as you want for testing, if you put them in a
+different file).</p>
+
+
+<h2 id="c-asymptotic-analysis-and-a-bit-twiddling-puzzle">C. Asymptotic Analysis and A Bit-Twiddling Puzzle</h2>
+
+
+<p>Go to Gradescope and complete the <code>HW5 Written</code> assignment within Gradescope. You have unlimited attempts. As with the Proj1 quiz, grades will take a while to update.</p>
+
+
+<h2 id="d-submission">D. Submission</h2>
+
+<p>Complete 2/3 of the methods in <code>BitExercise.java</code> (.25 point), <code>Nybbles.java</code> (1 point) and the Gradescope assignment <code>HW5 Written</code> (.75 point) to get full credit for this homework. Style will not be checked.</p>
+
+<p>Not all tests are provided in the skeleton.</p>
+
+<p>Don't forget to push both your commits and tags for your final submission. As a reminder, you can push your tags by running:</p>
+
+<pre><code>$ git push &#x2d;&#x2d;tags</code></pre>
+    </main></div>
+</body>
+</html>

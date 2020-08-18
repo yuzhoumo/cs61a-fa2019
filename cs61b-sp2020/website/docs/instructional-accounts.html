@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Using Instructional Accounts | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../index.html"><div class="navitem">Main</div></a>
+        <a href="../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="instructional-accounts.html#navigation">Navigation</a></li>
+  <li><a href="instructional-accounts.html#a-obtaining-an-instructional-account">A. Obtaining an Instructional Account</a></li>
+  <li><a href="instructional-accounts.html#b-accessing-remotely">B. Accessing Remotely</a></li>
+  <li><a href="instructional-accounts.html#c-registering-amp-updating-password">C. Registering &amp; Updating Password</a></li>
+  <li><a href="instructional-accounts.html#d-unix-commands">D. UNIX Commands</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Using Instructional Accounts</header>
+        <div class="due-date">Author: Sarah Kim</div>
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="instructional-accounts.html#a-obtaining-an-instructional-account">Obtaining an Instructional Account</a></li>
+  <li><a href="instructional-accounts.html#b-accessing-remotely">Accessing Remotely</a></li>
+  <li><a href="instructional-accounts.html#c-registering--updating-password">Registering &amp; Updating Password</a></li>
+  <li><a href="instructional-accounts.html#d-unix-commands">UNIX Commands</a></li>
+</ul>
+
+
+<h2 id="a-obtaining-an-instructional-account">A. Obtaining an Instructional Account</h2>
+
+
+<p>Request an EECS instructional account
+<a href="https://inst.eecs.berkeley.edu/webacct">here</a>.</p>
+
+<p>You should receive a login that looks like <code>cs61b&#x2d;***</code>, where <code>***</code> represents 2
+or 3 letters, as well as a password. Memorize your login and hold on to your
+password for just a bit (you can change it below).</p>
+
+<p>You should now be able to use the lab computers using your login and password.</p>
+
+
+<h2 id="b-accessing-remotely">B. Accessing Remotely</h2>
+
+
+<p>You may wish to access your instructional account remotely from a personal or
+non-lab computer (checking grades, for example). If you are using a lab computer
+for today, you can come back to this section later.</p>
+
+<p>Use your Terminal (or Git Bash if you're using Windows) to access your class
+account remotely through the <code>ssh</code> command:</p>
+
+<pre><code>ssh cs61b&#x2d;***@derby.cs.berkeley.edu</code></pre>
+
+<p>Replace <code>***</code> with the letters from your login.</p>
+
+<p>You may come across a message along the lines of</p>
+
+<pre><code>The authenticity of host &#x27;derby.cs.berkeley.edu (128.32.42.40)&#x27; can&#x27;t be established.</code></pre>
+
+<p>You may always ignore this message and type <code>yes</code> to proceed.</p>
+
+
+<h2 id="c-registering-amp-updating-password">C. Registering &amp; Updating Password</h2>
+
+
+<p>This section is done on the instructional account. If you are working on a lab
+computer, just login. If you are working from a personal computer, then ssh in
+as described in <a href="instructional-accounts.html#b-accessing-remotely">Accessing Remotely</a> first.</p>
+
+<p>Register for the course by typing this command into the terminal:</p>
+
+<pre><code>register</code></pre>
+
+<p>If nothing is outputted, that means you are already registered for the course
+and you can move on to the next step.</p>
+
+<p>You can also change your password using:</p>
+
+<pre><code>ssh update</code></pre>
+
+
+<h2 id="d-unix-commands">D. UNIX Commands</h2>
+
+
+<p>The lab computers run on the UNIX operating system. As such, you can use
+terminal commands to make changes to your directory and files. You will find
+that you can use most of these commands on your local computer as well.
+Familiarizing yourself with these commands are an important part of being a
+programmer; although we will not test you on this, these commands will make your
+life easier as you code. Below are some important ones that you may find useful
+in this course:</p>
+
+<ul>
+  <li><p><code>cd</code>: change your working directory</p>
+
+<pre><code>cd hw</code></pre>
+
+  <p>This command will change your directory to <code>hw</code>.</p></li>
+  <li><p><code>pwd</code>: present working directory</p>
+
+<pre><code>pwd</code></pre>
+
+  <p>This command will tell you the full path for the current directory you are
+  in if you are not sure where you are.</p></li>
+  <li><p><code>.</code>: means your current directory</p>
+
+<pre><code>cd .</code></pre>
+
+  <p>This command will change your directory to the current directory (aka.  do
+  nothing).</p></li>
+  <li><p><code>..</code>: means one parent directory above your current directory</p>
+
+<pre><code>cd ..</code></pre>
+
+  <p>This command will change your directory to its parent. If you are in
+  <code>/workspace/day1/</code>, the command will place you in <code>/workspace/</code>.</p></li>
+  <li><p><code>ls</code>: list files/folders in directory</p>
+
+<pre><code>ls</code></pre>
+
+  <p>This command will list all the files and folders in your current directory.</p>
+
+<pre><code>ls &#x2d;l</code></pre>
+
+  <p>This command will list all the files and folders in your current directory
+  with timestamps and file permissions. This can help you double-check if your
+  file updated correctly or change the read-write- execute permissions for
+  your files.</p></li>
+  <li><p><code>mkdir</code>: make a directory</p>
+
+<pre><code>mkdir dirname</code></pre>
+
+  <p>This command will make a directory within the current directory called
+  <code>dirname</code>.</p></li>
+  <li><p><code>rm</code>: remove a file</p>
+
+<pre><code>rm file1</code></pre>
+
+  <p>This command will remove <code>file1</code> from the current directory. It will not
+  work if <code>file1</code> does not exist.</p>
+
+<pre><code>rm &#x2d;r dir1</code></pre>
+
+  <p>This command will remove the <code>dir1</code> directory recursively. In other words,
+  it will delete all the files and directories in <code>dir1</code> in addition to <code>dir1</code>
+  itself. Be careful with this command!</p></li>
+  <li><p><code>cp</code>: copy a file</p>
+
+<pre><code>cp lab1/original lab2/duplicate</code></pre>
+
+  <p>This command will copy the <code>original</code> file in the <code>lab1</code> directory and
+  create a <code>duplicate</code> copy in the <code>lab2</code> directory.</p></li>
+  <li><p><code>mv</code>: move or rename a file</p>
+
+<pre><code>mv lab1/original lab2/original</code></pre>
+
+  <p>This command moves <code>original</code> from <code>lab1</code> to <code>lab2</code>. Unlike <code>cp</code>, <code>mv</code> does
+  not leave original in the <code>lab1</code> directory.</p>
+
+<pre><code>mv lab1/original lab1/newname</code></pre>
+
+  <p>This command does not move the file but rather renames it from <code>original</code>
+  to <code>newname</code>.</p></li>
+</ul>
+
+<p>There are some other useful tricks when navigating on command line:</p>
+
+<ul>
+  <li>UNIX can complete file names and directory names for you with <em>tab
+  completion</em>. When you have an incomplete name (for something that already
+  exists), try pressing the <code>tab</code> key for autocomplete or a list of possible
+  names.</li>
+  <li>If you want to retype the same instruction used recently, press the <code>up</code> key
+  on your keyboard until you see the correct instruction. This saves typing time
+  if you are doing repetitive instructions (like running Java programs on
+  command line while testing).</li>
+</ul>
+    </main></div>
+</body>
+</html>

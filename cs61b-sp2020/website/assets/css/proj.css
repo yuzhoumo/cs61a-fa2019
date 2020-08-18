@@ -1,0 +1,8 @@
+body {
+    font-family: Merriweather, Arial, sans-serif; 
+}
+
+span.updated {
+    color: DarkGreen;
+    text-decoration: underline;
+}

@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 8 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-intro">A. Intro</a></li>
+  <li><a href="index.html#b-estimating-efficiency-by-timing-functions">B. Estimating Efficiency by Timing Functions</a></li>
+  <ul>
+    <li><a href="index.html#algorithms">Algorithms</a></li>
+    <li><a href="index.html#time-estimates">Time Estimates</a></li>
+    <li><a href="index.html#exercise-timing-sorting-algorithms">Exercise: Timing Sorting Algorithms</a></li>
+    <li><a href="index.html#discussion-timing-results">Discussion: Timing Results</a></li>
+    <li><a href="index.html#amortization">Amortization</a></li>
+    <li><a href="index.html#exercise-timing-amortized-lists">Exercise: Timing Amortized Lists</a></li>
+    <li><a href="index.html#discussion-amortization-results">Discussion: Amortization Results</a></li>
+  </ul>
+  <li><a href="index.html#c-practice-with-asymptotics-and-maps">C. Practice with Asymptotics and Maps</a></li>
+  <ul>
+    <li><a href="index.html#simple-map-introduction">Simple Map Introduction</a></li>
+    <li><a href="index.html#linkedlistmap">LinkedListMap</a></li>
+    <li><a href="index.html#exercise-treemap">Exercise: TreeMap</a></li>
+    <li><a href="index.html#maptest">MapTest</a></li>
+  </ul>
+  <li><a href="index.html#d-submission-and-grading">D. Submission and Grading</a></li>
+  <ul>
+    <li><a href="index.html#deliverables">Deliverables</a></li>
+    <li><a href="index.html#submission">Submission</a></li>
+  </ul>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Lab 8: Practical Asymptotic Analysis and TreeMaps</header>
+        
+<p><strong>Due Date: Wednesday 3/18 11:59PM.</strong></p>
+
+
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-intro">A. Intro</a></li>
+  <li><a href="index.html#b-estimating-efficiency-by-timing-functions">B. Estimating Efficiency by Timing Functions</a></li>
+  <li><a href="index.html#c-practice-with-asymptotics-and-maps">C. Practice with Asymptotics and Maps</a></li>
+  <li><a href="index.html#d-submission-and-grading">D. Submission</a></li>
+</ul>
+
+
+<h2 id="a-intro">A. Intro</h2>
+
+
+<hr/>
+
+<p>In lecture you have been learning about complexity theory and how to determine the asymptotic bounds of functions. This practice has involved computing theoretical bounds, but it can be useful to tie this theory into real examples. This is exactly what you will be doing in this lab!</p>
+
+<p>We consider some alternative ways of measuring the efficiency of a given code segment. Given a function <code>f</code>, we want to find out how fast that function runs. One way of doing this is to take out a stopwatch and measure exactly how much time it takes for <code>f</code> to run on some input. We will look at some plots of runtime to understand how some functions' runtimes change with the size of their input. However, we will also see that there are problems with using elapsed time for this purpose. These empirical measures are not meant to replace the better models for analyzing runtime complexity from lecture and discussion, but merely provide another perspective on the runtime of functions. You will conduct several experiments, discuss the results with your partner, and then record some of the answers from your discussion.</p>
+
+<p>The next part of the lab will take a look at different implementations of maps. We have provided a complete implementation to a map which uses a linked list to store key-value pairs. You will be asked you to complete the implementation of a faster map which uses a binary search trees (BST) to store the key-value pairs. After implementing your tree map, you should be able to compare its performance to <code>java.util</code>'s implementation of a BST map, <code>TreeMap</code> and hopefully see that the performance is similar (at least on randomly inserted points).</p>
+
+<p>To get started pull the files for lab 8 from the skeleton.</p>
+
+<pre><code>git fetch shared
+git merge shared/lab8 &#x2d;m &quot;Start lab8&quot;
+git push</code></pre>
+
+
+<h2 id="b-estimating-efficiency-by-timing-functions">B. Estimating Efficiency by Timing Functions</h2>
+
+
+<hr/>
+
+
+<h3 id="algorithms">Algorithms</h3>
+
+
+<p>An <em>algorithm</em> is an abstract notion that describes an approach for solving a problem. The code we write in this class, our programs, are implementations of algorithms. For example, consider the problem of sorting a list of numbers. There are many different algorithms that will allow us to sort a list of numbers, each of which might have its own runtime. We will learn more about many of these sorting algorithms later in the class, but we will introduce a few of them briefly here.</p>
+
+<p>One algorithm we might use to solve this problem is called <em>bubble sort</em>. Bubble sort tells us we can sort a list by repeatedly looping through the list and swapping adjacent items if they are out of order, until the entire sorting is complete. Another algorithm we might use to solve this problem is called <em>insertion sort</em>. Insertion sort says to sort a list by repeatedly looping through our list, removing the minimum element, and putting it into a new list in the correct order.</p>
+
+<p>Several websites like <a href="http://visualgo.net/sorting">VisuAlgo</a>, <a href="http://sorting.at/">Sorting.at</a>, <a href="https://www.toptal.com/developers/sorting-algorithms/">Sorting Algorithms</a>, and <a href="http://www.cs.usfca.edu/~galles/visualization/ComparisonSort.html">USF</a> have developed some animations that can help us visualize these sorting algorithms. Spend a little time playing around with these demos to get an understanding of how much time it takes for bubble sort or insertion sort to completely sort a list. Again we'll revisit sorting in more detail later in this course, but for now, try to get a feeling of how long each algorithm takes to sort a list. How many comparison does each sort need? And how many swaps? Can you guess the overall runtime? Don't spend too much time on this, we will revisit sorting in much more detail later in the class.</p>
+
+<p>Since each comparison and each swap takes time, we want to know which is the faster algorithm. The runtime bounds that we compute using asymptotic analysis might not tell us this. Asymptotic bounds might tell us that two functions should run in time proportional to one another, but they would not tell us which of the two is actually faster. This is one case where it might be better to turn to empirical measures, despite their many potential problems.</p>
+
+<hr/>
+
+
+<h3 id="time-estimates">Time Estimates</h3>
+
+
+<p>To start, it seems that the most reasonable way to estimate the time an algorithm takes is to measure the time directly. Each computer has an internal clock that keeps track of time, usually in the number of fractions of a second that have elapsed since a given base date. The Java method that accesses the clock is <code>System.nanoTime()</code>. We have provided the <code>timing.Timer</code> class which implements functions that behave like a stopwatch which we'll use to time different operations. You should not have to interact directly with the <code>timing.Timer</code> class, but it might be useful to understand how it is implemented and what functionality it has. Spend a few minutes familiarizing yourself with the file and discuss what each part of this class seems to be doing with your lab partner.</p>
+
+<hr/>
+
+
+<h3 id="exercise-timing-sorting-algorithms">Exercise: Timing Sorting Algorithms</h3>
+
+
+<p>The file <code>timing.Sorter.java</code> contains multiple implementations of various sorting algorithms, including the bubble sort and insertion sort algorithms mentioned earlier. Each Sorter contains the following methods (some of which might be inherited from the abstract class <code>Sorter</code>).</p>
+
+<ul>
+  <li><code>int[] getRandomArray(int numElems)</code>: Returns an array of the specified size filled with randomly generated values.</li>
+  <li><code>void sort(int[] arr)</code>: Sort the given input array <code>arr</code>.</li>
+  <li><code>List&lt;Double&gt; score(int by, int ntrials, int nrepeats)</code>: Conduct a timing experiment. This will involve sorting <code>ntrials</code> different size arrays starting at 5 and increasing in size by <code>by</code> each time. The experiments will then be ran <code>nrepeats</code> times.</li>
+</ul>
+
+<p>Again you do not understand completely what each of these sorters is doing, but it might be interesting to see how each of them works. Pay close attention to the asymptotic runtimes of each of these different algorithms. The full list of algorithms contained and their asymptotic runtimes are as follows:</p>
+
+<ul>
+  <li><code>BubbleSorter</code>: This algorithm is as described above. On each iteration a forward pass is taken through the array or numbers, and any adjacent out of order elements are swapped. This continues until a forward pass is made and there are no swaps necessary. The time complexity for bubble sort is worst case $\Theta(N^2)$ where $N$ is the length of the array.</li>
+  <li><code>WipingBubbleSorter</code>: This algorithm is similar to the bubble sort described above, but <code>WipingBubbleSorter</code> will alternate between taking forward passes and backwards passes through the array to swap elements. This however does not change the time complexity which for the worst case is $\Theta(N^2)$ where $N$ is the length of the array.</li>
+  <li><code>InsertionSorter</code>: This algorithm will build a progressively larger sublist of sorted numbers, by continually inserting the next value in sorted sublist. The worst case runtime for insertion sort is also $\Theta(N^2)$ where $N$ is the length of the array.</li>
+  <li><code>JavaSorter</code>: This algorithm is Java's native sorting algorithm for arrays. The actual implementation of this algorithm is quicksort for primitive values and mergesort for Object values. You do not need to know what either of these algorithms do at this points, but the resulting time complexity is expected to be $\Theta(N \cdot \log(N))$ where $N$ is the length of the array.</li>
+  <li><code>CountingSorter</code>: This algorithm (at least as it is coded here) does not allow for all values of integers. We override the <code>getRandomArray</code> function to only contain values of a fixed size. This sort then counts each of the possible values, and fills in an array corresponding to the correct counts of each of the possible values. The time complexity for the worst case is $\Theta(N)$ where $N$ is the length of the array.</li>
+</ul>
+
+<p>We would like to compare these sorters, and much as before with asymptotic analysis we are mainly concerned with how the speed of the algorithm changes as a function of the input size. The input size here will be the length of the array to be sorted. In order to do this we will be running a series or calls to each of the different sorting algorithms and then plotting the results in order to visualize how each of them appears to grow. <em>Optional: If you are interested in seeing how we are plotting these in Java, feel free to check out the <code>timing.GraphUtil.java</code> file. We will not be expecting you to understand the code here, but again it might be interesting to look at.</em></p>
+
+<p>The file <code>timing.SortTiming</code> contains code to generate a plot of the runtimes of the different sorting implementations when sorting different sizes of arrays. Again feel free to examine this code, but you are not expected to understand everything that is going on here. You should be able to treat this class as a <a href="https://en.wikipedia.org/wiki/Black_box">black box</a> that accepts three arguments (or sets them by default) corresponding to the number of different array sizes it should test (<code>ntrials</code>), the interval by which it should increase the array size between trials (<code>by</code>), and the number of times it should repeat each size array per sorting implementation (<code>nrepeats</code>). By default, the minimum size array is 5. When you run this program it will take some time to run all of the experiments then a nice plot should be opened on your computer.</p>
+
+<p>For example, the commands</p>
+
+<pre><code>javac timing/SortTiming.java
+java timing.SortTiming 100 50 10</code></pre>
+
+<p>uses the command-line arguments to plot all sorters' runtimes for 100 trials, each increasing by 50 elements, and repeating each trial 10 times (and averaging the result).</p>
+
+<p>Try running the program, either with IntelliJ or over the command line. To run with IntelliJ, you can run the main method of <code>SortTiming</code> and alter the <code>ntrials</code>, <code>by</code>, and <code>nrepeats</code> values. If you're running it on the command line, run the above commands from the lab8 directory. We have made this setup flexible, so please play with the values of <code>ntrials</code>, <code>by</code>, and <code>nrepeats</code> to see how the graphs change!</p>
+
+<hr/>
+
+
+<h3 id="discussion-timing-results">Discussion: Timing Results</h3>
+
+
+<p>Once you have the visualization up and running, answer each of these questions with your lab partner!</p>
+
+<ul>
+  <li>Is one sorting algorithm <em>always</em> faster than another?</li>
+  <li>Above we said that <code>BubbleSort</code>, <code>WipingBubbleSort</code>, and <code>InsertionSort</code> each had the same $\Theta(N^2)$ asymptotic time complexity. How can you explain the differences in the plots for these three algorithms?</li>
+  <li>What information can we gain from empirical analysis of algorithms which might not be as noticeable in asymptotical bounds?</li>
+  <li>For any given sorting algorithm, does increasing the array size <em>always</em> mean the sorting takes longer?</li>
+  <li>How does changing <code>nrepeats</code> change the plot?</li>
+  <li>Is your plot the <em>exact</em> same as your partner's plot, even with the same values of <code>ntrials</code>, <code>by</code>, and <code>nrepeats</code>?</li>
+  <li><em>Optional</em>: Look at the source code for <code>BubbleSorter</code> to <code>WipingBubbleSorter</code>. After looking at the plots, can you intuitively explain why <code>WipingBubbleSorter</code> is usually 2x as fast as <code>BubbleSorter</code>? (Hint: Consider the immobility of some elements when the swapping passes are single directional (i.e. only going forward), and how this "Wiping" strategy helps deal with that issue.) Can you come up with an example that shows the difference in runtime?</li>
+</ul>
+
+<p>We will be asking you to record a brief summary of your responses to these questions to show that you have put some thought into discussing them. Again this is supposed to be a collaborative exercise and some of these questions might have many reasonable answers. If you have questions you can also ask a TA/AI! Once you feel satisfied with your responses, put a summary into the <code>sort_timing.txt</code> file in your lab8 directory.</p>
+
+<p><em>Note: We will not be directly grading your responses and you will be graded on effort. You should write at least one sentence for each question. No responses are required for the optional questions.</em></p>
+
+<hr/>
+
+
+<h3 id="amortization">Amortization</h3>
+
+
+<p>In lecture you should have also learned about amortization. If you have not watched lecture or reviewed the slides please take some time to go through <a href="../../lectures/lect17.pdf">slides 8-13</a> or the rest of this section will not make as much sense. Still we will briefly explain amortization here to recap the main points.</p>
+
+<p>If we look at a sequence of $N$ operations to be carried out for a specific algorithm (which might be an operation on a data structure), it is possible that each one of those operations differs in time complexity. Amortized time means that instead of considering the worst case time complexity for a given operation, we will instead look at the "average" time for each one of the operation. For certain instances, this can be more insightful than just assuming that each of the operations will run in worst case time. In this next exercise we will examine different schemas of resizeable arrays to see what the amortized performance of each of them is.</p>
+
+<hr/>
+
+
+<h3 id="exercise-timing-amortized-lists">Exercise: Timing Amortized Lists</h3>
+
+
+<p>The file <code>timing.GrowList.java</code> contains multiple implementations of a list that can grow as more elements are inserted into it. Each <code>GrowList</code> contains the following methods (some of which might be inherited from the abstract class <code>GrowList</code>).</p>
+
+<ul>
+  <li><code>void add(int e)</code>: Inserts an <code>int</code> element into the given list. Each <code>GrowList</code>'s behavior is described below.</li>
+  <li><code>GrowList newList()</code>: Creates a new <code>GrowList</code>, this is a method that is included to allow for easier creation of lists during tests.</li>
+  <li><code>List&lt;Double&gt; score(int maxSize, int nLists)</code>: Conduct a timing experiment by inserting <code>maxSize</code> elements into <code>nLists</code> different lists. The output of this will be a list such that <code>i</code>th item is the time for the <code>i</code>th insertion. We use <code>nLists</code> different lists and average the performance over all of them to hopefully reduce noise in our data collection.</li>
+  <li><code>List&lt;Double&gt; accumScore(int maxSize, int nLists)</code>: Conduct a timing experiment as specified above. The output of this will be a list such that <code>i</code>th item is the cumulative total of the average times of the first <code>i</code> insertions.</li>
+</ul>
+
+<p>Unlike the sorters from above, you should be able to understand all of the code for each of the <code>GrowList</code> implementations that we have provided. After reading the below descriptions, spend some time with your partner to look at each of their implementations and discuss how each of them work. Once again, pay close attention to the asymptotic runtimes of each of these variants. The full list of implementations and their asymptotic runtimes are as follows:</p>
+
+<ul>
+  <li><code>GeomGrowList</code>: This is an array-backed list that resizes by doubling the size of the array when the array is fully filled up. The runtime for $N$ insertions into a <code>GeomGrowList</code> is $\Theta(N)$, and the amortized runtime of a single addition is $\Theta(1)$.</li>
+  <li><code>ArithGrowList</code>: This is an array-backed list that resizes by increasing the size of the array by one when the array is fully filled up. The runtime for $N$ insertions into a <code>ArithGrowList</code> is $\Theta(N^2)$, and the amortized runtime of a single addition is $\Theta(N)$.</li>
+  <li><code>JavaGrowList</code>: This is a wrapper to Java's <code>ArrayList</code> which is array-backed list that resizes by doubling the size of the array when the array is fully filled up. The runtime for $N$ insertions into a <code>JavaGrowList</code> is $\Theta(N)$, and the amortized runtime of a single addition is $\Theta(1)$.</li>
+</ul>
+
+<p>The file <code>timing.AmortizationTiming</code> contains code to generate plots of the runtimes of the different <code>GrowList</code> implementations as many elements are added to each of them. Again feel free to examine this code, but you can again treat this class as a black box. The three arguments accepted (or set by default) are <code>maxSize</code> which specifies the number of elements to add, <code>nLists</code> which specifies the number of lists to test on, and <code>accumulate</code> which will specify whether you would like to visualize the accumulated runtimes or the per operation runtimes (<code>accumulate</code> should be passed as <code>&#x2d;accum</code> or <code>&#x2d;noaccum</code>, see below for more information). When you run this program it will take some time to run all of the experiments, and then a nice plot should be opened on your computer.</p>
+
+<p>For example, the commands</p>
+
+<pre><code>javac timing/AmortizationTiming.java
+java timing.AmortizationTiming 1024 1000 &#x2d;noaccum</code></pre>
+
+<p>uses the command-line arguments to plot all lists' runtimes per operation for 1024 additions into 1000 different lists (averaging the result). On the other hand the commands</p>
+
+<pre><code>javac timing/AmortizationTiming.java
+java timing.AmortizationTiming 1024 1000 &#x2d;accum</code></pre>
+
+<p>uses the command-line arguments to plot the accumulated runtimes for the first <code>i</code> insertion for the same 1024 additions into the same 1000 lists.</p>
+
+<p>Just like before try running the program, either with IntelliJ or over the command line. To run with IntelliJ, you can run the main method of <code>AmortizationTiming</code> and alter the <code>maxSize</code>, <code>nLists</code>, and <code>accumulate</code> values. If you're running it on the command line, run the above commands from the lab8 directory. We have made this setup flexible, so please play with the values of <code>maxSize</code>, <code>nLists</code>, and <code>accumulate</code> to see how the graphs change!</p>
+
+<hr/>
+
+
+<h3 id="discussion-amortization-results">Discussion: Amortization Results</h3>
+
+
+<p>Once you have the visualization up and running, answer each of these questions with your lab partner!</p>
+
+<ul>
+  <li>Is one <code>GrowList</code> implementation always better than the others?</li>
+  <li>Why is the runtime for <code>N</code> insertions into a geometrically resizing list a $\Theta(N)$ operation?</li>
+  <li>Why is the runtime for <code>N</code> insertions into a arithmetically resizing list a $\Theta(N^2)$ operation?</li>
+  <li>How does the runtime per operation for the <code>ArithGrowList</code> compare to that of <code>GeomGrowList</code> and <code>JavaGrowList</code>? Specifically look at the non-accumulated plots and describe the trends for how long each operation takes as a function of how many elements have already been inserted in the list.</li>
+  <li>When are there spikes in the per operation runtime graphs for each of the implementations? Do these make sense to you? <em>Hint: some of these should and others might not. Empirical runtime can be quite messy and depends on machine specifics which will be revealed in other subsequent classes like CS61C.</em></li>
+  <li><em>Optional</em>: Try changing the code for <code>GeomGrowList</code> to resize by a different factor. How does this effect the theoretical asymptotic runtime? How does this effect the plotted runtime?</li>
+  <li><em>Optional</em>: Try changing the code for <code>ArithGrowList</code> to resize by adding a different fixed number of spots in the array. How does this effect the theoretical asymptotic runtime? How does this effect the plotted runtime?</li>
+</ul>
+
+<p>We will be asking you to record a brief summary of your responses to these questions to show that you have put some thought into discussing them. Again this is supposed to be a collaborative exercise and some of these questions might have many reasonable answers. If you have questions you can also ask a TA/AI! Once you feel satisfied with your responses, put a summary into the <code>amortized_timing.txt</code> file in your lab8 directory.</p>
+
+<p><em>Note: We will not be directly grading your responses and you will be graded on effort. You should write at least one sentence for each question. No responses are required for the optional questions.</em></p>
+
+
+<h2 id="c-practice-with-asymptotics-and-maps">C. Practice with Asymptotics and Maps</h2>
+
+
+<hr/>
+
+
+<h3 id="simple-map-introduction">Simple Map Introduction</h3>
+
+
+<p>For the next part of the lab we will shift gears and look at different implementations of the <code>SimpleMap</code> interface we have provided for you. A map is an abstract data type which maintains pairs of keys and associated values. You probably have used them before for many tasks in 61B this semester or previously in other classes (a Python dictionary is a map). The <code>SimpleMap</code> interface contains the following two following methods:</p>
+
+<ul>
+  <li><code>void put(K key, V value)</code>: Inserts a new key-value pair into the map. If the key already exists, then the associated value is updated to the new value.</li>
+  <li><code>V get(K key)</code>: Returns the value associated with a particular key.</li>
+</ul>
+
+<hr/>
+
+
+<h3 id="linkedlistmap">LinkedListMap</h3>
+
+
+<p>As the name suggests this implementation of <code>SimpleMap</code> is backed by a linked list. Unlike the nodes in previous linked lists we have looked at (<code>IntList</code> and <code>IntDList</code>), the <code>MapNode</code> elements of this linked list will contain both a key and a value. <em>Optional: You will not be implementing any of the functionality of this class, but familiarize yourself with the code. Discuss with your partner what the best and worst case time is for the <code>put</code> and <code>get</code> operations are.</em></p>
+
+<hr/>
+
+
+<h3 id="exercise-treemap">Exercise: TreeMap</h3>
+
+
+<p>The <code>TreeMap</code> implementation of the <code>SimpleMap</code> class will be an implementation of the <code>SimpleMap</code> interface that is instead backed by a binary search tree. If you would like a refresher on binary search trees, please see the <a href="../../lectures/lect21.pdf">slides from lecture</a>. We have provided the basic structure of this class for you which we will describe in more detail here. Similar to the <code>LinkedListMap</code> there will be a <code>TreeMapNode</code> inner class which will be the underlying recursive binary search tree structure. The <code>TreeMap</code> class has a <code>_root</code> variable which points to the root of the tree. The <code>TreeMapNode</code> class contains the following variables:</p>
+
+<ul>
+  <li><code>TreeMapNode _left</code>: Pointer to the left child of the <code>TreeMapNode</code>.</li>
+  <li><code>TreeMapNode _right</code>: Pointer to the right child of the <code>TreeMapNode</code>.</li>
+  <li><code>K _key</code>: The key for the key-value pair represented by the <code>TreeMapNode</code>.</li>
+  <li><code>V _value</code>: The value for the key-value pair represented by the <code>TreeMapNode</code>.</li>
+</ul>
+
+<p>We have provided the <code>put</code> and the <code>get</code> functions for you and you should not need to edit these functions (although you may if you so choose as long as the tests still pass). The structure presented here is a common design pattern for classes which are wrapper classes for tree recursive data structures. The <code>get</code> and <code>put</code> functions themselves are not recursive as they operate on a <code>TreeMap</code> (which itself is not a recursive data structure). These methods call  <code>putHelper</code> and <code>getHelper</code> 
+which are recursive functions that take in <code>TreeMapNode</code>s and return <code>TreeMapNodes</code>.</p>
+
+<p>Your task for this lab will be to fill in the recursive <code>putHelper</code> and <code>getHelper</code> functions which handle most of the tree related operations. The goal will be to complete these methods such that your completed <code>TreeMap</code> implementation will perform similarly to that of Java's <code>java.util.TreeMap</code>. Before beginning take a look at the code provided in the <code>TreeMap</code> and make sure you understand the structure. Next implement the two methods by filling in the <code>// FIXME</code>s in the code. Finally discuss with your partner what the worst case and best case runtimes for each of these methods will be.</p>
+
+<p><em>Hint: The keys of the map will be <code>Comparable&lt;K&gt;</code> which means that you should use the <code>compareTo(K key)</code> function in order to compare keys. This will be useful for traversing through the tree correctly.</em></p>
+
+<hr/>
+
+
+<h3 id="maptest">MapTest</h3>
+
+
+<p>We have provided a small set of unit tests to test both the <code>LinkedListMap</code> and the <code>TreeMap</code> that you will be implementing. There are three helper methods <code>testSmallMap</code>, <code>fuzzTestMap</code> (this test is a <a href="https://en.wikipedia.org/wiki/Fuzzing">fuzz test</a>), and <code>timedFuzzTestMap</code>. More information can be found in the comments of these methods. The <code>fuzzTestMap</code> and the <code>timedFuzzTestMap</code> might be different than other testing functions that you have seen before. <em>Optional: Spend some time looking at each of these functions and try to understand what they are doing, discuss this with your partner. You might be able to take ideas from these tests to write new kinds of test for other code in your future!</em></p>
+
+<p>The actual tests that will be ran on the autograder are as follows (all just call one of the above three testing functions).</p>
+
+<ul>
+  <li><code>smallTestLinkedListMap</code>: Runs <code>smallTestMap</code> with a <code>LinkedListMap</code>.</li>
+  <li><code>smallTestTreeMap</code>: Runs <code>smallTestMap</code> with a <code>TreeMap</code>.</li>
+  <li><code>fuzzTestLinkedListMap</code>: Runs <code>fuzzTestMap</code> with a <code>LinkedListMap</code>.</li>
+  <li><code>fuzzTestTreetMap</code>: Runs <code>fuzzTestMap</code> with a <code>TreeMap</code>.</li>
+  <li><code>timedFuzzTestTreeMap</code>: Runs <code>timedFuzzTestMap</code> with a <code>TreeMap</code>.</li>
+</ul>
+
+<p>By default you should pass the <code>LinkedListMap</code> tests and fail the <code>TreeMap</code> tests. In order to get full credit for this section of the lab you must pass all 5 of these tests.</p>
+
+<p><em>Optional: It might be fun to see in practice how much better we can do when we use a binary search tree over a linked list. Try writing a new test, or modifying an existing one to see what the ratio between the speed of the <code>LinkedListMap</code> and the <code>java.util.TreeMap</code> is.</em></p>
+
+<p><em>Optional: The <code>TreeMap</code> that you have created here probably offers a good speedup over the <code>LinkedListMap</code>, and might even be close to that of the <code>java.util.TreeMap</code> however it might not be quite as good as it seems. In the tests that we have provided we insert random key-value pairs which has empirically been shown to result in roughly balanced tree structures. If we instead insert a large number of key-value pairs into our tree with keys that are in sorted order, then the performance of our tree might be decreased significantly. Discuss with your partner why this might be, and then see if you can verify this empirically by writing a new test or refactoring the existing code.</em></p>
+
+
+<h2 id="d-submission-and-grading">D. Submission and Grading</h2>
+
+
+<hr/>
+
+
+<h3 id="deliverables">Deliverables</h3>
+
+
+<p>For full credit on the lab you must:</p>
+
+<ul>
+  <li>Put sufficient effort into the responses in <code>sort_timing.txt</code>.</li>
+  <li>Put sufficient effort into the responses in <code>ammortized_timing.txt</code>.</li>
+  <li>Complete the <code>putHelper</code> and <code>getHelper</code> functions in <code>map.TreeMap.java</code>. In order to get full credit for this part of the lab all of the provided tests in <code>map.TestMap.java</code> must pass.</li>
+  <li>Also remember to complete and submit the <code>partner.txt</code> if you worked with a partner. If you did not, you do not need to edit this file.</li>
+</ul>
+
+
+<h3 id="submission">Submission</h3>
+
+
+<p>You can submit the same as usual:</p>
+
+<pre><code>&lt;git add / commit&gt;
+git tag lab8&#x2d;0 # or the next highest submission number
+git push
+git push &#x2d;&#x2d;tags</code></pre>
+    </main></div>
+</body>
+</html>

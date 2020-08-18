@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 2 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <link href="../../../assets/css/proj.css" rel="stylesheet" type="text/css">
+
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#introduction">Introduction</a></li>
+  <li><a href="index.html#notation">Notation</a></li>
+  <li><a href="index.html#textual-input-language">Textual Input Language</a></li>
+  <li><a href="index.html#errors">Errors</a></li>
+  <li><a href="index.html#output">Output</a></li>
+  <li><a href="index.html#running-your-program">Running Your Program</a></li>
+  <li><a href="index.html#your-task">Your Task</a></li>
+  <li><a href="index.html#testing-harness-and-staff-solution">Testing Harness and Staff Solution</a></li>
+  <li><a href="index.html#checkpoint">Checkpoint</a></li>
+  <li><a href="index.html#extra-credit">Extra Credit</a></li>
+  <li><a href="index.html#advice-amp-resources">Advice &amp; Resources</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Project 2: Lines of Action</header>
+        
+<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {inlineMath: [["$","$"]]}
+	  });
+	</script>
+	<script type="text/javascript"
+	   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+
+<p><em>Please check <a href="https://piazza.com/class/k5eevxebzpj25b?cid=1505">Piazza</a> for 
+updates, useful resources, and a changelog.</em></p>
+
+
+<h2 id="introduction">Introduction</h2>
+
+
+<p><em>Lines of Action</em> is a board game invented by Claude Soucie.
+It is played on a checkerboard with
+ordinary checkers pieces.  The two players take turns, each moving a
+piece, and possibly capturing an opposing piece.
+The goal of the game is to get all of one’s pieces into one group of pieces that
+are connected. Two pieces are connected if they are adjacent horizontally,
+ vertically, or diagonally.
+Initially, the pieces are arranged as shown in Figure 1.
+Play alternates between Black and White, with Black moving first.
+Each move consists of moving a piece of your color horizontally,
+vertically, or diagonally onto an empty square or onto a square occupied by
+an opposing piece, which is then removed from the board.  A piece may
+jump over friendly pieces (without disturbing them), but may not cross
+enemy pieces, except one that it captures.
+A piece must
+move a number of squares that is exactly equal to the total number of
+pieces (black and white) on the line along which it chooses to move
+(the <em>line of action</em>).  This line contains both the squares
+behind and in front of the piece that moves, as well as the square the
+piece is on.  A piece may not move off
+the board, onto another piece of its color, or over an opposing piece.</p>
+
+<center>
+<img src="img/fig1.png" alt="Initial Board and Moves">
+
+<p>
+
+<blockquote><p><strong>Figure 1.</strong> (a) Initial position, showing standard designations for rows
+and columns. (b) Possible moves for the black piece at f3. In (b) the
+piece at f3 cannot move horizontally to the right because it would be forced to
+move 4 steps, which would push it off the board. The same piece cannot move
+vertically up because there are 4 pieces in the vertical line of action and moving
+4 steps up would require it to move over enemy pieces
+</center></p></blockquote>
+
+<p>Figure 1b illustrates the four possible moves
+for a black piece in the position shown.
+(The examples here
+are taken from the
+<a href="http://www.boardspace.net/loa/english/index.html">BoardSpace website</a>.)
+The move f3-d5 is a capture; all others are ordinary moves.
+The diagonal moves are all two squares, since there are two pieces
+along each of the diagonals shown.  The horizontal move is four squares
+because of the four pieces in row 3.</p>
+
+<p>The game ends when one side's pieces are contiguous: that is, there is
+a path connecting any two pieces of that side's color by a sequence of steps to
+adjacent squares (horizontally, vertically, or diagonally), each of which
+contains a piece of same color.  Hence, when a side is reduced to a single
+piece, all of its pieces are contiguous.  If a move causes both sides' pieces
+to be contiguous, the winner is the side that made that move.
+One can have infinite games, where players just
+repeat positions indefinitely.  We will prevent this with a move-limit
+rule: if the current move limit is $L$ moves (the default is 60),
+then after the two sides both make $L$ moves combined, the game ends in a tie.
+Our testing will always include time limits; somebody
+will eventually lose if two players repeat positions many times.
+Figure 2a shows a final position.
+Figure 2b shows a board just before a move that will give both sides
+contiguous pieces.  Since the move is White's,  White wins this game.</p>
+
+<center>
+<img src="img/fig2.png" alt="Initial Board and Moves">
+
+<p>
+
+<blockquote><p><strong>Figure 2.</strong> End positions. Position (a) is a win for Black.  In position (b),
+White can move as shown, capturing an isolated black piece and
+giving <em>both</em> players contiguous pieces. Since
+it is White's move, however, the result is counted as a winning position for
+White.
+</center></p></blockquote>
+
+
+<h2 id="notation">Notation</h2>
+
+
+<p>We'll denote columns with
+letters a&ndash;h from the left and rows with numerals 1&ndash;8 from the
+bottom, as shown in Figure 1 and Figure 2.
+The square at column $c$ and row $n$ is denoted $cn$.
+A move from $c_1n_1$ to $c_2n_2$
+is denoted $c_1n_1$-$c_2n_2$</p>
+
+
+<h2 id="textual-input-language">Textual Input Language</h2>
+
+
+<p>Your program should respond to the following textual commands (you may
+add others).  There is one command per line, but whitespace
+may precede and follow command names and operands freely.  Empty lines
+have no effect, and a command line whose first non-blank character
+is <code>#</code> is ignored as a comment.
+Extra arguments to a command
+(beyond those specified below) are ignored.  An end-of-file
+indication on the command input should have the same effect as the
+<code>quit</code> command.</p>
+
+<ul>
+  <li><strong>new</strong>: Abandons the current game (if one is in progress),
+  and clears the board to its initial configuration.
+  Sets the current player to Black.
+  Takes moves alternately from Black and White.</li>
+  <li>$c_1r_1$<code>&#x2d;</code>$c_2r_2$:  As indicated under
+  <a href="index.html#notation">Notation</a>,
+  denotes a move from $c_1r_1$ to $c_2r_2$ (e.g.,
+  <code>b8&#x2d;b6</code>.)
+  This command is not valid after a game has ended and before the board has been
+  cleared for a new game.
+  The first and then every other move is for the Black
+  player, the second and then every other is for White, and the normal legality
+  rules apply to all moves.</li>
+  <li><strong>auto $P$</strong>:
+  Causes player $P$ to be played by an automated
+  player (an AI) on subsequent moves.  The value $P$ must be "black" or
+  "white" (ignore case&mdash;"black" or "BLACK" also work.)
+  Initially, White is an automated player.</li>
+  <li><strong>manual $P$</strong>:  Causes player $P$ to take moves from the terminal
+  on subsequent moves.  The value of $P$ is as for the <code>auto</code>
+  command. Initially, Black is a manual player.</li>
+  <li><strong>set</strong> <em>CR</em> $P$ $N$:
+  Depending on $P$, sets the contents of square $CR$.
+  $P$ may be <code>black</code>, <code>white</code>, or <code>&#x2d;</code> (denoting empty).
+  Make $N$ (<code>black</code> or <code>white</code>) the next player to move.
+  As for <code>auto</code> and <code>manual</code>, case is irrelevant.
+  This command is intended for setting up particular positions quickly for
+  testing or study, and is not intended for normal play.</li>
+  <li><p><strong>dump</strong>: This command is especially for testing and debugging.
+  It prints the board out in <em>exactly</em> the following format:</p>
+
+<pre><code>===
+    &#x2d; b b b b b b &#x2d;
+    w &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; w
+    w &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; w
+    w &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; w
+    w &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; w
+    w &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; w
+    w &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; &#x2d; w
+    &#x2d; b b b b b b &#x2d;
+Next move: black
+===</code></pre>
+
+  <p>with the <code>===</code> markers at the left margin and the board
+  indented four spaces.
+  Here, <code>&#x2d;</code> indicates an empty square, and <code>w</code> and <code>b</code> indicate
+  white or black pieces.
+  Don't use the two <code>===</code> markers anywhere else in your
+  output.  This gives the autograder a way to determine the state of
+  your game board at any point.
+  It does not change any of the state of the program.</p></li>
+  <li><p><strong>seed $N$</strong>: <em>If</em> your program's automated players
+  use  pseudo-random numbers to choose moves, this command
+  sets the random seed to $N$ (a long integer).  It
+  has no effect if there is no random component to
+  your automated players (or if you don't use automated
+  players in a
+  particular game).  It doesn't matter exactly how you
+  use $N$ as long as your automated player behaves
+  identically each time it is seeded with $N$.  In the
+  absence of a <code>seed</code> command, do what you want to
+  seed your generator. The idea behind <code>seed</code> is to
+  make it possible to have reproducible results when testing
+  an AI.  For example,</p>
+
+<pre><code>  import java.util.Random;
+  Random r = new Random();
+  r.setSeed(100000000);
+  System.out.println(r.nextInt(100));
+  System.out.println(r.nextInt(100));</code></pre>
+
+  <p>(The call <code>nextInt(int r)</code>
+  returns an integer between 0 and the <code>r</code>.)
+  When we run this program, we will deterministically get the same output
+  every time. For example, if we get 80 and then 30 printed,
+  the next time we run the program, 80 and 30 will print again,
+  even though the <code>nextInt</code> method returns a
+  "random" number (this is why we officially call these "pseudo-random
+  numbers.")</p></li>
+  <li><strong>limit $N$</strong> Sets the move limit to $2*N$ (initially, it is $N=30$).
+  If both players
+  make $N$ moves and neither side has won, the game is a draw.  The value of
+  $N$ may not be less than or equal to the number of moves made so far by
+  either player.</li>
+  <li><strong>help</strong>: Prints a brief summary of the commands.</li>
+  <li><strong>quit</strong>: Exits the program.</li>
+</ul>
+
+<p>As long as the commands described so far work properly, you may add
+any additional commands you want.</p>
+
+
+<h2 id="errors">Errors</h2>
+
+
+<p>Moves must be legal, or your program must reject
+them without affecting the board.  Humans are expected to make
+errors; your program should ask for another move when this happens.
+Similarly, your program should respond to other invalid commands by simply
+reporting the error and prompting for a new command.
+AIs must never make illegal moves.</p>
+
+
+<h2 id="output">Output</h2>
+
+
+<p>Each time the program expects a move from a human player,
+it should prompt.  You may prompt
+however you please with a string that ends with <code>&gt;</code> followed by any number
+of blanks (one does not typically print a newline after a prompt.)
+Write prompts to the standard output.
+It is probably wise to "flush" <code>System.out</code> explicitly after
+printing a prompt with</p>
+
+<pre><code>    System.out.flush();</code></pre>
+
+<p>Do not print a <code>&gt;</code> character except as a prompt.</p>
+
+<p>Whenever an AI moves, your program should print the move on the standard
+output using <em>exactly</em> the following format:</p>
+
+<pre><code>   * a2&#x2d;c2</code></pre>
+
+<p>(with asterisk shown).
+Do not print these lines out for a manual player's moves.</p>
+
+<p>When one side wins, the program should print out one of</p>
+
+<pre><code> * White wins.
+ * Black wins.
+ * Tie game.</code></pre>
+
+<p>(also with periods) as appropriate.  Do not use the <code>*</code> character in any
+other output you produce.</p>
+
+<p>Your program should
+not exit until it receives a <code>quit</code> command or reaches the end of
+its input.</p>
+
+<p>You are free to produce any other output you want, subject to the
+restrictions above (which are there to make autograding easier).  So,
+for example, you might want to print the board automatically from time
+to time, especially when at least one player is an AI.  As long as you
+do so without using the <code>===</code> markers, you are free to produce
+whatever output you want.</p>
+
+
+<h2 id="running-your-program">Running Your Program</h2>
+
+
+<p>Your job is to write a program to play Lines of Action.  Appropriately enough,
+we'll call the program "loa."
+To run your program, you'll type</p>
+
+<pre><code>    java &#x2d;ea loa.Main [&#x2d;&#x2d;display] [&#x2d;&#x2d;log=LOGFILE] [INPUT&#x2d;FILE [OUTPUT&#x2d;FILE]]</code></pre>
+
+<p>Here, square braces enclose optional arguments.  The <code>&#x2d;&#x2d;display</code> option
+applies only if you do the extra-credit GUI. The <code>&#x2d;&#x2d;log</code> argument specifies
+a file into which the program writes all the commands and moves entered into
+it (good for capturing the details of a session).  The <code>INPUT&#x2d;FILE</code> specifies
+a source of commands; by default it is simply the standard input (generally
+your terminal).  Finally, the <code>OUTPUT_FILE</code> specifies a file to receive
+output printed by the program; by default it is simply the standard output.</p>
+
+
+<h2 id="your-task">Your Task</h2>
+
+
+<p>The shared repository will contain skeleton files for this project, which you
+can merge into your repository as usual with</p>
+
+<pre><code>    git fetch shared
+    git merge shared/proj2</code></pre>
+
+<p>Be sure to include tests of your program (that is part of the
+grade).  The makefile we provide has
+a convenient target for running such tests.
+Our skeleton directory
+contains a couple of trivial tests, but  <strong><em>these do not constitute
+an adequate set of tests!</em></strong>
+Make up your tests ahead of time and update your makefile to run them.
+To help with testing and debugging, we will provide our own version of
+the  program, so that you can test your program against ours (we'll be
+on the lookout for illegal moves).</p>
+
+<p>Your AI should at least be able to find <em>forced wins</em> within a small number of
+moves.  Otherwise, we won't be too particular.  In fact, we suggest
+that you first aim to produce an AI that is simply capable of making
+legal moves.  A forced win in $N$ moves is a situation in which one side can always win after making $N$ moves
+with proper play, no matter what the opponent does.
+We'll eventually run a tournament among programs that pass our tests. If you
+want to understand how to implement your AI, please watch
+<a href="../../lectures/lect22.pdf">Lecture 22 (Game Trees)</a>.</p>
+
+<p>As usual, we'll run a style checker on your code.  The skeleton contains
+deliberate style errors that are there to draw your attention to certain things,
+including skeletons for extra-credit code. Just because you didn't write
+the lines that cause them, don't think you can ignore them.  You are responsible
+for all the code you hand in, regardless of who originally wrote it.</p>
+
+
+<h2 id="testing-harness-and-staff-solution">Testing Harness and Staff Solution</h2>
+
+
+<p>There is a staff solution available to play against or to better
+understand the spec.  Type
+<code>staff&#x2d;loa</code> on the instructional machines to run it. It takes the same
+arguments as your solution is supposed to take.</p>
+
+<p>Our testing of your projects will be automated.
+The testing program
+will be finicky, so be sure that</p>
+
+<pre><code>    make check</code></pre>
+
+<p>runs your tests on the instructional machines.</p>
+
+<p>The integration test program, <code>test&#x2d;loa</code>, feeds commands to one or two
+running programs and passes appropriate moves from one to the other, allowing
+you to test your program and to test it against another program (such as the
+staff version).
+To run <code>test&#x2d;loa</code>, you'll use</p>
+
+<pre><code>python3 testing/test&#x2d;loa TESTFILE&#x2d;1.in</code></pre>
+
+<p>to run <code>TESTFILE&#x2d;1.in</code> through your program and</p>
+
+<pre><code>python3 testing/test&#x2d;loa TESTFILE&#x2d;1.in TESTFILE&#x2d;2.in</code></pre>
+
+<p>to run two programs simultaneously so that each one sends all of its AI's moves
+(such as "<code>*</code>&nbsp;<code>b4</code>&#x2011<code>d6</code>"
+as described previously) to the other program.
+(Replace "TESTFILE" with the actual name of your test file.)</p>
+
+<p>Each <code>.in</code> file should start with a Unix-style command for
+running a program preceded by "<code>#*</code>", such as</p>
+
+<pre><code> #* java &#x2d;ea loa.Main</code></pre>
+
+<p>(You will probably use just the command command above;
+the autograder will sometimes
+replace it with an invocation of <code>staff&#x2d;loa</code>.)
+The rest of the <code>.in</code> file is fed to this program as the standard
+input, except for lines that start with "<code>#*</code>" in the first column,
+which are special instructions to the testing script.</p>
+
+<ul>
+  <li>The command <code>#*time</code> <em>MOVE</em> <em>GAME</em> puts a time limit of <em>MOVE</em> seconds
+  on each move in a game and <em>GAME</em> seconds for one side's moves in an
+  entire game (i.e., an entire sequence of moves controlled
+  by one of the <code>move/win</code> commands below).</li>
+  <li>The command <code>#*move</code> means "wait for the program to output an AI move,
+  and then continue with
+  the script."  When used with the two-argument form of <code>test&#x2d;loa</code>, it
+  also sends this
+  move as input to the other program.</li>
+  <li>The command <code>#*move/win</code> is intended for use when both players are AIs,
+  and means
+  "wait for the program to output a complete sequence of AI moves,
+  followed by "<code>* ... wins.</code>"
+  It does not print either the moves or the "win" message.</li>
+  <li>The command <code>#*move/win+</code> is the same as <code>#*move/win</code>, but also prints
+  the "<code>* ... wins.</code>" message.</li>
+  <li>The command <code>#*win+</code> waits for a "<code>* ... wins.</code>" message from the program
+  and prints it.</li>
+  <li>All lines that don't start with <code>#*</code> are sent to the program being tested.</li>
+</ul>
+
+<p>A few other commands apply only to the two-argument form of <code>test&#x2d;loa</code>.
+They are intended to
+allow two programs to play each other.</p>
+
+<ul>
+  <li>The command <code>#*remote move/win</code> means "Wait for an AI move from the other
+  program, give it to
+  this program, then execute a <code>#*move</code> command. Repeat
+  until one side sends a win message. Do not print the moves or win message.</li>
+  <li>The command <code>#*remote move/win+</code> is the same as <code>#*remote move/win</code>,
+  but prints the "win" message.</li>
+</ul>
+
+<p>The idea with these two commands is that one of the two scripts will,
+at a certain point,
+contain the commands</p>
+
+<pre><code>#*move
+#*remote move/win</code></pre>
+
+<p>and the other will contain</p>
+
+<pre><code>#*remote move/win</code></pre>
+
+<p>so that the first sends a move from its AI to the other program, which
+then waits for a response
+from its AI to send back, and so forth.</p>
+
+<p>For the <code>remote</code> commands, both programs should generate "wins" messages,
+and <tt>test&#x2011;loa</tt> will check
+that they are the same.</p>
+
+<p>The <code>test&#x2d;loa</code> script throws out any other output from either program
+except for properly
+formatted board dumps, as are supposed to be produced by the <strong>dump</strong> command
+described previously.   You can see all the output by running it with</p>
+
+<pre><code> python3 testing/test&#x2d;loa &#x2d;&#x2d;verbose TESTFILE&#x2d;1.in</code></pre>
+
+<p>or</p>
+
+<pre><code> python3 testing/test&#x2d;loa &#x2d;&#x2d;verbose TESTFILE&#x2d;1.in TESTFILE&#x2d;2.in</code></pre>
+
+<p>which will show all the commands sent to each program and all their output.</p>
+
+<p>The <code>test&#x2d;loa</code> program will report an error if a program hangs or
+times out, or if it exits abnormally (with an exception or an exit
+code other than 0).  Finally, if there is a file <code>TESTFILE&#x2d;1.std</code> or
+<code>TESTFILE&#x2d;2.std</code>, <code>make check</code> will check it against the output
+from the program for
+<code>TESTFILE&#x2d;1.in</code> (likewise for <code>TESTFILE&#x2d;2.std</code> against the output for
+<code>TESTFILE&#x2d;2.in</code>);
+<code>make check</code> uses on the script <code>testing/tester.py</code> to do this comparison.</p>
+
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+<p>Information about the checkpoint is on Piazza <a href="https://piazza.com/class/k5eevxebzpj25b?cid=1777">here</a>. The checkpoint is due Friday April 3 11:59 PM.</p>
+
+
+<h2 id="extra-credit">Extra Credit</h2>
+
+<p><em>Instructions to submit the EC are on <a href="https://piazza.com/class/k5eevxebzpj25b?cid=1888">Piazza</a>.</em></p>
+
+<p>For extra credit, you can implement the <code>&#x2d;&#x2d;display</code> option, and
+play the game using a graphical user interface (GUI). Don't even think
+about this until you get your project working!  However, you might
+consider how to structure your solution to make the addition of a GUI
+simple.  The package <code>ucb.gui2</code> contains classes that make it
+pretty easy to construct a simple GUI.  You will also have to examine
+the classes <code>java.awt.Graphics</code> and <code>java.awt.Graphics2D</code> to
+see how to draw things.</p>
+
+<p>We will be manually grading the GUI and awarding points based on this rubric:</p>
+
+<ul>
+  <li>2 pt - displays the current board, can make moves</li>
+  <li>1 pt - can show a help page</li>
+  <li>1 pt - can undo moves</li>
+  <li>1 pt - can switch a player (black or white) between AI and manual midway through the game</li>
+</ul>
+
+
+<h2 id="advice-amp-resources">Advice &amp; Resources</h2>
+
+
+<p>We've implemented some fussy bits or possibly useful classes in the
+skeleton.  Always remember, however, that you don't have to use them.
+Your job is to provide tests and
+make <code>java &#x2d;ea loa.Main</code> conform to the specification, period.
+If you need random numbers, take a look at
+<code>java.util.Random</code> and Chapter 11 of <em>Data Structures (Into Java).</em></p>
+
+<p>I suggest working first on the representation of the board (the
+skeleton has a class <code>Board</code>, which is supposed
+to represent the game board and state of play.)
+We have also included a skeleton <code>Game</code> class that uses
+<code>Board</code> to keep track of a series of games and interpret commands.
+Get this to work with a manual ("human") player first.
+Then you can tackle writing an automated player <code>MachinePlayer</code>.
+Start with something really simple (perhaps choosing a legal move at
+random) and introduce strategy only when you get the basic
+game-running machinery working properly.</p>
+
+<p>The TAs have created helpful walthrough videos for the <code>numContig</code> method in the <code>Board</code> class, <code>findMove</code> for the <code>MachinePlayer</code> class, and heuristics for the <code>MachinePlayer</code> class. They can be found on Piazza <a href="https://piazza.com/class/k5eevxebzpj25b?cid=1779">here</a>.</p>
+    </main></div>
+</body>
+</html>

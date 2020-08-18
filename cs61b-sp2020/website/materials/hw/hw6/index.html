@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework 6 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-set-of-strings">A. Set of Strings</a></li>
+  <li><a href="index.html#b-bststringset-bounded-iterator">B. BSTStringSet Bounded Iterator</a></li>
+  <li><a href="index.html#c-echashstringset">C. ECHashStringSet</a></li>
+  <li><a href="index.html#d-echashstringset-timing">D. ECHashStringSet Timing</a></li>
+  <li><a href="index.html#e-amortized-runtime">E. Amortized Runtime</a></li>
+  <li><a href="index.html#f-submission">F. Submission</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Homework 6: BSTs, Ranges, and Hashing</header>
+        
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-set-of-strings">A. Set of Strings</a></li>
+  <li><a href="index.html#b-bststringset-bounded-iterator">B. BSTStringSet Bounded Iterator</a></li>
+  <li><a href="index.html#c-echashstringset">C. ECHashStringSet Implementation</a></li>
+  <li><a href="index.html#d-echashstringset-timing">D. ECHashStringSet Timing</a></li>
+  <li><a href="index.html#e-amortized-runtime">E. Amortized Runtime</a></li>
+  <li><a href="index.html#f-submission">F. Submission</a></li>
+</ul>
+
+
+<h2 id="a-set-of-strings">A. Set of Strings</h2>
+
+
+<p>Complete the implementation of the type <code>BSTStringSet</code>, which implements the
+interface <code>StringSet</code>.  As the class name suggests, the intended implementation
+uses a binary search tree.  Don't use any of the Java Collection classes in your
+BST implementation (you may still use a <code>List</code> implementation to collect items for
+the <code>asList</code> method).</p>
+
+<p>Hint: think about what you would like your functions to be taking in, returning, and computing. Remember that you can always make your own private helper functions.</p>
+
+
+<h2 id="b-bststringset-bounded-iterator">B. BSTStringSet Bounded Iterator</h2>
+
+
+<p>Modify <code>BSTStringSet</code> to implement <code>SortedStringSet</code>, providing an iterator that returns elements 
+within a specified range of values in ascending order.  The iterator should produce 
+its <em>M</em> values in time <em>O(M + h)</em>, where <em>h</em> is the height of the tree, as described in lecture. 
+We've provided the class <code>BSTStringSetRangeTest</code> to help check that your solution works in these time bounds.</p>
+
+<p>The tricky part of this assignment is producing an inorder tree iterator.
+We've provided the class BSTIterator, which is an iterator for a full BST. You can reference this class when writing the in-order iterator.</p>
+
+
+<h2 id="c-echashstringset">C. ECHashStringSet</h2>
+
+
+<p>For this problem, you'll expand on your work from earlier by creating a
+hashing-based implementation of the <code>StringSet</code> interface.</p>
+
+<p>To implement the interface, you'll be working almost completely
+from scratch, with only minimal skeleton code that implements the interface so the code will compile.
+This one will be a fair bit more difficult than the <code>BSTStringSet</code>.</p>
+
+<p>Create a class <code>ECHashStringSet</code> (EC as in <em>External Chaining</em>) that implements the <code>StringSet</code> interface
+using an external chaining hash table as its core data structure. In
+order to ensure that the <code>.put</code> and <code>.contains</code> operations are fast, you should
+resize the hash table as soon as the load factor exceeds 5. For memory
+efficiency, we ideally would ensure that the load factor is never less than
+0.2, except for empty lists, for which the load factor is allowed to
+be zero.
+Why would this have an important effect on our memory useage?
+ However, for this assignment, you do not need to worry about this behavior or downsizing the set since we
+do not have a remove operation. You also do not need to worry about <code>asList</code> returning the keys in sorted order.</p>
+
+<p>There is one annoying issue you'll enounter: If the <code>hashCode()</code> is
+negative, we need to remove the top bit (since negative array indices
+are not allowed in Java). You can do this using the bit operations we
+discussed earlier in class, e.g. <code>s.hashCode() &amp; 0x7fffffff) %
+bucketCount</code>. You should remember this from BitExercise.absolute(int x) in HW5.</p>
+
+<p>There's no restriction on what you are allowed to use, but you should
+avoid using any library class that has "hash"
+in the name, since that would defeat the whole point of this problem.
+You <strong>are</strong> allowed to use the <code>hashCode()</code> function for Strings.</p>
+
+<p>For an extra challenge, don't use anything that requires using a Java library
+class (except for the <code>asList</code> method).</p>
+
+<p>As references, you might find the following resources useful:</p>
+
+<ul>
+  <li>Chapter 7 of DSIJ.</li>
+  <li>The <a href="http://algs4.cs.princeton.edu/13stacks/ResizingArrayStack.java.html">Resizing Array-Based Stack</a>, which is part of Princeton's
+  standard Java library.</li>
+  <li>The <a href="http://en.wikipedia.org/wiki/Hash_table#Separate_chaining_with_linked_lists">Wikipedia article on separate chaining</a>&nbsp;(another term for external chaining).</li>
+  <li>If you are getting "unchecked or unsafe operations" errors, you might want to
+  look at this <a href="http://stackoverflow.com/questions/217065/cannot-create-an-array-of-linkedlists-in-java">Stack Overflow post</a> on creating arrays of objects that
+  expect a formal type parameter. There is no good way to avoid the
+  warning, aside from suppressing it. If you are curious why, check out this <a href="https://stackoverflow.com/questions/1129795/what-is-suppresswarnings-unchecked-in-java">Stack Overflow post</a>.</li>
+</ul>
+
+<p>Your correctness tests from the previous part should work almost without
+modification (you'll just need to change the type of object that is
+instantiated). Make sure to test something that inserts a large number
+of strings. One testing approach is to generate random strings, insert
+them into both your <code>ECHashStringSet</code> and a
+<code>TreeSet&lt;String&gt;</code>, then iterate through the entire
+TreeSet and ensure that all of its members are also contained in your
+ECHashStringSet and vice-versa.</p>
+
+<p>One solution from a previous semester
+(which does use an import for handling the list of items
+that go in each bucket) is 66 lines including comments and whitespace.</p>
+
+<p>If you're unsure how to get started, slide 4 from the <a href="../../lectures/lect24.pdf">Hashing</a> lecture provides a visual of what our hash table will look like. Starting from this visual, try asking yourself:</p>
+
+<ol>
+  <li>What data structure do I need to make my buckets? What about the list stored at each bucket?</li>
+  <li>How do I know which bucket a given <code>String</code> should be put in?</li>
+  <li>Try implementing <code>put</code> and <code>contains</code>. Test that you are able to add to your <code>ECHashStringSet</code> and check if it contains elements.</li>
+  <li>Now, aim to satisfy the efficiency requirement with resizing. When do we want to resize the array? How do I resize an array?</li>
+</ol>
+
+
+<h2 id="d-echashstringset-timing">D. ECHashStringSet Timing</h2>
+
+
+<p>Run the provided timing tests <code>InsertRandomSpeedTest</code> and <code>InsertInOrderSpeedTest</code> for a range of speeds. Fill out <code>hw6timing.txt</code> as directed. Note that <code>hw6timing.txt</code> has the input sizes you should be passing to <code>InsertRandomSpeedTest</code> and <code>InsertInOrderSpeedTest.</code></p>
+
+<p>If you're having timing issues, make sure your hash table is actually resizing. However, give it a minute to run. The staff solution still takes about 60 seconds to compute some of the largest tests.</p>
+
+
+<h2 id="e-amortized-runtime">E. Amortized Runtime</h2>
+
+
+<p>So now you've implemented your HashSet (or at least read the spec) and (hopefully) satisfied the runtime constraints. We have seen other data structures in this class which rarely have such good runtime. 
+How can we store so many elements efficiently with such good runtime? 
+How do our decisions about when and how to resize affect this?</p>
+
+<p>For an intuitive metaphor for this, check out <a href="https://joshhug.gitbooks.io/hug61b/content/chap8/chap84.html">Amortized Analysis (Grigometh's Urn)</a>.</p>
+
+<p>If you are more visually inclined, visualize the runtime in a graph. When we first create our HashSet, let's say we decide to start with an outer array of size 4. This means we can have constant runtime for our first four insertions. Each operation will only take one unit of time.
+<center>
+<img src="firstInsert.png" alt="">
+</center></p>
+
+<p>When we reach our load factor and have to resize, let's say we decide to make an array of size 8 and copy over our four current items-- which takes four constant time lookups.
+<center>
+<img src="make4.png" alt="">
+</center></p>
+
+<p>That is a big spike! How can we say this is constant? Well, we will now have eight fast inserts! Wow!
+<center>
+<img src="https://inst.eecs.berkeley.edu/~cs61b/sp20/materials/hw/hw6/8inserts.png" alt="">
+</center></p>
+
+<p>A pattern starts to emerge. Once we have again reached our load factor there will be a spike, followed by a sequence of "inexpensive" inserts. These spikes, however, are growing rapidly!
+<center>
+<img src="resizeTo8.png" alt="">
+</center></p>
+
+<p>If we imagine this continuing, each spike will get bigger and bigger! Perhaps counterintuitively, this runtime, viewed over a long time, is actually constant if the work is "amortized" over all of our inserts. Here amortized means that we are spreading the cost of an expensive operation over all our operations. This gives us a constant runtime overall for a large sequence of inserts and resizes. To convince yourself of this visually, imagine "tipping" the size four spike so that it adds one operation to each of the four fast inserts before it. Now each insert operation is taking about 2 units of work, which is constant! We can see this pattern will continue. We can "tip" our size eight resize across the eight previous fast operations! Try drawing a few more resizes out and convince yourself that the spike will always fit.</p>
+
+<p>We have now gotten to the heart of the efficacy of HashSets. 
+Would we get this behavior if we picked a resizing scheme which was additive and not multiplicative?</p>
+
+
+<h2 id="f-submission">F. Submission</h2>
+
+<p>Make sure you have completed your <code>BSTSet</code>, your <code>HashSet</code>, and your <code>hw6timing</code> file.</p>
+
+<p>Don't forget to push both your commits and tags for your final submission. As a reminder, you can push your tags by running:</p>
+
+<pre><code>$ git push &#x2d;&#x2d;tags</code></pre>
+    </main></div>
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CS61B Style Guide | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../index.html"><div class="navitem">Main</div></a>
+        <a href="../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="style-guide.html#checking-program-style-with-style61b">Checking Program Style with style61b</a></li>
+  <li><a href="style-guide.html#whitespace">Whitespace</a></li>
+  <li><a href="style-guide.html#indentation">Indentation</a></li>
+  <li><a href="style-guide.html#braces">Braces</a></li>
+  <li><a href="style-guide.html#comments">Comments</a></li>
+  <li><a href="style-guide.html#names">Names</a></li>
+  <li><a href="style-guide.html#imports">Imports</a></li>
+  <li><a href="style-guide.html#assorted-java-style-conventions">Assorted Java Style Conventions</a></li>
+  <li><a href="style-guide.html#avoiding-error-prone-constructs">Avoiding Error-Prone Constructs</a></li>
+  <li><a href="style-guide.html#limits">Limits</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">CS61B Style Guide</header>
+        <div class="due-date">Author: Paul Hilfinger</div>
+<h2 id="checking-program-style-with-style61b">Checking Program Style with style61b</h2>
+
+
+<p>On the instructional machines, you can run our version of the open-source
+<code>checkstyle</code> program with the command</p>
+
+<pre><code> style61b FILE.java ...</code></pre>
+
+<p>where <code>FILE.java...</code> denotes one or more names of Java source files.  The 
+program will exit normally if there are no style violations, and otherwise 
+will exit with a non-zero exit code.</p>
+
+<p><code>Style61b&#x27; is a simple script that invokes</code>checkstyle<code>configured
+with our official style parameters.  For home use, it is included in our
+</code>cs61b-software<code>package.
+
+The rest of this document details the style rules that</code>style61b` enforces.</p>
+
+
+<h2 id="whitespace">Whitespace</h2>
+
+
+<ul>
+  <li><strong><em>W1.</em></strong> Each file must end with a newline sequence.</li>
+  <li><strong><em>W2.</em></strong> Files may not contain horizontal tab characters.
+  Use blanks only for indentation.</li>
+  <li><strong><em>W3.</em></strong> No line may contain trailing blanks.</li>
+  <li><p><strong><em>W4.</em></strong> Do NOT put whitespace:</p>
+
+  <ol>
+    <li>Around the "<" and ">" within a generic type designation
+    ("List<Integer>", not "List <Integer>", or "List< Integer >").</li>
+    <li>After the prefix operators "!", "--", "++", unary "-", or unary "+".</li>
+    <li>Before the tokens ";" or the suffix operators "--" and "++".</li>
+    <li>After "(" or before ")".</li>
+    <li>After "."</li>
+  </ol></li>
+  <li><p><strong><em>W5.</em></strong> DO put whitespace:</p>
+
+  <ol>
+    <li>After ";", ",", or type casts (e.g., "(String) x", not "(String)x").</li>
+    <li>Around binary operators (e.g., "*", "+") and comparison operators.</li>
+    <li>Around assignment operators (e.g., "=", "+=").</li>
+    <li>Around "?" and ":" in the ternary conditional operator ("x>0 ? x : -x").</li>
+    <li>Around the keywords "assert", "catch", "do", "else",
+    "finally", "for", "if", "return", "synchronized", "try", and "while".</li>
+  </ol></li>
+  <li><p><strong><em>W6.</em></strong> In general, break (insert newlines in) lines before an operator,
+  as in</p>
+
+<pre><code>  ... + 20 * X
+  + Y</code></pre></li>
+  <li><strong><em>W7.</em></strong> Do not separate a method name from the "(" in a method call with
+  blanks. However, you may separate them with a newline followed by
+  blanks (for indentation) on long lines.</li>
+</ul>
+
+
+<h2 id="indentation">Indentation</h2>
+
+
+<ul>
+  <li><strong><em>I1.</em></strong> The basic indentation step is 4 spaces.</li>
+  <li><p><strong><em>I2.</em></strong> Indent code by the basic indentation step for each block level
+  (blocks are generally enclosed in "{" and "}"), as in</p>
+
+<pre><code>if (x &gt; 0) {
+    r = &#x2d;x;
+} else {
+    r = x;
+}</code></pre></li>
+  <li><p><strong><em>I3.</em></strong> Indent 'case' labels at the same level as their
+  enclosing 'switch', as in</p>
+
+<pre><code>switch (op) {
+case &#x27;+&#x27;:
+    addOpnds(x, y);
+    break;
+default:
+    ERROR();
+}</code></pre></li>
+  <li><strong><em>I4.</em></strong> Indent continued lines by the basic indentation step.</li>
+</ul>
+
+
+<h2 id="braces">Braces</h2>
+
+
+<ul>
+  <li><strong><em>BR1.</em></strong> Use { } braces around the statements of all 'if',
+  'while', 'do', and 'for' statements.</li>
+  <li><p><strong><em>BR2.</em></strong> Place a "}" brace on the same line as a following
+  "else", "finally", or "catch", as in</p>
+
+<pre><code>if (x &gt; 0) {
+    y = &#x2d;x;
+} else {
+    y = x;
+}</code></pre></li>
+  <li><strong><em>BR3.</em></strong> Put the "{" that opens a block at the end of a line.  Generally,
+  it goes at the end of the "if", "for", "while", "switch", "do",
+  method header, or
+  class header that contains it.  If line length forces it to the
+  next line, do not indent it, and put it alone on the line.</li>
+</ul>
+
+
+<h2 id="comments">Comments</h2>
+
+
+<ul>
+  <li><strong><em>C1.</em></strong> Every class and field must have a Javadoc (/<em></em> ... */) comment.
+  Every method must either have a Javadoc comment, or an <code>@Override</code>
+  annotation.</li>
+  <li><strong><em>C2.</em></strong> Each parameter of a method must be mentioned in its
+  Javadoc comment, using either a <code>@param</code> tag, or spelled out in all
+  capital letters in running text.  Parameters that begin with
+  "dummy", "ignored", or "unused" do not need to be commented.</li>
+  <li><strong><em>C3.</em></strong> Methods that return non-void values must describe them in
+  their Javadoc comment either with a "@return" tag or in a phrase
+  in running text that contains the word "return", "returning", or "returns".</li>
+  <li><strong><em>C4.</em></strong> The Javadoc comment on every class must contain an @author tag.</li>
+  <li><strong><em>C5.</em></strong> Each Javadoc comment must start with a properly formed
+  sentence, starting with a capital letter and ending with a period.</li>
+  <li><strong><em>C6.</em></strong> Do not use C++-style (<code>//</code>) comments.  If they appear
+  in a skeleton file provided by the staff, they are intended to be removed.</li>
+  <li><strong><em>C7.</em></strong> In method bodies, use <code>/* ... */</code>'-style comments only at
+  the beginning of the method.  That is, avoid internal comments.</li>
+  <li><strong><em>C8.</em></strong> Comments must appear alone on their line(s).</li>
+</ul>
+
+
+<h2 id="names">Names</h2>
+
+
+<ul>
+  <li><strong><em>N1.</em></strong> Names of static final constants must be in all capitals (e.g.,
+  <code>RED</code>, <code>DEFAULT_NAME</code>).</li>
+  <li><strong><em>N2.</em></strong> Names of parameters, local variables, and methods must start with a
+  lower-case letter, or consist of a single, upper-case letter.</li>
+  <li><strong><em>N3.</em></strong> Names of types (classes), including type parameters, must start with
+  a capital letter.</li>
+  <li><strong><em>N4.</em></strong> Names of packages must start with a lower-case letter.</li>
+  <li><strong><em>N5.</em></strong> Names of instance variables and non-final class (static)
+  variables must start with either a lower-case letter or "_".</li>
+</ul>
+
+
+<h2 id="imports">Imports</h2>
+
+
+<ul>
+  <li><strong><em>IM1.</em></strong> Do not use 'import PACKAGE.*', unless the package is
+  <code>java.lang.Math</code>, <code>java.lang.Double</code>, or <code>org.junit.Assert</code>.
+  <code>import static CLASS.*</code> is OK.</li>
+  <li><strong><em>IM2.</em></strong> Do not import the same class or static member twice.</li>
+  <li><strong><em>IM3.</em></strong> Do not import classes or members that you do not use.</li>
+</ul>
+
+
+<h2 id="assorted-java-style-conventions">Assorted Java Style Conventions</h2>
+
+
+<ul>
+  <li><strong><em>S1.</em></strong> Write array types with the "[]" after the element-type name,
+  not after the declarator.  For example, write
+  "<code>String[] names</code>", not "<code>String names[]</code>".</li>
+  <li><p><strong><em>S2.</em></strong> Write any modifiers for methods, classes, or fields
+  in the following order:</p>
+
+  <ol>
+    <li>public, protected, or private.</li>
+    <li>abstract or static.</li>
+    <li>final, transient, or volatile.</li>
+    <li>synchronized.</li>
+    <li>native.</li>
+    <li>strictfp.</li>
+  </ol></li>
+  <li><p><strong><em>S3.</em></strong> Do not explicitly modify methods, fields, or classes where
+  the modification is redundant:</p>
+
+  <ol>
+    <li>Do not label methods in interfaces or annotations as "public"
+    or "abstract".</li>
+    <li>Do not label fields in interfaces or annotations as "static", "public",
+    or "final".</li>
+    <li>Do not label methods in final classes as "final".</li>
+    <li>Do not label nested interfaces "static".</li>
+  </ol></li>
+  <li><p><strong><em>S4.</em></strong> Do not use empty blocks ('{ }' with only whitespace
+  or comments inside) for control statements.  There is one exception:
+  a catch block may consist solely of comments having the form</p>
+
+<pre><code> /* Ignore EXCEPTIONNAME. */</code></pre></li>
+  <li><p><strong><em>S5.</em></strong> Avoid "magic numbers" in code by giving them symbolic names, as in</p>
+
+<pre><code>public static final MAX_SIZE = 100;</code></pre>
+
+  <p>Exceptions are the numerals -16 through 16, 100, 1000,
+  0.5, -0.5, 0.25, -0.25.</p></li>
+  <li><strong><em>S6.</em></strong> Do not try to catch the exceptions Exception,
+  RuntimeError, or Error.</li>
+  <li><strong><em>S7.</em></strong> Write "<code>b</code>" rather than "<code>b == true</code>" and "<code>!b</code>"
+  rather than "<code>b == false</code>".</li>
+  <li><p><strong><em>S8.</em></strong> Replace</p>
+
+<pre><code>if (condition) {
+    return true;
+} else {
+    return false;
+}</code></pre>
+
+  <p>with just</p>
+
+<pre><code>return condition;</code></pre></li>
+  <li><strong><em>S9.</em></strong> Only static final fields of classes may be public.
+  Other fields must be private or protected.</li>
+  <li><strong><em>S10.</em></strong> Classes that have only static methods and fields must
+  not have a public (or defaulted) constructor.</li>
+  <li><strong><em>S11.</em></strong> Classes that have only private constructors must
+  be declared "final".</li>
+</ul>
+
+
+<h2 id="avoiding-error-prone-constructs">Avoiding Error-Prone Constructs</h2>
+
+
+<ul>
+  <li><strong><em>E1.</em></strong> If a class overrides <code>.equals</code>, it must also override <code>.hashCode</code>.</li>
+  <li><p><strong><em>E2.</em></strong> Local variables and parameters must not shadow field
+  names.  The preferred
+  way to handle, e.g., getter/setter methods that simply control a field
+  is to prefix the field name with "_", as in</p>
+
+<pre><code>public double getWidth() {
+    return _width;
+}
+
+public void setWidth(double width) {
+    _width = width;
+}</code></pre></li>
+  <li><strong><em>E3.</em></strong> Do not use nested assignments,
+  such as "<code>if ((x = next()) != null) ...</code>".
+  Although this can be useful in C, it is almost never necessary in Java.</li>
+  <li><strong><em>E4.</em></strong> Include a <code>default</code> case in every <code>switch</code> statement.</li>
+  <li><p><strong><em>E5.</em></strong> End every arm of a "switch" statement either with
+  a <code>break</code> statement or a comment of the form</p>
+
+<pre><code>/* fall through */</code></pre></li>
+  <li><p><strong><em>E6.</em></strong> Do not compare String literals with <code>==</code>.  Write</p>
+
+<pre><code>if (x.equals(&quot;something&quot;))</code></pre>
+
+  <p>and not</p>
+
+<pre><code>if (x == &quot;something&quot;)</code></pre>
+
+  <p>There are cases where you really want to use <code>==</code>, but you are unlikely to
+  encounter them in this class.</p></li>
+</ul>
+
+
+<h2 id="limits">Limits</h2>
+
+
+<ul>
+  <li><strong><em>L1.</em></strong> No file may be longer than 2000 lines.</li>
+  <li><strong><em>L2.</em></strong> No line may be longer than 80 characters.</li>
+  <li><strong><em>L3.</em></strong> No method may be longer than 60 lines.</li>
+  <li><strong><em>L4.</em></strong> No method may have more than 8 parameters.</li>
+  <li><strong><em>L5.</em></strong> Every file must contain exactly one outer class
+  (nested classes are OK).</li>
+</ul>
+    </main></div>
+</body>
+</html>

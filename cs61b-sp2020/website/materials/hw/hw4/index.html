@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework 4 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-introduction">A. Introduction</a></li>
+  <li><a href="index.html#b-scanners">B. Scanners</a></li>
+  <ul>
+    <li><a href="index.html#intro-to-scanners">Intro to Scanners</a></li>
+    <li><a href="index.html#experiment-1-testreadints">Experiment #1: TestReadInts</a></li>
+    <li><a href="index.html#programming-tasks">Programming Tasks</a></li>
+    <ul>
+      <li><a href="index.html#task-1-readints">Task 1: readInts()</a></li>
+      <li><a href="index.html#task-2-smartreadints">Task 2: smartReadInts()</a></li>
+    </ul>
+  </ul>
+  <li><a href="index.html#c-patterns">C. Patterns</a></li>
+  <ul>
+    <li><a href="index.html#experiment-2-matching">Experiment #2: Matching</a></li>
+    <li><a href="index.html#programming-task">Programming task</a></li>
+  </ul>
+  <li><a href="index.html#d-submission">D. Submission</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Homework 4: Scanners and Patterns</header>
+        
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-introduction">Introduction</a></li>
+  <li><a href="index.html#b-scanners">Scanners</a></li>
+  <li><a href="index.html#c-patterns">Patterns</a></li>
+  <li><a href="index.html#d-submission">Submission</a></li>
+</ul>
+
+
+<h2 id="a-introduction">A. Introduction</h2>
+
+
+<p>In this homework, you'll learn some things that we won't talk about in
+lecture: classes and methods dedicated to searching strings for
+selected patterns and for reading formatted input.</p>
+
+<p>Warning: There's a lot of jargon for this homework. Sorry! Focus on
+the experiments and writing code and it should all come together. We always suggest you read the spec, but you will be more confused than normal if you skip this reading!</p>
+
+<p>As usual, you can obtain the skeleton with</p>
+
+<pre><code>$ git fetch shared
+$ git merge shared/hw4
+$ git push</code></pre>
+
+<p>and submit it by adding and committing all work, tagging, pushing, and pushing tags.</p>
+
+
+<h2 id="b-scanners">B. Scanners</h2>
+
+
+
+<h3 id="intro-to-scanners">Intro to Scanners</h3>
+
+<p>If you're already familiar with scanners,
+you can skip straight to the tasks below.</p>
+
+<p>The class <code>java.util.Scanner</code> gives you a way to read
+substrings of text, also called <strong><em>tokens</em></strong>, sequentially
+from a stream of text that is furnished to the <code>Scanner</code> by its
+constructor.  Typically, the stream of text comes from a file or from
+a terminal, but there are ways to convert any source of characters
+into a stream that a <code>Scanner</code> can process.</p>
+
+<p>One of Scanner's constructors accepts an <code>InputStream</code>--a
+stream of bytes (8-bit characters). Since <code>System.in</code>, which is
+normally the <strong><em>standard input</em></strong> stream to your program, is a
+kind of <code>InputStream</code> (that is, its type is a subtype of
+<code>InputStream</code>), you can write</p>
+
+<pre><code>java.util.Scanner inp = new java.util.Scanner(System.in);</code></pre>
+
+<p>to get something that scans the input from your terminal.  (Normally,
+of course, you'd put <code>import java.util.Scanner;</code> at the
+beginning of your source file and just write <code>Scanner</code> instead
+of <code>java.util.Scanner</code>).</p>
+
+<p>One can also create Scanners from Strings (e.g. <code>Scanner s = new
+Scanner(&quot;hello&quot;);</code>), input files, and more.</p>
+
+<p>The simplest way to use a <code>Scanner</code> is to treat the input stream
+as a sequence of tokens separated by text that matches a
+<strong><em>delimiter pattern</em></strong>.  By default, the delimiter pattern
+matches stretches of whitespace (blanks, tabs, newlines, carriage
+returns). For example, consider the input below:</p>
+
+<pre><code>hello i am a half human half
+
+horse</code></pre>
+
+<p>In this case, the tokens separated by our delimiter pattern are
+<code>&quot;hello&quot;</code>, <code>&quot;i&quot;</code>, <code>&quot;am&quot;</code>, <code>&quot;a&quot;</code>,
+<code>&quot;half&quot;</code>, <code>&quot;human&quot;</code>, <code>&quot;half&quot;</code>, and
+<code>&quot;horse&quot;</code>.</p>
+
+<p>Delimiter patterns can be arbitrary. For example, if our delimiter
+pattern were stretches of ";" and "," characters then the string:</p>
+
+<pre>hello; i am just a, horse</pre>
+
+<p>Would yield the tokens <code>&quot;hello&quot;</code>, <code>&quot; i am just a&quot;</code>, and
+<code>&quot; horse&quot;</code>.</p>
+
+<p>Look at <code>ReadInts.java</code> and <code>TestReadInts.java</code>. <code>ReadInts</code> provides one
+complete method <code>printInts</code> and two incomplete methods
+<code>readInts</code> and <code>smartReadInts</code>. <code>TestReadInts</code>
+calls all three methods, testing as appropriate.</p>
+
+
+<h3 id="experiment-1-testreadints">Experiment #1: TestReadInts</h3>
+
+
+<p>Try running <code>TestReadInts</code>. You should see that <code>testReadInts</code> and
+<code>testSmartReadInts</code> fail, but <code>testPrintInts</code> will print out the
+contents of the input <code>String inp</code> as you would expect. Yay, the
+provided code works.</p>
+
+<p>Next take a look at <code>ReadInts.java</code> and look at the source of the <code>printInts</code>
+method. You'll see that it uses the <code>hasNext()</code> and <code>nextInt()</code> methods from
+the <code>Scanner s</code> object created.</p>
+
+<p>These methods, along with their most common brethren are described
+below.</p>
+
+<ul>
+  <li><code>s.hasNext()</code> is true if and only if (iff) there is another token (that
+  is, something other than a delimiter) before the end of the input.</li>
+  <li><code>s.next()</code> returns the next token, and advances
+  <code>s</code> past it.</li>
+  <li><code>s.hasNextInt()</code> is true iff <code>s.hasNext()</code>
+  and the next token has the syntax of a (possibly signed) decimal
+  numeral.</li>
+  <li><code>s.nextInt()</code> does an <code>s.next()</code> and then
+  parses the token into an <code>int</code>.</li>
+  <li>There are several other similarly named methods for other types such as
+  <code>s.hasNextDouble()</code>, which returns true if there is another double available
+  to be read and <code>s.nextDouble()</code> which returns a <code>double</code> parsed from a
+  call to <code>s.next()</code>.</li>
+  <li><code>s.hasNextInt(RADIX)</code> is true iff the next token
+  exists and has the syntax of a (possibly signed) base-RADIX numeral, where RADIX is an int. For example 
+  this could be used to check for integers that are binary (RADIX = 2) or 
+  hexadecimal (RADIX = 16).</li>
+  <li><code>s.nextInt(RADIX)</code> reads the next token as a base-RADIX numeral, throwing an
+  exception if there is no next token, or it does not have the right form for
+  a numeral with that radix.</li>
+  <li><code>s.hasNextLine()</code> is true iff there is any more input.</li>
+  <li><code>s.nextLine()</code> returns the next line of input (that is,
+  everything up to, but not including, the next end-of-line character,
+  or the end of the input if there isn't an end-of-line at the end). Note that unix convention expects all text files to end in a new line character.
+  It then positions <code>inp</code> past the end-of-line character.  Thus,
+  it differs from the other <code>next</code> methods in that it uses a
+  different delimiter (end of line instead of whitespace).</li>
+</ul>
+
+
+<h3 id="programming-tasks">Programming Tasks</h3>
+
+
+
+<h4 id="task-1-readints">Task 1: readInts()</h4>
+
+
+<p>As above, when you run <code>TestReadInts</code>, you'll see that your code fails
+in <code>readInts</code>.  Head to the <code>readInts</code> method, and you'll see that one
+line of code is missing.</p>
+
+<p>Using the <a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html">documentation</a> for the <code>ArrayList</code> class,
+figure out how to modify the code so that the <code>readInts</code> method works
+correctly.</p>
+
+<p>The <code>testReadInts</code> test feeds your method a bad input, and actually expects an 
+exception. For those of you who are particularly keen on the idea of testing
+exceptions, JUnit supports a less unwieldy syntax based on the <code>@Rule</code> tag, which 
+you're free to use.</p>
+
+
+<h4 id="task-2-smartreadints">Task 2: smartReadInts()</h4>
+
+
+<p>Complete the <code>smartReadInts</code> method so that it works as described in the
+comments and <code>TestReadInts</code>. Use the <code>readInts</code> method as a guide.</p>
+
+
+<h2 id="c-patterns">C. Patterns</h2>
+
+
+<p>Your code in the previous part looked through input token by token,
+accepting tokens that were integers. How does Java know if a string
+represents an integer? As you might imagine, it looks for sequences
+that contain only the digits 0-9, possibly preceded by a <code>&#x2d;</code> symbol.</p>
+
+<p>What if we want to match, for example, numerals that only contain
+digits less than 5? Or five-digit numerals only?</p>
+
+<p>Java provides a faculty for this known as <em>Pattern Matching</em>, and
+supports a rich syntax for specifying patterns. For example, one-digit numerals
+less than 5 could be expressed by the pattern "[01234]". Five-digit
+numberals could be expressed by <code>&quot;[0&#x2d;9][0&#x2d;9][0&#x2d;9][0&#x2d;9][0&#x2d;9]&quot;</code> or <code>&quot;[0&#x2d;9]{5}&quot;</code>.</p>
+
+<p>These patterns are sometimes referred to as <em>regular expressions</em> (sometimes referred to as RegEx),
+though strictly speaking, they're more general than the
+formal notion of a regular expression that might be discussed, for
+example, in an upper-division CS class in your future.</p>
+
+<p>The full pattern language is quite rich, and is documented under 
+<a href="http://docs.oracle.com/javase/8/docs/api/java/util/regex/Pattern.html">java.util.regex.Pattern</a>
+in the on-line Java library documentation.  Here are just a few constructs that
+you might find particularly useful. You are not expected to read this
+entire list for this homework. However, you may find it useful moving
+forward in 61B.</p>
+
+<ul>
+  <li>Most characters (letters, digits, most punctuation) simply match
+  themselves.</li>
+  <li>A period (".") acts as a wildcard and matches any character other
+  than (usually) newline.  To get "." to match newline as well, include
+  <code>(?s)</code> at the beginning of your pattern.</li>
+  <li>A sequence such as "[abe]" denotes a <em>character
+  class</em>: in this case, "any of the (single) characters
+  <code>a</code>, <code>b</code>, or <code>e</code>".  As a shorthand, you can
+  represent a range of characters with a hyphen, as in <code>&quot;[abd&#x2d;qs&#x2d;z]&quot;</code> to
+  mean <code>a</code>, <code>b</code>, <code>d</code> through <code>q</code>, and <code>s</code>
+  through <code>z</code>.</li>
+  <li>A character class beginning with a carat, such as <code>[^abe]</code>, 
+  matches any single character <em>other than</em> those listed (the compliment).</li>
+  <li>There are several useful two-character shorthands for certain
+  character classes.  <code>\d</code> is short for <code>[0&#x2d;9]</code>,
+  <code>\s</code> is short for <code>[ \t\n\r]</code> (that is, for whitespace).
+  Unfortunately, in order to put an actual <code>\</code> in a string in Java, you
+  must double it.  Thus, a pattern that matches any two-digit string
+  would be written as the string literal <code>&quot;\\d\\d&quot;</code>.
+  (The Python language got around this problem with "raw strings" such
+  as <code>r&quot;\s&quot;</code>, and Perl got around it by having patterns be a part of
+  the syntax, distinct from strings.  The Java designers, however, apparently
+  never saw the need.)</li>
+  <li>If <code>P</code> represents a pattern, then <code>P*</code> represents
+  "0 or more repetitions of P".  Thus, <code>x*</code> matches the empty
+  string, "x", "xx", "xxx", etc.  <code>[a&#x2d;c]*</code> matches "", "a", "ab",
+  "aa", "bac", "ccc", etc.  <code>*</code>, <code>+</code>, and <code>?</code> (see below) have
+  the strongest binding of any
+  character.  That is, <code>ab*</code> means "one
+  <code>a</code> followed by 0 or more <code>b</code>s".  To get the effect
+  of "0 or more
+  <code>ab</code>s", use <code>(ab)*</code></li>
+  <li>Similarly, P+ means "1 or more Ps."</li>
+  <li><code>P?</code> denotes an optional P (0 or 1 Ps).</li>
+  <li>If <code>P</code> and <code>Q</code> denote patterns, then <code>P|Q</code>
+  denotes "a <code>P</code> or a <code>Q</code>".
+  For example the pattern <code>a|b</code> will match either "a" or "b".</li>
+  <li><code>(P)</code> denotes the same thing as P. It also serves to
+  define a <em>group</em>, a subpattern whose match you can
+  retrieve later.</li>
+  <li><code>(?:P)</code> also denotes the same thing as <code>P</code>, but it does not
+  define a group that you can retrieve later.</li>
+  <li>Following a <code>*</code>, <code>+</code>, or <code>?</code> with a <code>?</code> creates a "non-greedy" version,
+  meaning that it matches as few characters as possible to make the match work.
+  This affects <em>what</em> part of a string gets matched, but usually not <em>whether</em>
+  a string gets matched. For example, if you are matching the string
+  "1, 2, 3, 4" against the pattern string <code>&quot;(\\d).*(\\d).*&quot;</code>, the first
+  group will match <code>1</code> and second will match <code>4</code>.  But with the pattern
+  string <code>&quot;(\\d).*?(\\d).*&quot;</code>, the second group will match <code>2</code>.</li>
+  <li><strong><em>Boundary matchers</em></strong> match the empty string, but only
+  at certain places.  <code>^</code> and <code>$</code> match the beginning and
+  end of a string, respectively (but see below).  <code>\G</code> matches
+  the point at which the last match ended (this makes sense only in
+  <code>Scanners</code>, <code>Matchers</code>, or other kinds of things that have a notion of
+  "the last thing that was matched").  <code>\b</code> matches a "word
+  boundary", a place where a word begins or ends. (Again, when coding the
+  pattern as a Java <code>String</code> literal, you must write <code>\\b</code>.)</li>
+  <li>The sequence <code>(?m)</code> always matches the empty string, but
+  has a side effect of causing <code>^</code> and <code>$</code> to match the
+  beginnings and ends of lines as well as of entire strings.</li>
+  <li>The two-character escape sequences <code>\?</code>, <code>\*</code>,
+  <code>\.</code>, <code>\+</code>, etc., match the character after the
+  backslash, ignoring their special significance.  Thus, the pattern
+  <code>who\?</code> matches the string "who?", and would be written in a
+  Java program as the string literal <code>&quot;who\\?&quot;</code>.</li>
+</ul>
+
+
+<h3 id="experiment-2-matching">Experiment #2: Matching</h3>
+
+
+<p>Compile and run the <code>Matching</code> class. This class allows you to
+type in strings and patterns and see if the entire string matches the
+pattern. If you include any groups (read ahead if you're
+curious), it will also print those.  For example:</p>
+
+<pre><code>$ java Matching
+  Alternately type strings to match and patterns to match against
+  them. Use \ at the end of line to enter multi&#x2d;line strings or
+  patterns (\s are removed, leaving newlines).  The program
+  will indicate whether each pattern matches the ENTIRE
+  preceding string.  Enter QUIT to end the program.
+String: 123456
+Pattern: [0&#x2d;9]{6}
+Matches.
+String: 123456
+Pattern: [0&#x2d;9]{5}
+No match.
+String: 12345
+Pattern: [0&#x2d;9]{6}
+No match.
+String: abdeffff
+Pattern: ab(c|de)f+
+Matches.
+  Group 1: &#x27;de&#x27;
+String: abbbbdefefgg*h
+Pattern: a(b+)d(ef)+gg\*h
+Matches.
+  Group 1: &#x27;bbbb&#x27;
+  Group 2: &#x27;ef&#x27;
+String: QUIT</code></pre>
+
+<p>Use this class to experiment with how patterns work. Try writing
+patterns that match the following. Sample answers are given for each
+problem (drag the mouse over the white area after "Answer:" to see it).</p>
+
+<ul>
+  <li>A single digit between 5 and 8. Answer: <font color="FFFFFF">[5-8].</font></li>
+  <li>Sequences of lower case letters. Answer: <font color="FFFFFF">[a-z]+</font></li>
+  <li>Sequences of lower case letters except the letter j. Answer: 
+  <font color="FFFFFF">[a-ik-z]+</font></li>
+  <li>Sequences of characters that start with the uppercase letter A and
+  end with the letter f. Answer: <font color="FFFFFF">A.*f</font></li>
+  <li>Sequences of three words separated by spaces, where a word is
+  defined as a sequence of lower case letters. Answer:
+  <font color="FFFFFF">[a-z]+ +[a-z]+ +[a-z]+</font></li>
+  <li>Sequences of three
+  words separated by spaces, and where group 1 corresponds to the second
+  word. Answer: <font color="FFFFFF">[a-z]+ +([a-z]+) +[a-z]+</font></li>
+</ul>
+
+<p>To get more practice with writing regular expressions check out
+<a href="https://regexr.com/">RegExr</a> or <a href="https://regex101.com/">regular expressions 101</a>.
+These sites use plain regular expressions rather than Java patterns, which
+differ slightly as we have discussed above. They are still a great way
+to build more familiarity with regular expressions, which as we have
+mentioned, have many different applications involving string matching
+across multiple different programming languages.</p>
+
+
+<h3 id="programming-task">Programming task</h3>
+
+
+<p>In <code>P2Pattern.java</code>, you are given 5 String variables named <code>P1</code>, <code>P2</code>, <code>P3</code>, <code>P4</code> and <code>P5</code>. You are supposed to write regular expression as per the directions. Don't forget to use the escape character twice (<code>\\</code>) wherever you need a backslash (<code>\</code>) in regular expression.</p>
+
+<p><strong>1. For P1:</strong></p>
+
+<ul>
+  <li>Define a pattern that matches valid dates of the form MM/DD/YYYY</li>
+  <li>For example, <code>12/25/2019</code> is a valid date but <code>25/12/2019</code> is not.</li>
+  <li>Assume that MM ranges from 01-12, DD ranges from 01-31 and YYYY ranges from 1900 onwards.</li>
+</ul>
+
+<p><strong>2. For P2:</strong></p>
+
+<ul>
+  <li>Define a pattern that matches lists of non-negative numerals in the notation we used in homework
+  2 (e.g. <code>(1, 2, 33, 1, 63)</code>).</li>
+  <li>Each numeral but the last should be followed by a comma and one or more spaces.</li>
+</ul>
+
+<p><strong>3. For P3:</strong></p>
+
+<ul>
+  <li>Define a pattern that matches a valid domain name.</li>
+  <li>For example, <code>www.support.ucb&#x2d;login.com</code> is a valid domain name (even if it doesn't really exist!)</li>
+  <li>A valid domain name contains set of alphanumeric characters (i.e., a-z, A-Z), numbers (i.e. 0-9) and dashes (-) or a combination of all of these.</li>
+  <li>It does not begin or end with dash (-) or period (.)</li>
+  <li>It does not contain whitespace ( ) or underscore (_)</li>
+  <li>Assume that the top-level domain (last part after period) is between 2 to 6 characters in length.</li>
+</ul>
+
+<p><strong>4. For P4:</strong></p>
+
+<ul>
+  <li>Define a pattern that matches a valid Java variable name</li>
+  <li>For example, <code>_myVariable$1</code> is a valid variable name in Java while <code>1stVariable</code> is not.</li>
+  <li>A variable name cannot start with an integer. It can consist of alphanumeric characters as well as <code>_</code> and <code>$</code>.</li>
+</ul>
+
+<p><strong>5. For P5:</strong></p>
+
+<ul>
+  <li>Define a pattern that matches valid IPv4 address.</li>
+  <li>For example, <code>127.0.0.1</code> is a valid IP address whereas <code>299.10.10.1</code> is not.</li>
+  <li>A valid IPv4 address consists of four positive integer parts separated by period (.). Each integer part can range from 0-255.</li>
+</ul>
+
+<p>Run <code>TestP2Pattern.java</code> to verify that your patterns are correct.</p>
+
+
+<h2 id="d-submission">D. Submission</h2>
+
+
+<p>The files you will be turning are:</p>
+
+<ul>
+  <li><code>ReadInts.java</code></li>
+  <li><code>P2Pattern.java</code></li>
+</ul>
+
+<p>Make sure that your regular expression accepts valid strings and rejects invalid ones. Confirm that you pass all the tests defined in <code>TestReadInts.java</code> and <code>TestP2Pattern.java</code> before submission for full credit.</p>
+
+<p>Don't forget to push both your commits and tags for your final submission. As a reminder, you can push your tags by running:</p>
+
+<pre><code>$ git push &#x2d;&#x2d;tags</code></pre>
+    </main></div>
+</body>
+</html>

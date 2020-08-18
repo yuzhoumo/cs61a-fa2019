@@ -1,0 +1,26 @@
+1. Assignment
+
+
+2. Type of Operating System
+
+
+3. Java Version
+
+
+4. The complete filepath from which you are running your program
+
+
+5. EXACT sequence of commands that will cause the error you are seeing, including anything needed to compile and execute the program
+
+
+6. Describe your bug. Which part of the assignment is blocking you?
+
+
+7. What output are you expecting? What is actually getting outputted?
+
+
+8. List all the files and lines you have put breakpoints on to find your bug. E.g. Model.java: 124
+
+
+9. Copy and paste your most recent commit hash to confirm that we check the most recent version of your code
+

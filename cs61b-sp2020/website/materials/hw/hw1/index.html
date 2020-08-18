@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework 1 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-introduction-to-junit">A. Introduction to JUnit</a></li>
+  <ul>
+    <li><a href="index.html#why-is-testing-important">Why is testing important?</a></li>
+    <li><a href="index.html#setup">Setup</a></li>
+  </ul>
+  <ul>
+    <li><a href="index.html#ad-hoc-testing-in-java">Ad-hoc Testing in Java</a></li>
+    <li><a href="index.html#junit-testing">JUnit Testing</a></li>
+  </ul>
+  <li><a href="index.html#b-arithmetic">B. Arithmetic</a></li>
+  <li><a href="index.html#c-compound-interest">C. Compound Interest</a></li>
+  <ul>
+    <li><a href="index.html#testnumyears"><code>testNumYears</code></a></li>
+    <li><a href="index.html#numyears"><code>numYears</code></a></li>
+    <li><a href="index.html#futurevalue"><code>futureValue</code></a></li>
+    <li><a href="index.html#futurevaluereal"><code>futureValueReal</code></a></li>
+    <li><a href="index.html#printdollarfv-and-compoundinterest-main"><code>printDollarFV and CompoundInterest.main</code></a></li>
+    <li><a href="index.html#totalsavings-and-totalsavingsreal"><code>totalSavings</code> and <code>totalSavingsReal</code></a></li>
+    <li><a href="index.html#printsavingsfv-and-compoundinterest-main"><code>printSavingsFV</code> and <code>CompoundInterest.main</code></a></li>
+  </ul>
+  <li><a href="index.html#d-multidimensional-arrays">D. Multidimensional Arrays</a></li>
+  <li><a href="index.html#e-starting-signpost">E. Starting Signpost</a></li>
+  <li><a href="index.html#f-submission">F. Submission</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Homework 1: JUnit testing, basic syntax, and linked lists</header>
+        
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-introduction-to-junit">Introduction to JUnit</a></li>
+  <li><a href="index.html#b-arithmetic">Arithmetic</a></li>
+  <li><a href="index.html#c-compound-interest">Compound Interest</a></li>
+  <li><a href="index.html#d-multidimensional-arrays">Multidimensional Arrays</a></li>
+  <li><a href="index.html#e-starting-signpost">Starting Signpost</a></li>
+  <li><a href="index.html#f-submission">Submission</a></li>
+</ul>
+
+
+<h2 id="a-introduction-to-junit">A. Introduction to JUnit</h2>
+
+
+<p>In hw1, you saw an example of <em>unit testing</em>, the testing of individual
+components (methods) of a program.  To do this, you write extra code that
+is not used in the actual operation of your program, but is
+instead intended for use during development to find and localize bugs as
+they happen.</p>
+
+
+<h5 id="why-is-testing-important">Why is testing important?</h5>
+
+<p>Let's say we have a giant project to keep track of users' accounts and the overall worth of their stocks. The project comprises 10 classes, each with a wide range of methods and constructors. In testing our project, we find out that one of the user's overall worth for 2020 is off by 19 cents.</p>
+
+<p>Where do we start looking for the problem? Do we look for errors in how we store each user's balance? Do we look for errors in how we calculate interest over time? Determining where the bug is coming from may take longer than writing the program itself!</p>
+
+<p>Testing each individual piece helps us avoid this problem. When we finish our interest calculation method, we write a small test which helps us feel confident that our method is working correctly, and fix whatever bugs we are able to find. When we know that our foundation is solid (that all of the individual methods we wrote should be working correctly), we can move forward to actually using our code without worrying.</p>
+
+
+<h5 id="setup">Setup</h5>
+
+<p>To support unit testing our programs, we'll rely on a widely used testing package called
+<a href="http://en.wikipedia.org/wiki/JUnit">JUnit</a>. Your instructor has been
+quoted saying that "it is one of the most poorly documented bunches of Java
+code I've seen," so we'll jump right into using it, rather than going to
+any official documentation.</p>
+
+<p>As with any assignment, start this homework by running the following commands in your
+local <code>repo</code> directory.</p>
+
+<pre><code>git fetch shared
+git merge shared/hw1 &#x2d;m &quot;start HW 1&quot;
+git push</code></pre>
+
+<p>You'll receive a hw1 folder with three subdirectories: <code>Arithmetic</code>,
+<code>CompoundInterest</code>, and <code>MultiArr</code>.  Arithmetic contains a fully implemented
+sample program and JUnit tests, and the other two folders are programs that
+you'll need to implement for this homework.</p>
+
+<p>Open the hw1 folder in IntelliJ using <strong>Import Project</strong> or <strong>File > New >
+Project from Existing Sources...</strong>, and not with the Open command. Remember
+to import the libraries in <code>cs61b&#x2d;software/lib</code> by <strong>File > Project
+Structure > Libraries</strong> and clicking on the green plus button.</p>
+
+
+<h4 id="ad-hoc-testing-in-java">Ad-hoc Testing in Java</h4>
+
+
+<p>Let's start by examining the already completed contents of the
+<code>Arithmetic</code> folder. In it, you'll see a very simple arithmetic package in
+a file named <code>Arithmetic.java</code>, along with a couple of test clients named
+<code>ArithmeticTest.java</code> and <code>ArithmeticJunitTest.java</code>. In case you're
+unfamiliar with the term, a program X is said to be a <em>client</em> of the
+program Y if X uses any data or methods from program Y. In this case, the
+purpose of our two clients will be to test the class <code>Arithmetic</code>.</p>
+
+<p>The <code>ArithmeticTest</code> test client is an ad-hoc test written entirely from
+scratch.  Don't try to understand the details or even the flow of the
+test, just <em>briefly</em> look at the overall structure, noting the length and
+the nature of the methods implemented.</p>
+
+<p>You'll observe that the source code is 56 lines long, and has to manually
+implement common tasks like approximate floating point comparison,
+tallying of tests passed, and provision of useful test output for the
+human user. There are various ways to run the tests.
+Try running the file <code>ArithmeticTest.java</code> in IntelliJ. You should
+see the output:</p>
+
+<pre><code>product OK.
+sum FAILS.</code></pre>
+
+<p>On Unix or MacOS, another alternative is to use the command line to compile
+the program with <code>make</code> (or compile <code>ArithmeticTest.java</code> with <code>javac</code> on Windows)
+and then run it with <code>java ArithmeticTest</code> (or do both with <code>make adhoc&#x2d;check</code>).
+This should give the same output.</p>
+
+
+<h4 id="junit-testing">JUnit Testing</h4>
+
+
+<p>The JUnit package does a lot of the kludgy work for us, avoiding
+implementation of common testing tasks such as those we saw in
+ArithmeticTest. Basic JUnit tests tend to leverage a few key components:</p>
+
+<ol>
+  <li>A set of methods with names like <code>assertTrue</code> and <code>assertEquals</code> that
+  perform some simple tests and cause an error if it fails.</li>
+  <li>A number of "annotations," such as <code>@Test</code>, which marks a method as
+  being a unit test.</li>
+  <li>Various main testing routines that examine
+  specific classes at execution time and call all of their annotated test methods,
+  i.e. those methods with <code>@Test</code> proceeding their definition.</li>
+</ol>
+
+<p>As an example, look at the <code>Arithmetic/ArithmeticJUnitTest.java</code> JUnit-
+based arithmetic test client:</p>
+
+<ul>
+  <li>It starts with two lines that begin with <code>import</code>.
+  These lines just mean that our program will be able to utilize
+  shorthand names for items in the JUnit libraries: for example,
+  <code>assertEquals</code> rather than <code>org.junit.Assert.assertEquals</code>.</li>
+  <li>Some of the methods have <code>@Test</code> right above their declaration.
+  This is an example of an
+  <a href="http://docs.oracle.com/javase/tutorial/java/annotations">annotation</a>
+  which attaches various "metadata" to a Java entity that
+  is then accessible by the Java program itself.
+  As an example, the JUnit framework is a Java program that looks for methods
+  that have the @Test annotation, and then executes each such method found.</li>
+  <li>The main method performs the task
+  <code>System.exit(ucb.junit.textui.runClasses(ArithmeticJUnitTest.class))</code>.
+  This just means that every method in the class
+  <code>ArithmeticJUnitTest</code> that has the annotation @Test is to be run, and
+  the results accumulated and reported.</li>
+</ul>
+
+<p>In this homework, you'll write your own such JUnit tests, which can be compiled and executed with the command <code>make check</code>.</p>
+
+<p>There are a number of advantages to using JUnit-based testing over the
+ad-hoc test above: the JUnit test is only 29 lines long, is easier to read,
+and avoids implementation of common tasks like approximate floating point
+comparisons, and so forth. Furthermore, when run, it also provides us with
+a more useful output for deubgging purposes:</p>
+
+<pre><code>Time: 0.018
+There were 1 failures:
+1) testSum(ArithmeticJUnitTest)
+expected:&amp;lt;11.0&amp;gt; but was:&amp;lt;30.0&amp;gt;
+at ArithmeticJUnitTest.testSum:14 (ArithmeticJUnitTest.java)
+Ran 2 tests. 1 failed.</code></pre>
+
+<p>JUnit tests are easy to write once you learn the basics and give
+you useful output, straight out of the box.  We hope you'll grow to love
+them.</p>
+
+
+<h2 id="b-arithmetic">B. Arithmetic</h2>
+
+<p>Open up <code>Arithmetic/ArithmeticJUnitTest.java</code>. Try looking through the file. Try running the tests. Do they pass or fail? Make sure the test fail and then open <code>Arithmetic/Arithmetic.java</code>. Look through the code until you find the mistake. Try running your tests again. They should pass now.</p>
+
+
+<h2 id="c-compound-interest">C. Compound Interest</h2>
+
+
+<p>"Compound interest is the most powerful force in the universe." - Albert Einstein <a href="http://www.snopes.com/quotes/einstein/interest.asp">(maybe)</a></p>
+
+<p>Investment income grows faster than inflation, and thus the choices you
+make about investment at an early age can make a huge difference in how
+much money you'll have when you retire. In this homework problem, we'll
+build some code to explore this idea, and we'll also get some practice
+with the idea of test-driven-development using JUnit.</p>
+
+<p>Go into the CompoundInterest folder, and you should see
+CompoundInterest.java, CompoundInterestTest.java, and Makefile. Each of
+these files is a
+<a href="http://en.wikipedia.org/wiki/Skeleton_(computer_programming)">skeleton</a>.
+Your goal in this problem is to fill in all the methods in both
+<code>.java</code> files to match the comments.</p>
+
+<p>As you work, try to use the <a href="https://en.wikipedia.org/wiki/Test-driven_development">test-driven development methodology</a>
+where
+you do things in the following order: Write the test. Run the test (you
+should fail). Write the code. Run the test (you should pass). Refactor if
+desired and if so, re-run test.</p>
+
+<p>To run the tests in <code>CompoundInterestTest.java</code>, select the file and click on
+<strong>Run > Run 'CompoundInterestTest'</strong> in IntelliJ. You'll see
+that the unit tests report that all tests have passed. This is bad,
+because it means that our starter test is garbage, as it believes our
+incomplete CompoundInterest.java is flawless.</p>
+
+<p>By the way,
+you can also run the starter test from the command line like this (if you have
+<code>make</code> installed):</p>
+
+<pre><code>$ make check</code></pre>
+
+<p>which (as you can see from <code>Makefile</code>) runs the command</p>
+
+<pre><code>java CompoundInterestTest</code></pre>
+
+<p>after first making sure that <code>CompoundInterestTest.class</code> is up to date.</p>
+
+<p>The rest of this part of the homework describes a suggested path to
+completion. You do not have to follow it, but it is recommended. If you
+set off on your own from this point on to Part 1, please give the test-first
+approach a fair shake. We strongly believe it will save you grief in the future.</p>
+
+
+<h4 id="testnumyears"><code>testNumYears</code></h4>
+
+
+<p>Start this homework by opening <code>CompoundInterestTest.java</code> and
+<code>CompoundInterest.java</code> in intelliJ. In
+<code>CompoundInterestTest.java</code>, you'll see a bunch of tests you're supposed to
+implement. Using <code>Arithmetic/ArithmeticJUnitTest.java</code>
+as a guide, edit the <code>testNumYears</code>
+method so that it acts as a good test of whether or not <code>numYears</code> obeys
+the specifications given in the documentation comments in
+<code>CompoundInterest.java</code>. Two <code>assertEquals</code> statements are probably good
+enough. We're throwing you right in at the deep end with a bunch of sharks
+and megalodons here, so don't hesitate to ask for help (in lab, office
+hours, piazza, HKN, etc.).</p>
+
+<p>Useful fact: <code>numYears</code> returns an int, so you don't need to specify a
+tolerance when you write your assertEquals statements (since we don't have
+to worry about rounding error when comparing integers).</p>
+
+<p>After you've created better tests, run them, and your
+<code>numYears</code> method should now fail the test.  Ironically, this shows that
+the test is working!  In fact, experienced programmers get suspicious when
+they write a bunch of tests that <em>don't</em> fail out of the box.</p>
+
+
+<h4 id="numyears"><code>numYears</code></h4>
+
+
+<p>Now edit <code>numYears</code> in CompoundInterest.java so that it passes the test.
+It should be a straightforward method to write.</p>
+
+<p>While it might be a little silly to write a unit test for something as
+trivial as numYears, once you get used to JUnit testing, the time taken to
+write a test becomes so small that you may as well write at least a basic
+test for every method. This will save you sweat and tears down the line.</p>
+
+
+<h4 id="futurevalue"><code>futureValue</code></h4>
+
+
+<p>Repeat the exercise from before, but now with the <code>testFutureValue</code> and <code>futureValue</code> methods. Write the test first, and verify that it compiles and fails before moving on to writing <code>futureValue</code>. Feel free to use the example in the documentation comments as one of your JUnit tests.</p>
+
+<p>Make sure your test includes negative appreciation rates.</p>
+
+
+<h4 id="futurevaluereal"><code>futureValueReal</code></h4>
+
+
+<p>Now we'll write a method that computes the future value of an appreciating
+(or depreciating) asset taking inflation into account. Having a
+million dollars today is very different from what it will be in 60 years.</p>
+
+<p>To correct for inflation, one simply considers how much an asset would be
+worth if it hypothetically depreciated at the inflation rate for the
+appropriate time frame. For example, if we want to know how much 1,000,000
+dollars in cash will be worth in 40 years and we assume the inflation rate will be
+3 percent over the next 40 years, we'd see it would be worth $\$1,000,000 \times
+(0.97)^{40}$ or $295,712.29 in 2020 dollars. Not bad, but not quite so
+impressive.</p>
+
+<p>Again, start by writing the tests, then run the tests to see they
+successfully compile and fail, and then finally write code for
+<code>futureValueReal</code> that passes the tests.</p>
+
+
+<h4 id="printdollarfv-and-compoundinterest-main"><code>printDollarFV and CompoundInterest.main</code></h4>
+
+
+<p>Using what we've written so far, we can answer our first interesting
+question: How much money is future-you losing every time present-you spends
+a dollar? They say a penny saved is a penny earned, but this is only true
+if you're a bad investor. In fact, each penny is worth many pennies.</p>
+
+<p>Try running CompoundInterest's main function, and you'll see that it tells
+you something that is clearly not true (assuming that we don't go through
+an apocalyptic event that eradicates the value of all money). Update the
+printDollarFV function so that it gives you a correct result.</p>
+
+
+<h4 id="totalsavings-and-totalsavingsreal"><code>totalSavings</code> and <code>totalSavingsReal</code></h4>
+
+
+<p>Another more interesting question: How much money will you have if you set
+aside some fixed amount each year? To lay the groundwork, repeat the same
+exercise as above for <code>totalSavings</code> and <code>totalSavingsReal.</code></p>
+
+
+<h4 id="printsavingsfv-and-compoundinterest-main"><code>printSavingsFV</code> and <code>CompoundInterest.main</code></h4>
+
+
+<p>As the final step in this assignment, edit <code>printSavingsFV</code> so that it
+gives you useful information about how much money you'll have if you save
+<code>perYear</code> dollars every year until <code>targetYear</code>.</p>
+
+
+<h2 id="d-multidimensional-arrays">D. Multidimensional Arrays</h2>
+
+
+<p>Test-driven development particularly shines when you have a task whose
+outcome is conceptually easy to understand but hard to implement. Let's
+try out the TDD methodology in the context of recursive data structures.</p>
+
+<p>This assignment will be diving into the world of multidimenstional arrays! We know that an array is a list of objects (integers, strings, Objects, etc). But what happens when we put an array inside an array? What about when those internal arrays are themselves filled with arrays? <a href="https://en.wikipedia.org/wiki/Turtles_all_the_way_down">It's turtles all the way down</a>!</p>
+
+<p>Indexing into these types of data structures can get confusing as the number of dimensions increases, but if you can draw a mental map of the dimensions the indexing follows. Row indices always comes first, followed by column, and then by any additional following dimensions. For example, this is what a two dimensional array looks like. 
+<img src="rowColumn.png" alt=""></p>
+
+<p>To cement the idea of indexing into multiple dimensions, try implementing <code>printRowAndCol</code> (which will <em>not</em> be graded).</p>
+
+<p>Then, start by opening <code>MultiArrTest.java</code> and implementing <code>testMaxValue</code>. Run the test to ensure it fails. 
+After writing <code>testMaxValue</code>, implement <code>maxValue</code> to return the maximum value found in a multidimensional array. Then, move on to <code>testAllRowSums</code> followed by <code>allRowSums</code>. Further details of functionality and examples can be found in the skeleton code.</p>
+
+
+<h2 id="e-starting-signpost">E. Starting Signpost</h2>
+
+<p>For this part of the assignment you will be introduced to Project 0: Signpost. Signpost is a board game that is played on an $N x M$ grid of squares. For this assignment, we are only concerned with a small component of the overall project. 
+We provided the <code>Place</code> class, which represents one $(X,Y)$ coordinate on the board. This class has a method called <code>successorCells</code>, which for every square on the board, 
+computes all the other squares reachable by a queen move (unlimited movement in a single direction) from that square. In code, directions are numbered 1-8, such that direction d is d * 45 degrees clockwise from straight up (i.e., toward higher y coordinates). Thus, direction 1 is "northeast", 2 is "east", ..., and 8 is "north".</p>
+
+<center>
+<img src="assets/board.png" alt="Game board with coordinates">
+</center>
+
+<p>For example, on the above board all reachable squares from (0,0) in direction 8 (north) are (0,1), (0,2), and (0, 3).
+All reachable squares from (1, 1) in direction 1 (northeast) are (2, 2) and (3, 3).</p>
+
+<p>The provided method is almost fully implemented, but includes two small bugs.</p>
+
+<p>Open this assignment in IntelliJ. Read over the description for this method, run the unit test (which will fail since the code provided is buggy), and observe its output. Once you've read the debugging guide and feel comfortable with how the debugger works, try running through successorCells by setting a breakpoint.
+This is code you will use for Project 0, so you are already starting on the project! One of your tasks in Project 0 will be to implement the method <code>successorCells</code>, which is included here. Once you fixed the two bugs here, <em>feel free to use your solution from this homework on the actual project</em>.</p>
+
+<p>Start by reading through the <a href="../../../docs/debuggingGuide.html">debugging</a> guide thoroughly!</p>
+
+
+<h2 id="f-submission">F. Submission</h2>
+
+<p>To get full credit for this assingment, turn in a functioning Arithmetic.java, CompoundInterest.java, and MultiArr.java (each with their approriate testing files!) and the corrected signpost code!</p>
+
+<p>To submit, follow the same instructions as for lab1. Here is a summary of those:</p>
+
+<p>When you're done with the assignment and have properly
+committed your changes (<code>git commit &#x2d;m</code> ...), submit them:</p>
+
+<pre><code>git tag hw1&#x2d;0       # or hw1&#x2d;1, hw1&#x2d;2, for resubmissions
+git push
+git push &#x2d;&#x2d;tags</code></pre>
+
+<p>These are required in order to get credit for the homework.
+In order to recieve full credit your submission must pass 10/15 of the autograder tests on Compound Interest, 3/5 on Multidimensional Arrays, and 1/5 of unit test tests. You must pass all of your own unit tests.</p>
+    </main></div>
+</body>
+</html>

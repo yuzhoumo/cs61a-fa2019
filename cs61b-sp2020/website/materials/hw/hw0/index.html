@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework 0 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-preliminaries">A. Preliminaries</a></li>
+  <ul>
+    <li><a href="index.html#goals">Goals</a></li>
+    <li><a href="index.html#setup">Setup</a></li>
+    <li><a href="index.html#do-the-reading">Do the Reading</a></li>
+  </ul>
+  <li><a href="index.html#b-max">B. Max</a></li>
+  <li><a href="index.html#c-3sum">C. 3SUM</a></li>
+  <ul>
+    <li><a href="index.html#examples">Examples:</a></li>
+  </ul>
+  <li><a href="index.html#d-3sum_distinct">D. 3SUM_DISTINCT</a></li>
+  <ul>
+    <li><a href="index.html#examples">Examples:</a></li>
+  </ul>
+  <li><a href="index.html#e-faq">E. FAQ</a></li>
+  <ul>
+    <li><a href="index.html#1-i-am-really-lost-on-3sum-how-do-i-start">1. I am really lost on 3SUM? How do I start?</a></li>
+    <li><a href="index.html#2-how-many-test-cases-do-i-have-to-write">2. How many test cases do I have to write?</a></li>
+    <li><a href="index.html#3-i-am-getting-a-weird-compiler-error-help">3. I am getting a weird compiler error!! Help!</a></li>
+    <li><a href="index.html#4-my-main-method-can-t-find-my-classes">4. My main method can't find my classes!</a></li>
+    <li><a href="index.html#5-i-am-getting-issues-with-multiple-methods-of-the-same-name">5. I am getting issues with multiple methods of the same name!</a></li>
+  </ul>
+  <li><a href="index.html#f-submission">F. Submission</a></li>
+  <li><a href="index.html#g-getting-help">G. Getting Help</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Homework 0: A Few Java Exercises</header>
+        
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-preliminaries">Preliminaries</a></li>
+  <li><a href="index.html#b-max">MAX</a></li>
+  <li><a href="index.html#c-3sum">3SUM</a></li>
+  <li><a href="index.html#d-3sum_distinct">3SUM_DISTINCT</a></li>
+  <li><a href="index.html#e-faq">FAQ</a></li>
+  <li><a href="index.html#f-submission">Submission</a></li>
+  <li><a href="index.html#g-getting_help">Getting Help</a></li>
+</ul>
+
+
+<h2 id="a-preliminaries">A. Preliminaries</h2>
+
+
+
+<h3 id="goals">Goals</h3>
+
+
+<p>The exercises here aim to introduce you to a few basic points of Java 
+syntax.
+<br/>
+
+<ul>
+  <li>Initializing variables, e.g. <code>int x = 5;</code></li>
+  <li>Comparisons and logical operators</li>
+  <li>Conditionals (if statements)</li>
+  <li>Iteration (using for and while)</li>
+</ul></p>
+
+<p>Grading for this assignment will be pretty lenient and will just consist of 
+making sure you've submitted the presemester survey, though full grader details will
+be coming soon. You won't be graded on whether or not the code works as it should,
+but with that said we suggest that you do give them a serious try in order to give
+yourself a chance to get comfortable with Java and dust off your programming skills 
+from last semester.</p>
+
+<p>For each of the problems,</p>
+
+<ul>
+  <li>No starter code is provided. 
+  Use examples from class and the textbook to write your solutions.
+  We don't care what you call your classes, since we don't intend to test
+  your submissions.</li>
+  <li>You can use whatever tool you'd like to write and run your code. 
+  This could be the javac/java on your own computer or the lab machines, etc.,
+  or IntelliJ,
+  or an <a href="http://www.tutorialspoint.com/compile_java8_online.php">online execution tool</a>.</li>
+  <li>For each problem, use the main method to perform an ad-hoc test 
+  (by ad-hoc, I just mean a crude test that isn't generalizable 
+  like the fancier tests that you'll be developing in HW1). For 
+  example, you can write in your main method a few print statements
+  calling your method to ensure it correctly prints the right thing.</li>
+</ul>
+
+
+<h3 id="setup">Setup</h3>
+
+<p>As with lab1, start this homework by using the following commands in your
+local <code>repo</code> directory (assuming that you are using our normal setup--working
+on the default <code>master</code> branch--and that you have committed any files you
+you already have there from other assignments.)</p>
+
+<pre><code>git fetch shared
+git merge shared/hw0 &#x2d;m &quot;Get HW0 skeleton&quot;
+git push</code></pre>
+
+<p>This time there will be no skeleton file for your solution. The idea
+is for you create and add the necessary files.  As you create new files, be sure
+to use <code>git add</code> to add bring them under Git's control.
+<br/>
+We have provided a skeleton <code>Tester.java</code> file for writing simple tests of your
+solutions.  However, you will have to figure out how to get it to actually
+call your solutions before you can compile and run it.
+You can use <code>javac</code> to compile it, and <code>java Tester</code> to run it.
+<br/>
+
+To submit, you will tag a specific commit. Details can be found in the <a href="index.html#f-submission">submission</a> section.</p>
+
+
+<h3 id="do-the-reading">Do the Reading</h3>
+
+
+<p>Make sure you've done the first reading assignment: AJR 1.1 through 1.9 (<a href="../../book1/java.pdf">found here</a>) and Chapter 1
+of Head First Java. If you don't have Head First Java, that's fine,
+AJR provides all the information you need (but might be a harder
+read).</p>
+
+<p>While you're reading, you may find it helpful to be able to run Java code so that you can experiment. You can compile and execute as you have done in lab, 
+of course.  There is also a convenient
+<a href="http://www.tutorialspoint.com/compile_java8_online.php">online Java compilation tool</a>.
+To run code, simply add the code you'd like to execute to the <code>main</code> 
+method and then press the Compile and Execute buttons.</p>
+
+<p>Head First Java provides you with exercises that you can do as you
+read.  Feel free to skip doing these if you'd like.</p>
+
+
+<h2 id="b-max">B. Max</h2>
+
+
+<p>Write a function <code>max(int[] a)</code> that takes in a non-empty array (that is, size(a)>0) and returns the maximum value
+of the array. Try writing this function using both a while loop
+and a for loop.</p>
+
+<p>A note about convenient syntax for creating arrays:</p>
+
+<blockquote><p>You can specify an array using curly braces. A strange choice of
+symbols, for a Python programmer, but we're in the C family of languages
+here. For
+example:</p>
+
+<pre><code>int[] a = new int[]{1, 2, 3, 4}</code></pre>
+
+<p>would create an array
+containing 1, 2, 3, and 4 and then give it the name a.</p>
+
+<p>In this context, the curly braces are interpreted in a completely
+different way from when we use them to begin and end a block of code.</p></blockquote>
+
+<p>To test, modify your main function to perform an ad-hoc test of your method. In this context, this means a non-generalizable test in which you feed in specific test cases as input to the function, compile, and check that the output is what is expected.</p>
+
+
+<h2 id="c-3sum">C. 3SUM</h2>
+
+
+<p>Suppose we have a non-empty array of integers <code>int[] a</code>. 
+The <a href="http://en.wikipedia.org/wiki/3SUM">3SUM problem</a> asks if
+there are three integers (not neccesarily distinct) in <code>a[]</code> whose sum is zero. You may assume that the array is not empty.</p>
+
+<p>For this problem, write a function <code>threeSum(int[] a)</code> that returns true if there exist three integers in a that sum to zero and false otherwise. Integers may be used more than once. As in part 1, use your main function to perform an ad-hoc test that <code>threeSum</code> works.</p>
+
+<p>For loops will look a lot more compact than while loops for this problem.</p>
+
+
+<h5 id="examples">Examples:</h5>
+
+
+<ul>
+  <li><code>threeSum(new int[]{&#x2d;6, 2, 4})</code> is true, can select -6, 2, and 4.</li>
+  <li><code>threeSum(new int[]{&#x2d;6, 2, 5})</code> is false.</li>
+  <li><code>threeSum(new int[]{&#x2d;6, 3, 10, 200})</code> is true, can select -6, 3, and 3.</li>
+  <li><code>threeSum(new int[]{8, 2, &#x2d;1, 15})</code> is true, can select 2, -1, and -1.</li>
+  <li><code>threeSum(new int[]{8, 2, &#x2d;1, &#x2d;1, 15})</code> is true, can select 2, -1, -1.</li>
+  <li><code>threeSum(new int[]{5, 1, 0, 3, 6})</code> is true, can select 0, 0, and 0.</li>
+</ul>
+
+<p>This might seem daunting at first, but it's relatively
+straightforward. As a hint, consider an
+alternative way of stating the problem: Do there exist three indices
+(not necessarily distinct) f, g, and h such that a[f] + a[g] + a[h] ==
+0?</p>
+
+
+<h2 id="d-3sum_distinct">D. 3SUM_DISTINCT</h2>
+
+
+<p>Repeat the exercise from Part C, but with the constraint that each
+element in the array can be used only once. Where in the last problem we wanted the three not necessarily distinct indices, we here require three distinct indices. Numbers can appear more than once in our sum if and only if they appear more than once in the given array. Again, you may assume the array is not empty.</p>
+
+
+<h5 id="examples">Examples:</h5>
+
+
+<ul>
+  <li><code>threeSumDistinct(new int[]{&#x2d;6, 2, 4})</code> is true, can select -6, 2, and 4.</li>
+  <li><code>threeSumDistinct(new int[]{&#x2d;6, 2, 5})</code> is false.</li>
+  <li><code>threeSumDistinct(new int[]{&#x2d;6, 3, 10, 200})</code> is false.</li>
+  <li><code>threeSumDistinct(new int[]{8, 2, &#x2d;1, 15})</code> is false.</li>
+  <li><code>threeSumDistinct(new int[]{8, 2, &#x2d;1, &#x2d;1, 15})</code> is true, can select 2, -1, and -1.</li>
+  <li><code>threeSumDistinct(new int[]{5, 1, 0, 3, 6})</code> is false.</li>
+</ul>
+
+
+<h2 id="e-faq">E. FAQ</h2>
+
+
+
+<h4 id="1-i-am-really-lost-on-3sum-how-do-i-start">1. I am really lost on 3SUM? How do I start?</h4>
+
+<p>Consider first how you would handle 1SUM. How would you figure out if there is a specific index in the given array which is equal to 0? From there, think about how you would implement 2SUM. How would you find out if there exists two indices in the array j,k (not necessarily distinct, that is j can equal k) such that array[j] + array[k] = 0? From here, try to generalize for the number of terms you are summing over! You'll see that 3SUM, 4SUM, 5SUM, etc are all very similar and you could easily make any of them!</p>
+
+
+<h4 id="2-how-many-test-cases-do-i-have-to-write">2. How many test cases do I have to write?</h4>
+
+<p>You should think through the basic cases and as many of the corner cases as you can think of. Though you are not being graded on the correctness of your code for this assignment, later assignments will be graded on correctness and require you to test your own code! It is a good idea to start practicing now.</p>
+
+
+<h4 id="3-i-am-getting-a-weird-compiler-error-help">3. I am getting a weird compiler error!! Help!</h4>
+
+<p>Before you post on Piazza, try googling the error you are getting. This is how you learn, Google is one of the most important tools for any person who writes software. For example, if your terminal says that you are getting an "IndexOutOfBoundsError", try typing that into Google and following the advice of a reputable website (for example, stackOverflow).</p>
+
+
+<h4 id="4-my-main-method-can-t-find-my-classes">4. My main method can't find my classes!</h4>
+
+<p><a href="https://stackoverflow.com/questions/45678971/cant-access-functions-in-another-class">Can't access method from main</a></p>
+
+
+<h4 id="5-i-am-getting-issues-with-multiple-methods-of-the-same-name">5. I am getting issues with multiple methods of the same name!</h4>
+
+<p>Check out <a href="https://docs.oracle.com/javase/tutorial/java/package/namingpkgs.html">this</a> documentation!</p>
+
+
+<h2 id="f-submission">F. Submission</h2>
+
+<p>We don't intend to test the correctness of your methods, just that you have created the required methods (<code>max</code>, <code>3SUM</code>, <code>3SUM_Distinct</code>) and created tests for them. We will also be checking that you've filled out the <a href="https://forms.gle/NWyZ8qxQjjMf8nx97">presemester survey</a>. If you haven't done all of these things, then you will not receive full credit for this homework.</p>
+
+<p>Before beginning the submission process, take a moment to make sure all of the files you created have been added to Git's control (by using <code>git add &lt;insert file name here&gt;</code>).</p>
+
+<p>To submit, follow the same instructions as for lab1:</p>
+
+<ul>
+  <li>Commit (with <code>git commit &#x2d;a</code>) any changes you've made.</li>
+  <li>Tag the submission (e.g., <code>git tag hw0&#x2d;0</code>).</li>
+  <li>Push your commits and tags (<code>git push</code> and <code>git push &#x2d;&#x2d;tags</code>).</li>
+</ul>
+
+
+<h2 id="g-getting-help">G. Getting Help</h2>
+
+
+<p>For future assignments we are using an infrastructure called Git Bugs for interfacing with staff for debugging help. More info to come on that in the next homework.
+We won't be using Git Bugs on this assignment. If you need help on this homework, you should ask your lab TA or visit office hours for in person help. You're also welcome to use Piazza, but please read our Piazza guidelines before that.</p>
+    </main></div>
+</body>
+</html>

@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Project 0 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <link href="../../../assets/css/proj.css" rel="stylesheet" type="text/css">
+
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#due-tuesday-18-february-2020">Due: Tuesday, 18 February 2020</a></li>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#introduction">Introduction</a></li>
+  <li><a href="index.html#the-puzzle">The Puzzle</a></li>
+  <li><a href="index.html#play-time">Play Time</a></li>
+  <li><a href="index.html#program-design">Program Design</a></li>
+  <li><a href="index.html#getting-started">Getting Started</a></li>
+  <li><a href="index.html#detailed-overview-of-the-skeleton">Detailed Overview of the Skeleton</a></li>
+  <ul>
+    <li><a href="index.html#place">Place</a></li>
+    <li><a href="index.html#model-sq">Model.Sq</a></li>
+    <ul>
+      <li><a href="index.html#connectable">connectable</a></li>
+      <li><a href="index.html#connect">connect</a></li>
+      <li><a href="index.html#disconnect">disconnect</a></li>
+    </ul>
+    <li><a href="index.html#model">Model</a></li>
+    <ul>
+      <li><a href="index.html#arrowdirection">arrowDirection</a></li>
+      <li><a href="index.html#model-constructor">Model Constructor</a></li>
+      <li><a href="index.html#model-copy-constructor">Model Copy Constructor</a></li>
+      <li><a href="index.html#autoconnect">autoconnect</a></li>
+      <li><a href="index.html#solve">solve</a></li>
+    </ul>
+    <li><a href="index.html#puzzlegenerator">PuzzleGenerator</a></li>
+  </ul>
+  <li><a href="index.html#instrumentation-and-testing">Instrumentation and Testing</a></li>
+  <ul>
+    <li><a href="index.html#running-integration-tests-in-intellij">Running Integration Tests in IntelliJ</a></li>
+  </ul>
+  <li><a href="index.html#submission-and-version-control">Submission and Version Control</a></li>
+  <li><a href="index.html#grading-details">Grading Details</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Project 0: Signpost</header>
+        
+<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {inlineMath: [["$","$"]]}
+	  });
+	</script>
+	<script type="text/javascript"
+	   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+
+
+<h2 id="due-tuesday-18-february-2020">Due: Tuesday, 18 February 2020</h2>
+
+
+<p><em>Please see <a href="https://piazza.com/class/k5eevxebzpj25b?cid=331">@331</a> for updates and changes to the assignment.</em></p>
+
+
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#introduction">Introduction</a></li>
+  <li><a href="index.html#the-puzzle">The Puzzle</a></li>
+  <li><a href="index.html#program-design">Program Design</a></li>
+  <li><a href="index.html#instrumentation-and-testing">Instrumentation and Testing</a></li>
+  <li><a href="index.html#discussion">Discussion</a></li>
+  <li><a href="index.html#submission-and-version-control">Submission and Version Control</a></li>
+</ul>
+
+
+<h2 id="introduction">Introduction</h2>
+
+
+<p>This initial programming assignment is intended to give you a chance to get familiar with Java
+and the various tools used in the course. This project is smaller in scale compared to the other
+three projects you will complete this semester. However, you may still find it challenging and we
+encourage you to start as early as possible.</p>
+
+<p>We will be grading <em>solely</em> on whether you manage to get your program to work
+(according to our tests, which are provided to you in the skeleton) and to hand in the
+assigned pieces. There is a slight stylistic component: the submission and grading
+machinery require that your program pass a mechanized style check (<code>style61b</code>), which
+mainly checks for formatting and the presence of comments in the proper places.
+See <a href="../../../docs/style-guide.html">the style61b guide</a> for a description of the style it enforces and how to run it yourself.</p>
+
+<p>First, make sure that everything in your repository is properly updated and
+checked in.  Before you start, the command</p>
+
+<pre><code>cd  ~/repo
+git status</code></pre>
+
+<p>should report that the directory is clean and that there are no untracked files
+that should be added and committed.  <em>Never</em> start a new assignment without doing
+this.</p>
+
+<p>To obtain the skeleton files (and set up an initial entry for your project in
+the repository), you can use the command sequence</p>
+
+<pre><code>git fetch shared
+git merge shared/proj0 &#x2d;m &quot;Get proj0 skeleton&quot;
+git push</code></pre>
+
+<p>from your repo directory. Should we update the skeleton, you can use the
+same sequence (with an appropriate change in the <code>&#x2d;m</code> parameter) to update your
+project with the same changes.</p>
+
+
+<h2 id="the-puzzle">The Puzzle</h2>
+
+
+<p>The puzzle game Signpost is one of <a href="https://www.chiark.greenend.org.uk/~sgtatham/">Simon Tatham's</a> collection of
+GUI games (available on a variety of operating-system configurations, including
+Ubuntu.) He attributes the puzzle to  <a href="https://www.janko.at/Raetsel/Pfeilpfad/index.htm">Angela and Otto Janko</a>,
+who call it <em>Pfeilpfad</em> (arrow path). In this project, you are given an incomplete
+Java program that creates these puzzles and allows its user to solve them, and you must
+supply the missing parts to complete the implementation.</p>
+
+<p>The puzzle itself is quite simple. It is played on a $W\times H$
+rectangular grid of square cells. Every square on the board is
+annotated with an arrow pointing horizontally, vertically, or
+diagonally.  One special square, <em>the goal</em>, is not annotated with an arrow,
+but instead is annotated with a star. The goal square also contains the number $W\cdot H$. Another
+special square, <em>the start</em>, always contains the number 1. By default, the start and the goal will
+appear in the top-left and bottom-right corners of the board, respectively. Alternatively, the puzzle may be
+set to have <em>free ends</em>, in which case the start and the goal squares may appear
+anywhere on the board. The bottom-left corner of the board
+has the coordinates $(0, 0)$, with the positive x-axis running horizontally to the right,
+and the positive y-axis running vertically upwards.</p>
+
+<p>The player's goal is to assign each unnumbered square a sequence number so that the squares
+form a chain following the arrows from 1 to $W \cdot H$, using up all numbers in between.
+We say that square A is <em>connectable</em> to square B if B is one queen move away from A in
+the direction specified by A's arrow (here, "queen move" refers to the queen move in chess.) For example, in the following board, the start, at
+coordinates $(0, 3)$, is connectable to the squares at $(1, 2)$, $(2, 1)$, and $(3, 0)$.</p>
+
+<center>
+<img src="img/signpost-connectable.png" alt="Signpost Connectable Squares Example">
+</center>
+
+<p>If A and B are both already numbered, their numbers must be consecutive
+for them to be considered <em>connectable</em>.
+To connect two connectable squares, press and hold on the first in sequence and drag to
+the second. We say that the first is now the <em>predecessor</em> of the second, and the second is now the <em>successor</em> of the first. Whenever a square is numbered,
+any connected square also becomes numbered with the next or previous
+consecutive number, as appropriate.
+To disconnect two connected squares, press and hold on the first,
+drag to a position off the grid, and release.</p>
+
+<p>If a square initially has a number on the unsolved board, it must be the number of that square in the sequence of connected squares. Such squares are said to be <em>fixed</em>. The start and the goal are always fixed.</p>
+
+<p>When playing the game, the player is not obligated to start forming the sequence from
+the start. Two connectable squares can be connected even if they are unnumbered. That is, we
+can form <em>groups</em> of connected squares on the board, which may be connected later to form the
+solution sequence. If a group does not contain a numbered square, its squares are assigned a
+letter and an offset. For example, a, a + 1, a + 2 for the 1st, 2nd, and 3rd squares in the
+group's sequence. Once an unnumbered group is connected to a group whose squares are numbered, the members of the unnumbered group become numbered appropriately.</p>
+
+<center>
+<img src="img/signpost-groups.png" alt="Signpost Groups Example">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="img/signpost-groups-numbered.png" alt="Signpost Connected Groups Example">
+</center>
+
+<p>The diagrams below show a sample puzzle on the left and its solution on the
+right.</p>
+
+<center>
+<img src="img/signpost-unsolved.png" alt="Signpost Puzzle Example">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="img/signpost-solved.png" alt="Signpost Puzzle Solution">
+</center>
+
+
+<h2 id="play-time">Play Time</h2>
+
+
+<p>The first step in tackling the project is to play the game. That is, you should familiarize yourself with what the final product should look like. You can do so by playing the game on an instructional machine using the staff solution program.</p>
+
+<p>On the instructional machines (only), you can run the staff version of this
+program with the following command:</p>
+
+<pre><code> staff&#x2d;signpost</code></pre>
+
+<p>It takes the same options as your project (see <a href="index.html#instrumentation-and-testing">Instrumentation and Testing</a>).</p>
+
+<p>If you are working on your local computer you will have to SSH into your instructional machine to run the staff solution. To allow the GUI of the program to appear via SSH you will have to follow the instructions here: <a href="../../../docs/x11.html">Staff GUIs over SSH</a>. Section C of the linked guide will show you how to SSH to your instructional machine with X11 forwarding enabled (which allows to view the staff solution's GUI on your local computer over an SSH connection).</p>
+
+<p>Once you are on an instructional machine, run the following command:</p>
+
+<pre><code>staff&#x2d;signpost &#x2d;&#x2d;log</code></pre>
+
+<p>This command starts the signpost program (specifically, the one implemented by the course staff). The <code>&#x2d;&#x2d;log</code> option will output information about the program's execution. Every time the program is invoked, it creates a signpost puzzle board with some randomly generated solution. In your terminal you will see an output very similar to the following:</p>
+
+<pre><code>PUZZLE
+4 4
+1 14 12 15
+8 5 13 4
+7 6 2 3
+9 10 11 16
+1 10 16
+ENDPUZZLE</code></pre>
+
+<p>This is a log of the program, describing its operations.
+In the first line, PUZZLE, indicates that a puzzle is being created. The second line indicates that it is a $4\times 4$ signpost puzzle.
+The next 4 lines define the solution of this puzzle.
+The 7th line says that the fixed numbers on the board are 1, 10, and 16.
+Finally, ENDPUZZLE indicates that this board is done initializing.</p>
+
+<p>If you want to always get the same board, you can use the seed option as in the following example:</p>
+
+<pre><code>staff&#x2d;signpost &#x2d;&#x2d;seed=42 &#x2d;&#x2d;log</code></pre>
+
+<p>The same seed number produces the same random sequence, which will make the puzzle
+deterministic. This way bugs and other behavior can be reproduced.</p>
+
+<p>Now that the puzzle has been generated by the program, it's time to play the game. If we tried to connect the start to the square that contains 2 in the solution, the program would output the following log:</p>
+
+<pre><code>CONN 0 3 2 1</code></pre>
+
+<p>There was an attempt to connect the square whose coordinates on the board are (0,3), and the
+square whose coordinates are (2,1). Try to play the game and see what are the logs
+the program produces. You should also try the options in the program's menu bar.</p>
+
+
+<h2 id="program-design">Program Design</h2>
+
+
+<p>The skeleton exhibits a <em>design pattern</em> in common use: the
+Model-View-Controller Pattern (MVC).</p>
+
+<p>The MVC pattern divides our problem into three parts:</p>
+
+<ul>
+  <li>The <em>model</em> represents the subject matter being represented and acted
+  upon&mdash;in this case incorporating the state of a board and the rules by
+  which it may be modified. Our model resides in the <code>Model</code> and <code>Place</code> classes.</li>
+  <li>A <em>view</em> of the model, which displays the puzzle state to the user.
+  Our view resides in the <code>GUI</code> and <code>BoardWidget</code> classes.</li>
+  <li>A <em>controller</em> for the puzzle, which translates user actions into
+  operations on the model.  In our case, it also notifies the view when the
+  model has been modified. Our controller
+  resides mainly in the <code>Controller</code> class, although it also uses the GUI class
+  to read mouse clicks.</li>
+</ul>
+
+<p>Your job for this project is to modify and complete the <code>Model</code>, <code>Place</code>,
+<code>PuzzleGenerator</code>, and <code>BoardWidget</code> classes.
+We've marked places that need attention with comments containing "<code>FIXME</code>" (the
+style checker will point these out to you should you forget to fix one).
+Don't let that stop you from looking at all the other code in these classes.
+That's actually part of the point of giving you the skeleton.  You can learn a
+great deal about programming by reading other people's programs. It is unlikely that you
+will be able to complete the "<code>FIXME</code>"s successfully without understanding the majority
+of the provided code in the aforementioned classes.</p>
+
+<p>The "<code>FIXME</code>"s appear in the classes <code>Model</code>, <code>Place</code>, and
+<code>PuzzleGenerator</code>.  There is also one trivial <code>FIXME</code> in <code>BoardWidget</code>, which
+is only there as a stopgap to make the initial skeleton display something.
+Generally the <code>FIXME</code>'s will have instructions to implement something specific,
+remove certain lines, etc.</p>
+
+<p>Initially, the skeleton contains some dummy code so that when run, you'll see
+a board, although you won't be able to do anything with it to speak of.</p>
+
+
+<h2 id="getting-started">Getting Started</h2>
+
+
+<p>This project is largely an exercise in reading someone else's program and
+understanding its intent, which is actually a common activity in "real-world"
+programming as well.</p>
+
+<p>You'll see numerous uses of parts of the Java library we haven't talked about.
+However, you <em>have</em> seen all these data structures in Python.  Where Python has
+lists, Java has arrays, <code>ArrayList</code>s, <code>ArrayDeque</code>s, and <code>LinkedLists</code> (among
+others).  Where Python has dictionaries, Java has <code>HashMap</code>s and <code>TreeMap</code>s.
+Where Python has sets, Java has <code>HashSet</code>s, <code>TreeSet</code>s, and <code>BitSet</code>s. These and many more library classes are all defined in the <a href="https://docs.oracle.com/en/java/javase/13/docs/api/allclasses-index.html">online Java library documentation</a>, which should constitute much of your bedtime reading for this semester.</p>
+
+<p>We've gone to some pains to provide comments that actually indicate what
+things do (in sharp contrast, I fear, to standard practice these days).  We'd
+like you to get into the habit of doing the same.</p>
+
+<p>Reading and trying to understand these files and comments before beginning
+programming will be well worth the time. Spending up-front time before
+writing code can feel a bit counterintuitive at first. If you begin writing
+code before making an attempt to understand the preexisting code, you will likely
+struggle more. You need not understand every line of the given code, but you
+should strive to understand the different objects, their instance variables, what their
+instance methods do, and how the methods relate to one another. The comments
+in line with the methods and instance methods are a great way to begin learning
+about the code.</p>
+
+<p>Before you start working on a particular class, you must read the comment
+above the class to understand the object at hand. Then, continue to the bottom of the class
+to read about its instance variables. Finally, read the comments of the methods that were provided
+for you. Only after this exercise you will be truly prepared to tackle the first "<code>FIXME</code>".</p>
+
+<p>A note on style: you will see that all instance and static variable names are preceded
+by an underscore. The underscore gives these variables no special powers. It
+is merely a visual signal to the programmer that a variable is an instance or static variable of a class.</p>
+
+<p>This project makes considerable use of abstraction; the simpler functions
+you write will be instrumental in helping you accomplish more complex goals.
+Be sure
+to respect the abstraction barriers to minimize the impact of bugs
+or logical errors in your code.
+Further, if you find yourself bogged down by the details of a particular
+method, consider pausing to break it down into
+"helper" functions, each performing some coherent piece of the original function
+(only, as a stylistic matter, do give these new functions descriptive names,
+generally avoiding the word "helper" in the name.)</p>
+
+
+<h2 id="detailed-overview-of-the-skeleton">Detailed Overview of the Skeleton</h2>
+
+
+<p>We highly recommend that you complete the <code>FIXME</code>s in the order specified here.</p>
+
+
+<h3 id="place">Place</h3>
+
+
+<p>A Place object represents an (x, y) position on a Signpost puzzle board. This class is used in
+order to save coordinates as objects and to calculate relations between coordinates.
+This class defines a private inner class <code>PlaceList</code>. You are welcome to read more about <code>ArrayList</code>
+online, but you can also simply treat these objects like Python lists that hold Place objects.
+That is, these objects are lists you can keep adding Place objects to using the
+instance method <code>add(Place e)</code>.</p>
+
+<p>To make new Place objects across all classes, you should <em>not</em> use the <code>Place(int x0, int y0)</code> constructor.
+There is a provided "factory" constructor, <code>pl(int x, int y)</code>, that you should use instead. This
+method saves all Place objects it creates, and if we try to instantiate a Place object that already
+exists, <code>pl</code> will return the saved object, instead of instantiating a duplicate. For example, suppose
+we instantiate a Place representing the coordinates $(0,2)$ on the board:</p>
+
+<pre><code>    Place myFirstPlace = pl(0,2);</code></pre>
+
+<p>If we never called <code>pl</code> with these arguments, it will call the place constructor to make this
+Place object and save it in the <code>_places</code> static variable. This is a 2-dimensional array of Place
+objects used to save all Places ever instantiated.</p>
+
+<p>Now, if we define another place representing the same coordinates:</p>
+
+<pre><code>    Place mySecondPlace = pl(0,2);</code></pre>
+
+<p><code>pl</code> will return the object it previously saved in <code>_places</code>. So, <code>myFirstPlace</code> and <code>mySecondPlace</code>
+do not point to two different objects. Instead, they point to the same exact Place object in memory.</p>
+
+<p>In this class you should implement the <code>successorCells</code> method. A buggy implementation of this method
+was provided in HW1. If you were able to find the bugs, you can use your corrected version here. When you are done with <code>successorCells</code>, you should pass
+the <code>successorCellsTest</code> unit test in PlaceTests.java.</p>
+
+
+<h3 id="model-sq">Model.Sq</h3>
+
+
+<p>This is a nested class inside Model. One reason which we may want to have nested classes is that
+it allows us to logically group together classes whose implementations are intimately related.</p>
+
+<p>The Sq class represents a square on the board and its contents. An Sq object and a Place
+object are not the same thing. A Place only corresponds to a particular coordinate on the board. 
+In fact, every Sq object contains a Place instance variable that represents the coordinates of that Sq.</p>
+
+
+<h4 id="connectable">connectable</h4>
+
+
+<p>This is an instance method, so it has access to the <code>this</code> pointer, which points to
+the Sq object that was used to call this method.
+It may be worth looking at the Place class for a method that will help implement this.</p>
+
+
+<h4 id="connect">connect</h4>
+
+
+<p>This is another instance method of the Sq class.
+Take a look at the instance variables of Sq if you have not already. Each Sq keeps track of its
+<em>predecessor</em> and <em>successor</em> Sqs. So, each <em>group</em> of connected Sqs is essentially a doubly-linked
+list. Each Sq in a group keeps track of its group's <em>head</em>, the first Sq in the connected sequence,
+and its <em>group</em> number. The comment above the Model class declaration details the group numbering
+convention used here.</p>
+
+<p>You <em>rarely</em> need to assign or deal with group numbers directly. We have provided you methods
+that will handle all the necessary operations needed to assign group numbers. Namely, <code>newGroup</code>,
+<code>releaseGroup</code>, and <code>joinGroups</code>. You should read the comments above these methods and
+understand when you should use them.</p>
+
+<p>All the possible scenarios when connecting two squares are listed in the <code>FIXME</code> of this method.
+Before trying to implement each item of the <code>FIXME</code> set up these scenarios on paper or on the
+staff solution, and make sure you understand which instance variables should change after a
+connection is made between two squares (which could potentially connect two distinct groups of squares).</p>
+
+<p>When you finish implementing this method, you should be able to pass <code>sqConnectTest()</code> from ModelTests.java.</p>
+
+
+<h4 id="disconnect">disconnect</h4>
+
+
+<p>After completing <code>connect</code> you should have a good understanding of how the program handles
+groups of connected squares on the board. When disconnecting two squares, we essentially break
+one group of connected squares into two groups. The resulting groups may contain one or more connected squares.</p>
+
+<p>Before implementing this method, set up the scenarios described in the <code>FIXME</code> items
+on paper or on the staff solution, and make sure you understand how the Sq objects in each
+resulting group change as a result of the disconnect. Again, refer to the methods we provided you to deal with group numbering. The only time in which you should assign a group number directly is when a square is to join group -1 (when it should become unumbered and unlinked as a result of a disconnect).</p>
+
+<p>After you are done with this method, you should pass the <code>sqDisconnectTest()</code> from ModelTests.java. This test is not comprehensive,  so we highly recommend that you do not proceed to the next step before you are confident in your implementation of this method.
+You should at least perform some sanity checks via ad hoc testing before you move on, or preferably write additional unit tests.</p>
+
+
+<h3 id="model">Model</h3>
+
+
+<p>After you have implemented the Place and Sq classes, you should have a good understanding of
+the purpose of these objects and what their methods are used for. Now it's time to implement
+the Signpost board. A Model object represents a Signpost puzzle. The instance variables of this object store the information needed to describe the state of the puzzle (the dimensions of the board, the arrows in
+the squares, which squares are connected, which squares have numbers, etc.)
+and will be updated as the puzzle is solved.
+This contains the vast majority of the code you will change, so understanding this
+file will be crucial.</p>
+
+
+<h4 id="arrowdirection">arrowDirection</h4>
+
+
+<p>This method returns the direction from the square at coordinates $(x,y)$ to its successor in the
+<em>solution</em> of the board. For example, if the starting square is at $(0,3)$ and the square whose sequence number is 2
+in the solution of the board is at coordinates $(0,0)$, a call to <code>arrowDirection(0,3)</code> should return 4 (south).</p>
+
+<p>There are no unit tests provided for this method, which means that you have to write your own
+tests to verify your solution works.
+We highly recommend that you do not proceed to the next step before
+you are confident in your implementation of this method.</p>
+
+
+<h4 id="model-constructor">Model Constructor</h4>
+
+
+<p>Next, implement the Model constructor, which takes in a 2D array representing the
+solution of the board being constructed as a parameter. You will have to instantiate all squares on the board
+correctly, based on the solution provided to the constructor. Some methods that you have
+already implemented in Place, Sq, and Model will likely be useful here. The <code>get</code> methods from Model
+may also be useful.</p>
+
+<p>After you are done implementing this constructor, open PuzzleGenerator.java and locate the <code>makePuzzleSolution</code> method.
+Remove the line that returns a hardcoded 2D array and instead uncomment <code>return _vals;</code>.
+Do not touch <code>findSolutionPathFrom</code> or the assert statement. After doing so, you should
+be able to pass <code>arrowTest1</code> and <code>initTest2</code> in ModelTests.java.</p>
+
+
+<h4 id="model-copy-constructor">Model Copy Constructor</h4>
+
+
+<p>A copy constructor is a constructor that takes in an object of the class as a parameter, and
+creates a <em>new</em> distinct but identical object.</p>
+
+<p>The Model object contains pointers to some other objects as instance variables. You should make <em>new</em> distinct copies of
+these objects as well, being mindful not to just copy the pointers, but actually create new objects that are identical to the original.
+For example, when you are copying over the squares in your <code>_board</code> instance variable. You don't want the pointers in the new Model's 
+<code>_board</code> to refer to squares in the original Model's <code>_board</code> that was passed in as a parameter.
+Instead you should be creating new squares and adding them to your new <code>_board</code>.</p>
+
+<p>Again, the getter methods from the Model class may be useful to implement this.</p>
+
+<p>After implementing this constructor, remove the line specified in the <code>FIXME</code> from
+BoardWidget.java, and you should now be able to pass <code>copyTest</code> in Model.java.</p>
+
+
+<h4 id="autoconnect">autoconnect</h4>
+
+
+<p>This method finds all numbered squares and makes connections between them
+if they are consecutively numbered and not yet connected.</p>
+
+<p>After implementing this method, uncomment the line that calls <code>model.autoconnect()</code> in the <code>getPuzzle</code> method of
+PuzzleGenerator.java. You should now be able to pass <code>autoConnectTest</code> in ModelTests.java.</p>
+
+
+<h4 id="solve">solve</h4>
+
+
+<p>This method should solve the board. That is, for each square assign the sequence number specified in the board's
+solution for that square, and make all the correct connections between the squares on the board.  Strictly speaking, we should say that the method applies <em>one
+possible</em> solution, since nothing in the <code>Model</code> class requires that there be
+a unique solution to the puzzle.
+However, our <code>PuzzleGenerator</code> class only creates puzzles with
+unique solutions, (although one can set up ambiguous puzzles using the
+<code>&#x2d;&#x2d;testing</code> and <code>&#x2d;&#x2d;setup</code> command line arguments to the Signpost program).</p>
+
+<p>After you are done with this method, you should be able to pass <code>solvedTest</code> and <code>initTest3</code>
+from ModelTests.java.</p>
+
+
+<h3 id="puzzlegenerator">PuzzleGenerator</h3>
+
+
+<p>This class helps to randomly generate Boards.
+There are two methods to implement here: <code>findUniqueSuccessor</code> and
+<code>findUniquePredecessor</code>. These check to see if there is exactly one unconnected
+square to
+which a given square may validly be connected in a given Model object
+(either after the given square for
+<code>findUniqueSuccessor</code> or before for <code>findUniquePredecessor</code>), and returns that
+square if so.</p>
+
+<p>After implementing this method, you should pass the tests in PuzzleGeneratorTests.java, and hopefully
+all the integration tests when running <code>make check</code>!</p>
+
+
+<h2 id="instrumentation-and-testing">Instrumentation and Testing</h2>
+
+
+<p>To facilitate automated testing of your work, there are a few features that you
+can use to record sessions and to play back moves for testing or debugging
+purposes.  The skeleton is set up so that when you start your program with</p>
+
+<pre><code>java &#x2d;ea signpost.Main &#x2d;&#x2d;log</code></pre>
+
+<p>you'll get a record on the standard output of all of the edges clicked, all the
+randomly created puzzles, and all the menu commands entered. The -ea option stands for "enable assertions". Typically logs would be printed to the terminal, but one might want to save them to a file which can be
+done by capturing a log through redirection. You can capture logs using
+redirection, like this:</p>
+
+<pre><code>java &#x2d;ea signpost.Main &#x2d;&#x2d;log &gt; testing/myscript1.in</code></pre>
+
+<p>The <code>&#x2d;&#x2d;seed</code> option will allow you to prime the random number generation so that
+you can get the same set of random numbers each time:</p>
+
+<pre><code>java &#x2d;ea signpost.Main &#x2d;&#x2d;seed=42</code></pre>
+
+<p>The same seed produces the same random sequence, which will make the puzzle
+deterministic. This way bugs and other behavior can be reproduced.</p>
+
+<p>The <code>&#x2d;&#x2d;testing</code> option reads in a script produced by <code>&#x2d;&#x2d;log</code> and uses it (in
+place of user clicks and random numbers) to supply the results of <code>getPuzzle</code>
+and <code>getCommand</code>.  It also prints out a textual display of the initial
+board and after each command, which <code>Tester.py</code> can use to test the
+program.  For example, to read back the file <code>myscript1</code>, use</p>
+
+<pre><code>java &#x2d;ea signpost.Main &#x2d;&#x2d;testing testing/myscript1.in</code></pre>
+
+<p>This will print out what tester.py sees, which it compares to
+<code>testing/myscript1.out</code>.  Using <code>&#x2d;&#x2d;log</code> and <code>&#x2d;&#x2d;testing</code>, you can thus create
+your own <code>.in</code> and <code>.out</code> testing files to augment the ones we've provided in
+<code>testing</code>.</p>
+
+<p>We have set up the Makefiles in the <code>proj0</code> directory and in the <code>signpost</code>
+subdirectory to have targets <code>check</code> and <code>unit</code>.  In order to use make, you'll
+need to install it. Follow <a href="../../../docs/make-install.html">the instructions here</a> to do so.</p>
+
+<p>Once installed, the command</p>
+
+<pre><code>make unit</code></pre>
+
+<p>will run all the <em>unit tests</em> on <code>Model.java</code>. If you try this on
+the skeleton, you'll see that, unsurprisingly, it fails all these tests, giving
+you an indication of what needs to be changed.</p>
+
+<p>In addition, <code>make check</code> in the <code>proj0</code> directory will run <em>integration tests</em>,
+which run the program and check its outputs against expected output using the
+scripts <code>tester.py</code> and <code>testing.py</code> in the <code>testing</code> subdirectory. Integration tests
+test all the program's components together. <strong>By the time
+you finish the project both <code>make unit</code> and <code>make check</code> should report no errors.</strong>
+If your python command is <code>python</code> rather than <code>python3</code> you may need to run
+<code>make check PYTHON=python</code> to run the integration tests.</p>
+
+
+<h3 id="running-integration-tests-in-intellij">Running Integration Tests in IntelliJ</h3>
+
+
+<p>Integration tests used in <code>make check</code> are stored under the <code>proj0/testing</code> folder.
+If you would like to run an integration test in IntelliJ so that you can use the 
+debugger, use the following steps:</p>
+
+<ol>
+  <li>Navigate to the Main class in IntelliJ and open it.</li>
+  <li>Click on Run > Edit Configurations...</li>
+  <li>In the left sidebar of the pop-up window, under "Application", select Main.</li>
+  <li>For "Program arguments", put in <code>&#x2d;&#x2d;testing testing/&lt;test_file&gt;</code> where 
+  <code>&lt;test_file&gt;</code> is the name of the file of the integration test you would like to run.
+  For example, if you would like to run integration test 8, you should have
+  <code>&#x2d;&#x2d;testing testing/test08.in</code> as your program arguments.</li>
+  <li>Now you can click Run > Run 'Main' or Run > Debug 'Main' to run and use the
+  debugger on the integration tests. Remember to set a breakpoint if you're debugging!</li>
+</ol>
+
+
+<h2 id="submission-and-version-control">Submission and Version Control</h2>
+
+
+<p>It is important that you commit work to your repository <em>at frequent intervals</em>.
+Version control is a powerful tool for saving yourself when you mess something
+up or your dog eats your project, but you must use it regularly if it is to be
+of any use.  Feel free to commit every 15 minutes; Git only saves what has
+changed, even though it acts as if it takes a snapshot of your entire project.</p>
+
+<p>The command <code>git status</code> will tell you what you have modified, removed, or
+added since the last commit.  It will also tell you what you have
+not yet sent to your central repository.  You needn't just assume that things
+are as you expect; <code>git status</code> will tell you whether you've committed and
+pushed everything.</p>
+
+<p>If you are switching between using a clone of your central repository on the
+instructional computers and another at home (or on your laptop), be careful to
+synchronize your work.  When you are done working on one system, be sure to push
+your work to the central repository:</p>
+
+<pre><code>git status                          # To see what needs to be added or committed.
+git add &lt;filepath&gt;                  # To add, or stage, any new files.
+git commit &#x2d;a &#x2d;m &quot;Commit message&quot;   # To commit changes.
+git push</code></pre>
+
+<p>If you start working on the other system, you then do</p>
+
+<pre><code>git status          # To make sure you didn&#x27;t accidentally leave
+                    # stuff uncommitted or untracked (if you did, commit
+                    # it before doing the next step.)
+git pull &#x2d;&#x2d;rebase   # Get changes from your central repo.</code></pre>
+
+<p>Submit your project by committing and tagging it:</p>
+
+<pre><code>git tag proj0&#x2d;0     # Or proj0&#x2d;1, etc.
+git push
+git push &#x2d;&#x2d;tags</code></pre>
+
+<p>Be sure to respond to all prompts and to make sure the messages you get indicate
+that the submission was successful.  Don't just "say the magic words" and assume
+that everything's OK.</p>
+
+
+<h2 id="grading-details">Grading Details</h2>
+
+
+<p>While we provided you with an extensive suite of tests, we reserve the right to add hidden tests to the grader. <em>Update (2/11): There will be no hidden tests in the grader.</em></p>
+
+<p>A week before the project's due date we will release the project's autograder.
+However, you will only be given limited information from the autograder. It may not reveal what particular tests you are failing. Three days
+before the project's due date, the grader will show the complete logs.</p>
+
+<p>The idea behind this policy is that
+<strong><em>we want you to get out of
+the habit of using the autograder to test and debug your program.</em></strong></p>
+
+<p><em>Update (2/11): Please see <a href="https://piazza.com/class/k5eevxebzpj25b?cid=584">@584</a> on Piazza for autograder details.</em></p>
+    </main></div>
+</body>
+</html>

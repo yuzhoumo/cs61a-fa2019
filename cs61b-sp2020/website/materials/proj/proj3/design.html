@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gitlet Design Document | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="design.html#design-document-guidelines">Design Document Guidelines</a></li>
+  <li><a href="design.html#1-classes-and-data-structures">1. Classes and Data Structures</a></li>
+  <li><a href="design.html#2-algorithms">2. Algorithms</a></li>
+  <li><a href="design.html#3-persistence">3. Persistence</a></li>
+  <li><a href="design.html#example">Example</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Gitlet Design Document</header>
+        <div class="due-date">Author: Itai Smith</div>
+<h2 id="design-document-guidelines">Design Document Guidelines</h2>
+
+
+<p>Please use the following format for your Gitlet design document. Your design
+document should be written in markdown, a language that allows you to nicely format and style a text file. 
+Organize your design document in a way that will make it easy for you
+or a course-staff member to read.</p>
+
+<h2 id="1-classes-and-data-structures">1. Classes and Data Structures</h2>
+
+
+<p>Include here any class definitions. For each class list the instance
+variables and static variables (if any). Include a <strong><em>brief description</em></strong>
+of each variable and its purpose in the class. Your explanations in
+this section should be as concise as possible. Leave the full
+explanation to the following sections. You may cut this section short
+if you find your document is too wordy.</p>
+
+
+<h2 id="2-algorithms">2. Algorithms</h2>
+
+
+<p>This is where you tell us how your code works. For each class, include
+a high-level description of the methods in that class. That is, do not
+include a line-by-line breakdown of your code, but something you would
+write in a javadoc comment above a method, <strong><em>including any edge cases
+you are accounting for</em></strong>. We have read the project spec too, so make
+sure you do not repeat or rephrase what is stated there.  This should
+be a description of how your code accomplishes what is stated in the
+spec.</p>
+
+<p>The length of this section depends on the complexity of the task and
+the complexity of your design. However, simple explanations are
+preferred. Here are some formatting tips:</p>
+
+<ul>
+  <li>For complex tasks, like determining merge conflicts, we recommend
+  that you split the task into parts. Describe your algorithm for each
+  part in a separate section. Start with the simplest component and
+  build up your design, one piece at a time. For example, your
+  algorithms section for Merge Conflicts could have sections for:</li>
+  <li>Checking if a merge is necessary.</li>
+  <li>Determining which files (if any) have a conflict.</li>
+  <li>Representing the conflict in the file.</li>
+  <li>Try to clearly mark titles or names of classes with white space or
+  some other symbols.</li>
+</ul>
+
+
+<h2 id="3-persistence">3. Persistence</h2>
+
+
+<p>Describe your strategy for ensuring that you don’t lose the state of your program across multiple runs. Here are some tips for writing this section:</p>
+
+<ul>
+  <li>This section should be structured as a list of all the times you
+  will need to record the state of the program or files. For each
+  case, you must prove that your design ensures correct behavior. For
+  example, explain how you intend to make sure that after we call
+     java gitlet.Main add wug.txt,
+  on the next execution of
+     java gitlet.Main commit -m “modify wug.txt”, 
+  the correct commit will be made.</li>
+  <li>A good strategy for reasoning about persistence is to identify which
+  pieces of data are needed across multiple calls to Gitlet. Then,
+  prove that the data remains consistent for all future calls.</li>
+  <li>This section should also include a description of your .gitlet
+  directory and any files or subdirectories you intend on including
+  there.</li>
+</ul>
+
+
+<h2 id="example">Example</h2>
+
+
+<p>To illustrate all this, we've created a
+<a href="enigma-example.html">sample design document</a>
+for the Enigma project (Project 1).</p>
+    </main></div>
+</body>
+</html>

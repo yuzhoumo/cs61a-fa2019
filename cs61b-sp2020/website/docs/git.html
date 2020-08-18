@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Using Git in CS61B | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../index.html"><div class="navitem">Main</div></a>
+        <a href="../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="git.html#navigation">Navigation</a></li>
+  <li><a href="git.html#a-introduction">A. Introduction</a></li>
+  <li><a href="git.html#b-preliminaries">B. Preliminaries</a></li>
+  <li><a href="git.html#c-setting-up-a-local-repository">C. Setting up a Local Repository</a></li>
+  <ul>
+    <li><a href="git.html#non-lab-computers">Non-Lab Computers</a></li>
+    <li><a href="git.html#mac-or-linux">Mac or Linux</a></li>
+    <li><a href="git.html#windows">Windows</a></li>
+  </ul>
+  <li><a href="git.html#d-using-your-repository">D. Using Your Repository</a></li>
+  <li><a href="git.html#e-submitting-your-work">E. Submitting Your Work</a></li>
+  <li><a href="git.html#f-quick-summary">F. Quick Summary</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Using Git in CS61B</header>
+        <div class="due-date">Author: P. N. Hilfinger</div>
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="git.html#a-introduction">Introduction</a></li>
+  <li><a href="git.html#b-preliminaries">Preliminaries</a></li>
+  <li><a href="git.html#c-setting-up-a-local-repository">Setting up a Local Repository</a></li>
+  <li><a href="git.html#d-using-your-repository">Using Your Repository</a></li>
+  <li><a href="git.html#e-submitting-your-work">Submitting Your Work</a></li>
+  <li><a href="git.html#f-quick-summary">Quick Summary</a></li>
+</ul>
+
+
+<h2 id="a-introduction">A. Introduction</h2>
+
+
+<p>Git is a <em>distributed version-control system</em> that has become the norm in the
+open-source software community.  Developers within a team (or in our case, a
+class) each work on separate repositories, and may from time to time synchronize
+all or part of the contents of their repositories with one or more other
+repositories.</p>
+
+<p>This document describes a minimal set of commands for using Git in this course
+to submit assignments and acquire skeleton files.  It is not any kind of
+tutorial or introduction to Git.  Consult <a href="using-git.html">this brief introduction</a>
+and <a href="http://git-scm.com/doc">this Git documentation</a> for an overview of Git and details of its
+various commands.</p>
+
+
+<h2 id="b-preliminaries">B. Preliminaries</h2>
+
+
+<p>If you are working from your own machine, be sure to install Git, if it is not
+already installed.  If you followed the lab1b setup, you should have Git already
+installed.</p>
+
+<p>Git terminology uses the term <em>repository</em> to mean an organized collection of
+versions (called <em>commits</em>) of a directory structure, a checked-out copy of the
+one of those commits (a <em>working directory</em>) possibly in the process of
+modification, and a staging area (called the <em>index</em>) used to track what goes
+into the next commit.  Usually, the set of commits and the index are stored in a
+directory named <code>.git</code> at the  top level of the working directory.  The term
+<em>bare repository</em> refers to a directory containing only the set of commits (what
+would be a <code>.git</code> directory in an ordinary repository, but with no index).
+Typically, we use bare repositories as central copies of versions that will be
+shared by several repositories.</p>
+
+<p>Each student has a bare <em>central repository</em> that we maintain for you on the
+instructional servers under the account <code>cs61b&#x2d;taa</code>.  You, the staff, and the
+autograding software all have access to this repository.  In addition, we've set
+up for you one <em>local repository</em> under your cs61b instructional account in a
+directory called <code>repo</code>.  It is a <em>clone</em> of your central repository, together
+with a checked-out working directory from one of its commits (generally your
+latest).  You are free to set up other such local clones (say on your personal
+laptop or home computer).  The central repository will serve to keep them all in
+sync with each other (at least if you follow the  instructions here), so that
+you can work on any of several machines.</p>
+
+
+<h2 id="c-setting-up-a-local-repository">C. Setting up a Local Repository</h2>
+
+
+<p><strong>Regardless of if you plan on using your local computer or a lab computer, you
+must do this section.</strong> This part sets up a local repository on your
+instructional account. Open up the terminal on the lab computer (or ssh in from
+your personal computer like you did in the <a href="instructional-accounts.html">section on instructional accounts</a>) and type:</p>
+
+<pre><code>  init&#x2d;git&#x2d;repo</code></pre>
+
+<p>This invokes a script that will create a clone of a central repository for your
+work (one that we and the autograder share).</p>
+
+<p>Don't worry if you get this error, it's perfectly fine and you can continue:</p>
+
+<pre><code>  error: pathspec &#x27;master&#x27; did not match any file(s) known to git.
+  Error: Could not checkout master branch.  Trying to create it.</code></pre>
+
+
+<h4 id="non-lab-computers">Non-Lab Computers</h4>
+
+
+<p><strong>If you are only planning to use a lab computer, you may skip this part.</strong> However,
+if you plan to be using a non-lab computer at any point this semester, then you will have to install the
+appropriate ssh private key for access to your central repository. Don't worry
+about what it is for now.</p>
+
+<p>We highly recommend that you read <a href="instructional-accounts.html">section D of the instructional accounts
+guide</a> if you are confused with the commands or feel free to ask your TA for help.</p>
+
+<p>For the following steps, <strong>make sure you are not ssh'd into your instructional
+account.</strong> If you are ssh'd, you can log out by typing the command <code>logout</code>.</p>
+
+<ol>
+  <li><p>Type the following command on your terminal on your personal computer, <strong>where
+  <code>***</code> is your three-letter login</strong>:</p>
+
+<pre><code>scp cs61b&#x2d;***@ashby.cs.berkeley.edu:.ssh/id_rsa ~/.ssh/cs61b_id_rsa</code></pre>
+
+  <p>This command will copy the private ssh key of your instructional account into
+  a new file called <code>cs61b_id_rsa</code> in the <code>.ssh</code> directory in the root
+  directory of your personal computer. If you cannot see your <code>~/.ssh</code>
+  directory on your personal computer, you might have hidden files active. To
+  fix this issue, you should Google how to show hidden files (this will be an
+  exercise on how to solve problems on your own!).</p></li>
+  <li><p>Next, run the following commands:</p>
+
+<pre><code>echo &quot;Host *.cs.berkeley.edu *.eecs.berkeley.edu&quot; &gt;&gt; ~/.ssh/config
+echo &quot;IdentityFile ~/.ssh/cs61b_id_rsa&quot; &gt;&gt; ~/.ssh/config</code></pre>
+
+  <p>These commands will append the line <code>IdentityFile ~/.ssh/cs61b_id_rsa</code>
+  to the <code>config</code> file in the <code>~/.ssh</code> directory.</p>
+
+  <p>Then, run the following command:</p>
+
+<pre><code>cat ~/.ssh/config</code></pre>
+
+  <p>This command will output the contents of the <code>~/.ssh/config</code> file. Make sure
+  it contains the line IdentityFile ~/.ssh/cs61b<em>id</em>rsa`!</p></li>
+  <li><p>Finally, you must correctly set your <code>cs61b_id_rsa</code> file permissions by using
+  the command:</p>
+
+<pre><code>chmod 600 ~/.ssh/cs61b_id_rsa</code></pre>
+
+  <p>Otherwise you will get the "WARNING! UNPROTECTED PRIVATE KEY FILE!" message
+  later.</p></li>
+  <li><p>Now, continue below under the sub-section that matches your operating system.</p>
+
+  <ul>
+    <li><a href="git.html#mac-or-linux">Mac or Linux</a></li>
+    <li><a href="git.html#windows">Windows</a></li>
+  </ul></li>
+</ol>
+
+
+<h4 id="mac-or-linux">Mac or Linux</h4>
+
+
+<p>We've packaged the rest of the setup described here in a Python3 script called
+<code>remote&#x2d;init&#x2d;git&#x2d;repo</code> which can be downloaded <a href="https://inst.eecs.berkeley.edu/~cs61b/sp20/other/bin/remote-init-git-repo.py" download="remote-init-git-repo.py">here</a>. Once you have downloaded the script run the following command (<strong>where DIR is where the file lives on your personal computer, likely the Downloads folder</strong>):</p>
+
+<pre><code>python3 DIR/remote&#x2d;init&#x2d;git&#x2d;repo.py</code></pre>
+
+<p>Alternatively, this script also resides on the instructional servers at
+<code>~cs61b/bin/other/remote&#x2d;init&#x2d;git&#x2d;repo.py</code>.</p>
+
+<p>All of the setup has been abstracted away by using this script, but you should
+read the Windows setup below to understand what this script is doing.</p>
+
+<p>If you encounter the error when running the script:</p>
+
+<pre><code>Repo already exists</code></pre>
+
+<p>then type the command:</p>
+
+<pre><code>rm &#x2d;rf ~/repo</code></pre>
+
+<p>Then you can rerun the script and it should work. In general, however, be
+careful with the remove command (be sure not to misspell ~/repo), as this command will <strong>permanently delete your files</strong>.</p>
+
+
+<h4 id="windows">Windows</h4>
+
+
+<p>If you plan to be using a non-lab computer that is Windows machine, then you
+should set up a local repository according to the following section.</p>
+
+<p>We will now configure Git as if we are a student named Fred with login
+<code>cs61b&#x2d;***</code>. When you are setting up your computer, use the same commands but
+replace Fred's information with your information and <code>***</code> with your
+three-letter login.</p>
+
+<p>Having installed Git, Fred will first perform some general configuration that
+will apply to all repositories used from his account (for this course or
+elsewhere):</p>
+
+<pre><code>git config &#x2d;&#x2d;global user.name &quot;Fred Student&quot;
+git config &#x2d;&#x2d;global user.email &quot;fred.student@somemail.com&quot;
+git config &#x2d;&#x2d;global push.default simple</code></pre>
+
+<p>The first two lines set the name and email that Git will record in commits and
+logs.  The last line is a safety measure that affects the <code>git push</code> command
+described later.</p>
+
+<p>Fred now will establish a working directory containing a local clone of his
+central repository in a directory <code>~/repo</code> (actually, any name works; <code>repo</code> is
+the name we use in your instructional account):</p>
+
+<pre><code>cd
+git clone cs61b&#x2d;taa@derby.cs.berkeley.edu:students/cs61b&#x2d;*** repo</code></pre>
+
+<p>This will copy the contents of Fred's personal bare repository on <code>cs61b&#x2d;taa</code>
+into the new local working directory <code>repo</code> as <code>repo/.git</code>, and will then check
+out its head version into <code>repo</code> as well.  Initially, this head version is the
+branch <code>master</code> and is empty.</p>
+
+<p>There will be various resources that we provide, including skeleton (starter)
+files for projects and assignments.  Fred can add a reference to these resources
+to his repository with the commands</p>
+
+<pre><code>cd repo
+git remote add shared cs61b&#x2d;taa@derby.cs.berkeley.edu:shared </code></pre>
+
+<p>We'll see how to use this remote reference later.</p>
+
+
+<h2 id="d-using-your-repository">D. Using Your Repository</h2>
+
+
+<p>For this course, you must keep each assignment or project, <em>ASSGN</em>, in a
+subdirectory of that name in your working directory.  Typically, we provide an
+initial set of files for each assignment.  You can initialize an assignment
+directory, say for hw3, like this:</p>
+
+<pre><code>cd repo                                 # If not already there
+git fetch shared                        # Fetch current copy of skeleton files
+git merge &#x2d;m &quot;Start hw3&quot; shared/hw3     # Add or update your master directory from our remote version of hw3.
+git push                                # Save your local updated master directory to your central repository.</code></pre>
+
+<p>Here, <code>shared/hw3</code> is a <em>remote branch</em> containing a copy of the <code>hw3</code>
+subdirectory from the staff repository (which we maintain).  The <code>merge</code> command
+combines the contents of this branch with the contents of your working
+directory, which in our case will add a directory called <code>hw3</code>.  Later, if the
+staff makes changes to the skeleton after you have done this initial merge, you
+can use essentially the same sequence:</p>
+
+<pre><code>git fetch shared     # Fetch current copy of skeleton files
+git merge &#x2d;m &quot;Get updates to hw3 skeleton&quot; shared/hw3
+git push</code></pre>
+
+<p>to add these changes to your files.</p>
+
+<p>Work on hw3 now proceeds as a sequence of edits and commits.  After editing,
+adding, and deleting files, you first inform Git of any new files that it should
+start tracking.  For example, if when working on hw3, you create files
+<code>test1.inp</code> and <code>test1.out</code>, you would use the command</p>
+
+<pre><code>git add test1.inp test1.out</code></pre>
+
+<p>(from inside the directory <code>~/repo/hw3</code>).  Or, if these files are stored in a
+new subdirectory called <code>hw3/testing</code>, you can use the command</p>
+
+<pre><code>git add testing</code></pre>
+
+<p>to add all the files in the <code>testing</code> directory.  Once you add any new files,
+you can create a new commit (snapshot) for <code>hw3</code> with</p>
+
+<pre><code>git commit &#x2d;m &quot;ADD YOUR COMMIT MESSAGE HERE&quot;</code></pre>
+
+<p>You should replace the text inside the quotation marks with a commit message for
+the new commit. Descriptive commit messages are generally a good idea, since
+they help you identify commits when using the <code>git log</code> command to list the
+commits you have made. In later courses (and real life), they are especially
+useful for complex team projects where one is trying to keep other team members
+informed of what changes you've made and why.</p>
+
+<p>Before doing either of the <code>git merge</code> commands above (either to start or update
+an assignment), be sure that you use <code>git commit</code>, since you won't otherwise be
+able to commit.</p>
+
+<p>Before performing a <code>git commit</code>, it's a good idea to make sure that all your
+files are accounted for.  The command</p>
+
+<pre><code>git status</code></pre>
+
+<p>will indicate any files that are <em>untracked</em>, meaning that <code>git commit</code> will pay
+no attention to them and will not save or update them.  Generally, we suggest
+that you use <code>git add</code> on these files (or get rid of them entirely if they are
+unneeded) before committing.  This way you avoid the annoying (and, alas, rather
+common) problem of thinking that you have submitted a file when you have not.</p>
+
+<p>Files that <em>are</em> being tracked and have been changed must also be subjected to
+<code>git add</code> before committing; otherwise, the changes will not be committed.  The
+<code>git status</code> command will tell which files have "changes not staged for commit",
+and that therefore should be added.  Generally, however, it can be more
+convenient to use the command</p>
+
+<pre><code> git commit &#x2d;a &#x2d;m ...</code></pre>
+
+<p>which will first add all these unstaged changes and then commit them.  This does
+nothing with untracked files, so you will still need to check for them with <code>git
+status</code> and <code>git add</code> them.</p>
+
+<p>Periodically, you will want to transmit your work to your central repository on
+<code>cs61b&#x2d;taa</code> (from which your local repository was cloned).  This is especially
+true when you intend to hand it in or do further work on it from a different
+local repository. The command to push to your central repository is just</p>
+
+<pre><code>git push</code></pre>
+
+<p>which (assuming you've used the procedures described in this document for
+configuration and for creating assignments) will by default push your master
+branch and everything committed to it to the central repository.  Don't try to
+push, however,  without first committing any outstanding changes.</p>
+
+<p>Git's distributed nature means that you can create an arbitrarily long sequence
+of commits before pushing them.  It's not necessary to be connected to the
+<code>cs61b&#x2d;taa</code> repositories (or indeed, the Internet) to use Git's version-control
+features. We've been suggesting that you execute</p>
+
+<pre><code>git push</code></pre>
+
+<p>after merges, but in fact you can delay this until you wish to submit your
+assignment or until you think you might need to transfer your work to another of
+your local repositories.  Still, it is wise to use the <code>push</code> command with some
+regularity, since it provides an extra backup copy of your work on your central
+repository&mdash;one that you cannot accidentally erase.</p>
+
+<p>If you work on hw3 from two different local repositories (say from home and on
+the instructional machines), then (if you have used <code>git push</code> to push your work
+from one local repository to your central repository) you can bring the other
+local repository up to date with any changes you made with the command</p>
+
+<pre><code>git pull &#x2d;&#x2d;rebase</code></pre>
+
+<p>after first committing anything you've done to this local repository.  (This
+command will work without the <code>&#x2d;&#x2d;rebase</code>, but we suggest using it for this
+course, because it keeps the history of versions (the "log") simple.  Without
+the <code>&#x2d;&#x2d;rebase</code> option, you get what are called <em>merge commits</em>, having multiple
+parents.)</p>
+
+<p>One last thing. Periodically, you will run into <em>merge conflicts</em>. For more
+information on merge conflicts themselves and how to resolve them, please read
+<a href="using-git.html">this documentation</a>.</p>
+
+
+<h2 id="e-submitting-your-work">E. Submitting Your Work</h2>
+
+
+<p>The staff does not immediately see changes to your local repositories.  That is,
+when you modify, add, or delete a file or when you execute <code>git commit</code>, we do
+<em>not</em> see these changes, since your central repository  under <code>cs61b&#x2d;taa</code> is not
+changed.  To be seen by us (or our testing software), your commits must be
+pushed as described in the preceding section.</p>
+
+<p>Furthermore, we don't treat all your commits, even when pushed, as submissions
+until you mark them as such.  To submit one of your committed versions, create
+(and subsequently push) an appropriately named  <em>tag</em>.  For example, when you
+first want to submit hw3, first commit any changes in your hw3 directory, and
+then do this:</p>
+
+<pre><code>git tag hw3&#x2d;1</code></pre>
+
+<p>A <em>tag</em> is a named reference to a particular commit.  After using <code>git tag</code> on a
+commit, you can later check out that commit by name check what you committed.
+For example,</p>
+
+<pre><code>git checkout hw3&#x2d;1</code></pre>
+
+<p>(after examining the commit at this tag, do be sure to <code>git checkout master</code> in
+order to get back to your development branch.  Otherwise, you will create great
+confusion for yourself.)</p>
+
+<p>Submission is not complete until you push the work to us:</p>
+
+<pre><code>git push         # To push the hw3 branch (if not yet done)
+git push &#x2d;&#x2d;tags  # To push hw3&#x2d;1 (and any other tags)</code></pre>
+
+<p>Subsequent submissions should be named <code>hw3&#x2d;2</code>, <code>hw3&#x2d;3</code>,  etc. We take the
+highest-numbered tag as your final submission.  You can submit at any time, even
+when you have many intervening commits.  For example, if you have submitted
+<code>hw3&#x2d;1</code> and  <code>hw3&#x2d;2</code> and decide that the last submission is bogus, and the first
+one was better, you can execute</p>
+
+<pre><code>git tag hw3&#x2d;3 hw3&#x2d;1</code></pre>
+
+<p>which makes <code>hw3&#x2d;3</code>, the latest submission, as a synonym for <code>hw3&#x2d;1</code>.  In fact,
+if the commit you want to submit was not previously tagged, you can find its
+unique id using <code>git log</code> and then tag that.  For example, you might see</p>
+
+<pre><code>git log
+commit ff39e11f5e292a0c81f3cb65c2a39c7b301a595a
+Author: Fred Student &lt;fred.student@somemail.com&gt;
+Date:   Tue Jan 27 16:32:17 2015 &#x2d;0800
+
+    Experimentally refactor my solution to problem 3.
+
+commit 4f7d9e65744c8b528289746bf911cb81ded7c5e2
+Author: Fred Student &lt;fred.student@somemail.com&gt;
+Date:   Wed Jan 26 15:36:28 2015 &#x2d;0800
+
+    Add tests.
+    No errors detected so far.
+
+commit 2aea9782d7000bb07277617b9f81bea485374d27
+Author: Fred Student &lt;fred.student@somemail.com&gt;
+Date:   Wed Jan 22 15:34:55 2015 &#x2d;0800
+
+    Begin work on hw3.</code></pre>
+
+<p>Now to submit the second commit back (from 1/26) as your first submission,
+execute</p>
+
+<pre><code>git tag hw3&#x2d;1 4f7d9e</code></pre>
+
+<p>(The unique ids in Git are hexadecimal SHA-1 hashcodes of the contents of the
+commits.  You only need to specify a sufficiently long prefix of the hashcode to
+uniquely identify which commit you mean.)</p>
+
+<p>Again, after adding any new tags, you must use <code>git push &#x2d;&#x2d;tags</code> to push them to
+the repository that the staff (and autograder) see.</p>
+
+<p>Submission dates and times will be taken from the time of the commit tagged by
+<code>hw3&#x2d;</code><em>n</em>, and <em>not</em> from the time you created the tag.
+<br/>
+
+While it is possible to delete tags, it shouldn't be necessary, since the
+autograder will ignore tags that don't refer to known assignments and you can
+always supersede a tag with a higher-numbered one.</p>
+
+
+<h2 id="f-quick-summary">F. Quick Summary</h2>
+
+
+<p>These commands assume you have  account <code>cs61b&#x2d;***</code>.</p>
+
+<ol>
+  <li><p><strong>To initialize Git on a particular system</strong>:
+  This is already done on the instructional machines.</p>
+
+<pre><code>git config &#x2d;&#x2d;global user.name &quot;Fred Student&quot;
+git config &#x2d;&#x2d;global user.email &quot;fred.student@somemail.com&quot;
+git config &#x2d;&#x2d;global push.default simple      # Suggested</code></pre></li>
+  <li><p><strong>To create a local copy of your personal repository</strong> in directory 
+  <code>repo</code> and connect it up our shared repository:</p>
+
+<pre><code>git clone cs61b&#x2d;taa@derby.cs.berkeley.edu:students/cs61b&#x2d;*** repo
+cd repo
+git remote add shared cs61b&#x2d;taa@derby.cs.berkeley.edu:shared </code></pre></li>
+  <li><p><strong>To start an assignment</strong> named <em>ASSGN</em> (e.g., <code>hw3</code>),
+  from our skeleton, first make sure all your local work is committed,
+  and then use</p>
+
+<pre><code>cd repo              # If not already there
+git fetch shared     # Fetch current copy of skeleton files
+git merge &#x2d;m &quot;Start assignment ASSGN&quot; shared/ASSGN
+git push</code></pre></li>
+  <li><p><strong>To see the current status of a repository</strong>, including files that have
+  been added, removed, or modified; files that are in the working 
+  directory, but not in the current commit ("untracked"); and 
+  discrepancies between the current branch and the remote branch it is 
+  tracking (gets pushed to or pulled from):</p>
+
+<pre><code> git status</code></pre>
+
+  <p>The message will tell you how to undo changes from the last commit, should
+  you want to.</p></li>
+  <li><p><strong>To start tracking a file (or directory)</strong> <em>Foo.java</em>, so that it will be added to the repository on the next commit:</p>
+
+<pre><code> git add Foo.java</code></pre></li>
+  <li><p><strong>To commit modifications to all tracked files in the local repository:</strong></p>
+
+<pre><code>git commit &#x2d;a</code></pre>
+
+  <p>This does nothing with untracked files.</p></li>
+  <li><p><strong>To transmit commits on the current branch</strong> to the remote 
+  (<code>cs61b&#x2d;taa</code>) repository:</p>
+
+<pre><code>git push</code></pre></li>
+  <li><p><strong>To fetch new commits</strong> from the 
+  <code>cs61b&#x2d;taa</code> repository that have been
+  pushed from another local directory (commit current work first):</p>
+
+<pre><code>git pull &#x2d;&#x2d;rebase</code></pre></li>
+  <li><p><strong>To submit assignment</strong> <strong><em>ASSGN</em></strong>, make sure everything you want is
+  committed and then execute</p>
+
+<pre><code>git tag ASSGN&#x2d;n
+git push
+git push &#x2d;&#x2d;tags</code></pre>
+
+  <p>where <em>n</em> is a sequence number larger than those of existing tags.</p></li>
+  <li><p><strong>To see tags that you have created</strong> (not necessarily pushed):</p>
+
+<pre><code>git tag</code></pre></li>
+</ol>
+    </main></div>
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 14 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-intro">A. Intro</a></li>
+  <li><a href="index.html#b-union-find">B. Union Find</a></li>
+  <ul>
+    <li><a href="index.html#quick-union">Quick Union</a></li>
+    <ul>
+      <li><a href="index.html#find">Find</a></li>
+      <li><a href="index.html#samepartition">SamePartition</a></li>
+      <li><a href="index.html#union">Union</a></li>
+      <li><a href="index.html#path-compression">Path Compression</a></li>
+    </ul>
+    <li><a href="index.html#exercise-implementing-unionfind">Exercise: Implementing UnionFind</a></li>
+  </ul>
+  <li><a href="index.html#c-minimum-spanning-trees">C. Minimum Spanning Trees</a></li>
+  <ul>
+    <li><a href="index.html#kruskal-s-algorithm">Kruskal's Algorithm</a></li>
+    <li><a href="index.html#exercise-implementing-kruskal-s-algorithm">Exercise: Implementing Kruskal's Algorithm</a></li>
+    <ul>
+      <li><a href="index.html#hints">Hints</a></li>
+      <li><a href="index.html#testing">Testing</a></li>
+    </ul>
+  </ul>
+  <li><a href="index.html#d-submission">D. Submission</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Lab 14: Union Find & MSTs</header>
+        
+<style>
+img {  height: 300px }
+</style>
+
+
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-intro">A. Intro</a></li>
+  <li><a href="index.html#b-union-find">B. Union Find</a></li>
+  <li><a href="index.html#c-minimum-spanning-trees">C. Minimum Spanning Trees</a></li>
+  <li><a href="index.html#d-submission">D. Submission</a></li>
+</ul>
+
+
+<h2 id="a-intro">A. Intro</h2>
+
+<p>In this lab, we will be exploring the union find data structure (also called disjoint sets), and you will be implementing your own weighted quick union data structure. We will then explore minimum spanning trees (MSTs) of graphs, and you will be implementing Kruskal's Algorithm to find the MST of a graph. Union Find and MSTs are covered in <a href="../../lectures/lect34.pdf">lecture 34</a>, so you can look at the lecture for a quick refresher, or the lab spec will also reintroduce the topics.</p>
+
+<p>As always, you can get the skeleton of this lab with:</p>
+
+<pre><code> git fetch shared
+ git merge shared/lab14 &#x2d;m &quot;get lab14 skeleton&quot;</code></pre>
+
+
+<h2 id="b-union-find">B. Union Find</h2>
+
+
+<p>Optional conceptual introduction <a href="https://youtu.be/jz3EZ7x99uc">here</a>.</p>
+
+<p>Suppose we have a collection of companies that have gone under mergers or
+acquisitions. We want to develop a data structure that allows us to determine if any two companies are in the same conglomerate. For example, if company X and company Y were originally independent but Y acquired X, we want to be able to represent this new connection in our data structure. How would we do this? One way we can do this is by using the union find, or disjoint, sets data structure.</p>
+
+<p>The <strong>disjoint sets</strong> data structure represents a collection of sets that are
+disjoint, meaning that any item in this data structure is found in no more than one set. When discussing this data structure, we often limit ourselves to two operations, <code>union</code> and <code>find</code>, which is also why this data structure is also called the <strong>union-find</strong> data structure. We will be using these two
+names interchangeably.</p>
+
+<p>The <code>union</code> operation will combine two sets into one set. The <code>find</code> operation will take in an item, and tell us which set that item belongs to by returning the representative item of its set. With this data structure, we will be able to keep track of the acquisitions and mergers that occur!</p>
+
+<p>Let's run through an example of how we can represent our problem using disjoint sets with the following companies:</p>
+
+<p><img src="img/x-y-z.jpg" alt="disjoint"></p>
+
+<p>To start off, each company is in its own set with only itself and a call to <code>find(X)</code> 
+will return $X$ (and similarly for all the other companies). If $Y$ acquired $X$, 
+we will make a call to <code>union(X, Y)</code> to represent that the two companies should now be linked. 
+In this call to <code>union</code>, one of the companies is picked to be the representative of this set. 
+If the representative is picked to be $Y$, a call to <code>find(X)</code> will return $Y$, and a call 
+to <code>find(Y)</code> will also return $Y$. If the representative is picked to be $X$, a call to 
+<code>find(X)</code> will return $X$, and a call  to <code>find(Y)</code> will also return $X$.</p>
+
+<p><img src="img/xy-z.jpg" alt="union"></p>
+
+
+<h3 id="quick-union">Quick Union</h3>
+
+
+<p>For the rest of the lab, we will work with positive integers as the items in our union find.</p>
+
+<p>We will represent each set as its own tree. Each tree will have the following qualities:</p>
+
+<ul>
+  <li>The nodes in the tree will be the items in the same set.</li>
+  <li>Each node only needs a reference to its parent rather than a direct reference to the representative of the set.</li>
+  <li>The top of each tree (we refer to this top as the "root" of the tree) will be the representative its set.</li>
+</ul>
+
+<p>Example: We have a union find data structure for the numbers 1 to 7.</p>
+
+<p><img src="img/quick_union_example.jpg" alt="quick union example"></p>
+
+<p>Here, there are three distinct sets:</p>
+
+<ul>
+  <li>Set #1 with items 1, 2, 4, and 7. The root of this set is 1.</li>
+  <li>Set #2 with item 3. The root of this set is 3.</li>
+  <li>Set #3 with items 5 and 6. The root of this set is 5.</li>
+</ul>
+
+<p>In code, we can conveniently represent these trees as an array <code>parents</code>. The $i$th item in <code>parents</code> contains the parent of that item. For example, 7's parent is 4, so the value at index 7 in <code>parents</code> is 4. An item that doesn't have a parent (i.e. an item that is the root of its tree) has itself as its parent.</p>
+
+
+<h4 id="find">Find</h4>
+
+
+<p>We want to define an operation <code>find(u)</code> that takes in an item and returns the representative of the set it belongs to. In this case, the representative of the set is the root of the tree that <code>u</code> belongs to. In the example above, <code>find(1)</code>, <code>find(4)</code>, and <code>find(7)</code> should all return 1 because 1 is the root of the tree they belong to. <code>find(3)</code> should return 3, and <code>find(6)</code> should return 5.</p>
+
+
+<h4 id="samepartition">SamePartition</h4>
+
+
+<p>We also want to define an operation <code>samePartition(u, v)</code> that takes in two items and returns whether or not they are in the same set. In the example above, <code>samePartition(2, 4)</code> should return true, while <code>samePartition(3, 6)</code> should return false.</p>
+
+<p>To see if two items are in the same set, we see if the representatives of the sets that each item belongs to are the same by checking if the roots of the trees each item belongs to are the same.</p>
+
+
+<h4 id="union">Union</h4>
+
+
+<p>Lastly, we want to define the opreation <code>union(u, v)</code> that will take the two items and union the two sets that the two items belong to. It will do nothing if the two items are already in the same set. In the example above, if we called <code>union(4, 5)</code> we should end up with 2 sets: set #1 with items 1, 2, 4, 5, 6, and 7, and set #2 with item 3.</p>
+
+<p>To do this, we take the roots of the trees of the two items, and make one root the child of the other root. Below are two valid results of calling <code>union(4, 5)</code> (changes highlighted in red):</p>
+
+<p><em>Option 1</em>
+<img src="img/union_example_good.jpg" alt="union example good"></p>
+
+<p><em>Option 2</em>
+<img src="img/union_example_bad.jpg" alt="union example bad"></p>
+
+<p>Looking at the two results, it seems like option 1 is superior to option 2 since it leads to a bushier tree. This leads us to the <em>weighted quick union</em> data structure. In a regular quick union, both option 1 and option 2 are valid results. In a weighted quick union, when unioning, you should always put the root of the tree with more nodes as the parent of the root of the tree with fewer nodes. (If the two trees have the same size, break ties arbitrarily.) In the example above, the result of unioning should be option 1.</p>
+
+<p>To achieve this, for each item that is the root of its tree, we keep track of the size of its tree in an array <code>sizes</code>. Here is an example:</p>
+
+<p><img src="img/weighted_quick_union_example.jpg" alt="weighted quick union example"></p>
+
+<p>1, 3, and 5 are the roots of their trees so their corresponding values in <code>sizes</code> are 4, 1, and 2 respectively. For other non-root items, the asterisks signify that that the <code>sizes</code> array may have a value there, but we don't care about what they are. After calling <code>union(4, 5)</code>, we get the following (changes highlighted in red):</p>
+
+<p><img src="img/weighted_quick_union_union.jpg" alt="weighted quick union union"></p>
+
+<p>Note that the size associated with item 1 is now 6. The size associated with 5 may still be 2, but it is no longer relevant.</p>
+
+<p>To recap, the algorithm for <code>union(u, v)</code>:</p>
+
+<ol>
+  <li>Find the root of <code>u</code> and root of <code>v</code>. If they are the same, you are done.</li>
+  <li>Find the sizes of the trees of each root.</li>
+  <li>Make the root with the larger size the parent of the root with the smaller size. If there is a tie in size, we pick the parent arbitrarily.</li>
+  <li>Update the size of the root with the larger size that became the parent.</li>
+</ol>
+
+
+<h4 id="path-compression">Path Compression</h4>
+
+
+<p>Even though we have made a speedup by using a weighted quick union data
+structure, there is still yet another optimization that we can do. What would
+happen if we had a tall tree and called <code>find</code> repeatedly on the deepest leaf? Each time, we would have to traverse the tree from the leaf to the root.</p>
+
+<p>A clever optimization is to move the leaf up the tree so it becomes a direct
+child of the root. That way, the next time you call <code>find</code> on that leaf, it will run much more quickly. Remember that we do not care if a node has a certain parent; we care more about general connectivity (and therefore only what the root is), which is why we can move the leaf up to be a child of the root without losing important information about our disjoint sets structure.</p>
+
+<p>An even more clever idea is that we could do the same thing to <em>every</em> node that is on the path from the leaf to the root, connecting each node to the root as we traverse up the tree. This optimization is called <strong>path compression</strong>. Once you find an item, path compression will make finding it (and all the nodes on the path to the root) in the future faster.</p>
+
+<p>Example: We have the following tree with 1 as the root.</p>
+
+<p><img src="img/pc.jpg" alt="path compression"></p>
+
+<p>We call <code>find(7)</code>:</p>
+
+<p><img src="img/pc-find7.jpg" alt="path compression find 7"></p>
+
+<p>When we call <code>find(7)</code>, we find that 1 is its root so we set 7's parent to be 1. Next, we call <code>find(8)</code>:</p>
+
+<p><img src="img/pc-find8.jpg" alt="path compression find 8"></p>
+
+<p>When we call <code>find(8)</code>, we find that 1 is its root, so we set 8's parent to be 1. However, along the way, we also find that 3's root is also 1, so we set 3's parent to be 1. (We also find along the way that 5's root is 1, but 5's parent is already 1 so there is no change.)</p>
+
+<p>Since the <code>find</code> operation is used when calling <code>union</code>, if path compression is implemented in <code>find</code>, <code>union</code> will also be optimized.</p>
+
+
+<h3 id="exercise-implementing-unionfind">Exercise: Implementing UnionFind</h3>
+
+
+<p>Fill out the FIXMEs <code>UnionFind.java</code>. You should be implementing a <em>weighted quick union</em> with path compression. The path compression is optional and ungraded. Suggested order of completion:</p>
+
+<ol>
+  <li>Add instance attributes and fill out the constructor.</li>
+  <li>Complete <code>find</code> without path compression.</li>
+  <li>Complete <code>union</code>. Be sure to use <code>find</code> and not repeat code, and make sure you are joining trees based on their sizes. All tests in <code>UnionFindTest.java</code> should now pass.</li>
+  <li>(Optional) Add path compression to <code>find</code>. Depending on your implementation, this should be a 1-2 line change! All tests in <code>UnionFindTest.java</code> should still pass.</li>
+</ol>
+
+
+<h2 id="c-minimum-spanning-trees">C. Minimum Spanning Trees</h2>
+
+<p>Optional conceptual overview video <a href="https://youtu.be/tOmUmfibzGE">here</a>.</p>
+
+<p><em>We assume you already know what a MST is. If not, review <a href="../../lectures/lect34.pdf">lecture 34</a>.</em></p>
+
+
+<h3 id="kruskal-s-algorithm">Kruskal's Algorithm</h3>
+
+
+<p>Kruskal's algorithm is an algorithm that can calculate the MST of a weighted graph $G$. It goes as follows:</p>
+
+<ol>
+  <li>Create a new graph $T$ with the same vertices as $G$, but no edges (yet).</li>
+  <li>Make a list of all the edges in $G$.</li>
+  <li>Sort the edges from smallest weight to largest weight.</li>
+  <li>Iterate through the edges in sorted order. For each edge $(u, w)$, if $u$ and $w$ are not already connected by a path in $T$, add $(u, w)$ to $T$. This is the same as saying: for each edge $(u, w)$, if adding $(u, w)$ to $T$ would not create a cycle in $T$, add $(u, w)$ to $T$.</li>
+</ol>
+
+<p>The new graph $T$ with the same vertices as $G$ and a subset of the edges from $G$ is the MST of $G$.</p>
+
+<p>If you would like to see a visual demonstration of Kruskal's algorithm, see the <a href="https://docs.google.com/presentation/d/1RhRSYs9Jbc335P24p7vR-6PLXZUl-1EmeDtqieL9ad8/edit#slide=id.g9a60b2f52_0_0">Kruskal's
+Demo slides</a>. Note that this demo has vertices starting at 0 but in this lab vertices start at 1. (It shouldn't make a difference).</p>
+
+<p>The trickier part of Kruskal's is determining if two vertices $u$ and $w$ are already connected. We can revisit the data structure that specializes in determining if connections exist, the <strong>union find</strong> data structure! Each of the vertices of $G$ will be an item in our data structure. Whenever we add an edge $(u, w)$ to $T$, we can <code>union</code> the sets that $u$ and $w$ belong to. To check if there is already a path connecting $u$ and $w$, we see if $u$ and $w$ are in the same set.</p>
+
+
+<h3 id="exercise-implementing-kruskal-s-algorithm">Exercise: Implementing Kruskal's Algorithm</h3>
+
+
+<p>Consider an undirected graph whose vertices are numbered $1$ to $V$ and whose edges are labeled with non-negative integer weights. Given such a graph, we would like to find a minimal spanning tree that includes edges from the input graph. For this problem, we'll represent the input and output graphs using only arrays and ints. The graph is given as an array of edges, where each "edge" is a 3-item array where the first two items are the vertices the edge connects and the third item is the edge's weight.  Fill in the file <code>MST.java</code> to use Kruskal's Algorithm to create this MST.</p>
+
+
+<h4 id="hints">Hints</h4>
+
+
+<p>You will find the following tools useful:</p>
+
+<ul>
+  <li>The <code>UnionFind</code> class you implemented in the first half of the lab.</li>
+  <li>The <a href="https://docs.oracle.com/javase/7/docs/api/java/util/Arrays.html#sort(T[],%20java.util.Comparator"><code>Arrays.sort</code></a> method.</li>
+  <li>The <code>EDGE_WEIGHT_COMPARATOR</code> given to you. It compares "edges" (three-element arrays) based on their weights.</li>
+</ul>
+
+
+<h4 id="testing">Testing</h4>
+
+
+<p>The class <code>MSTTest</code> runs some JUnit tests on your MST algorithm.  If a test case fails, you can use the main program of <code>Utils.java</code> to see exactly what graph was fed to it, if desired. The test cases will print out parameters for the main program that generate the graph in the test case. Executing the following command (after replacing the arguments with the printed out parameters) prints the corresponding test case and the MST your program produces from it.</p>
+
+<pre><code>    java Utils V MINEDGES MAXWEIGHT RANDOM&#x2d;SEED true</code></pre>
+
+<p>(The arguments V through RANDOM-SEED tell <code>Utils.randomConnectedGraph</code>
+what graph to generate). This is less helpful on really large test cases,
+of course.</p>
+
+
+<h2 id="d-submission">D. Submission</h2>
+
+
+<p>You will be required to submit:</p>
+
+<ol>
+  <li><code>UnionFind.java</code> with union() and find() implemented.</li>
+  <li><code>MST.java</code> which implements Kruskal's Algorithm.</li>
+  <li><code>partner.txt</code> if you worked with a partner.</li>
+</ol>
+
+<p>The grading scheme is as follows (maximum 2pts total):</p>
+
+<ol>
+  <li>1.5pt: Passing UnionFind correctness tests. The AG UnionFind correctness tests are very similar to the provided UnionFindTest class.</li>
+  <li>1.5pt: Passing MST correctness and efficiency tests. These are the same as those provided in the MSTTest class. You will need a working UnionFind implementation to complete this portion.
+  If you are seeing timeout errors in Gradescope, that means your code is taking too long to run.</li>
+</ol>
+
+<p>Don't forget to push both your commits and tags for your final submission. As a reminder, you can push your tags by running:</p>
+
+<pre><code>$ git push &#x2d;&#x2d;tags</code></pre>
+    </main></div>
+</body>
+</html>

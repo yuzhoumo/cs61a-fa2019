@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 9 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-intro">A. Intro</a></li>
+  <li><a href="index.html#b-the-priority-queue-abstract-data-type">B. The Priority Queue Abstract Data Type</a></li>
+  <li><a href="index.html#c-review-heaps">C. Review: Heaps</a></li>
+  <ul>
+    <li><a href="index.html#heap-properties">Heap Properties</a></li>
+    <ul>
+      <li><a href="index.html#invariant-1-completeness">Invariant 1: Completeness</a></li>
+      <li><a href="index.html#invariant-2-heap-property">Invariant 2: Heap Property</a></li>
+    </ul>
+    <li><a href="index.html#heap-representation">Heap Representation</a></li>
+    <li><a href="index.html#heap-operations">Heap Operations</a></li>
+    <ul>
+      <li><a href="index.html#insert">insert</a></li>
+      <li><a href="index.html#removemin">removeMin</a></li>
+      <li><a href="index.html#findmin-peek">findMin / peek</a></li>
+      <li><a href="index.html#changepriority">changePriority</a></li>
+    </ul>
+  </ul>
+  <li><a href="index.html#d-exercise-implementing-your-own-min-heap">D. Exercise: Implementing Your Own Min Heap</a></li>
+  <li><a href="index.html#e-application-heapsort">E. Application: Heapsort</a></li>
+  <li><a href="index.html#f-heapify">F. Heapify</a></li>
+  <li><a href="index.html#g-submission">G. Submission</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Lab 9: Heaps and Priority Queues</header>
+        
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-intro">A. Intro</a></li>
+  <li><a href="index.html#b-the-priority-queue-abstract-data-type">B. The Priority Queue Abstract Data Type</a></li>
+  <li><a href="index.html#c-review-heaps">C. Review: Heaps</a></li>
+  <li><a href="index.html#d-exercise-implementing-your-own-min-heap">D. Exercise: Implementing Your Own Min Heap</a></li>
+  <li><a href="index.html#e-application-heapsort">E. Application: Heapsort</a></li>
+  <li><a href="index.html#f-heapify">F. Heapify</a></li>
+  <li><a href="index.html#g-submission">G. Submission</a></li>
+</ul>
+
+
+<h2 id="a-intro">A. Intro</h2>
+
+
+<p><em>Here's an optional <a href="https://youtu.be/6ULksYzOENM">intro video</a> for the lab with
+some explanations and examples. All the information in the video is covered in 
+the spec and timestamps for topics are in the video description. </em></p>
+
+<p>Today, we'll take a look at the <em>priority queue</em> and how it can be implemented
+using a heap. We'll then implement our own priority queue (called <code>ArrayHeap</code>),
+and then discuss some applications of heaps.</p>
+
+<p>As always, you can get the skeleton of this lab with the following commands.</p>
+
+<pre><code> git fetch shared
+ git merge shared/lab9 &#x2d;m &quot;get lab9 skeleton&quot;
+ git push</code></pre>
+
+
+<h2 id="b-the-priority-queue-abstract-data-type">B. The Priority Queue Abstract Data Type</h2>
+
+
+<p>We’ve learned about a few abstract data types already, including the stack and
+queue. The stack is a last-in-first-out (LIFO) abstract data type where, much
+like a physical stack, we remove most recently added elements first. The queue is a
+first-in-first-out (FIFO) abstract data type. When we remove items from a queue,
+we remove the least recently added elements first.</p>
+
+<p>For example, you can model the back button in your browser as a stack - if you hit it,
+the most recent page you visited is the one you go to. You can model the GBC burrito
+bowl line as a queue - the first people to get in line get served first.
+But what if we want to model an emergency room, where people waiting with the
+most urgent conditions are served first? We would need to serve patients
+based on how urgent their condition is, and not by how long ago they arrived.</p>
+
+<p>Sometimes, processing items LIFO or FIFO is not what we want. We may instead
+want to process items in order of importance or a priority value.</p>
+
+<p>The priority queue is an abstract data type that allows for this that contains 
+the following methods:</p>
+
+<ul>
+  <li><code>insert(item, priority value)</code>: Inserts <code>item</code> into the priority queue with <code>priority
+  value</code> priority.</li>
+  <li><code>poll()</code>: Removes and returns the highest priority item in the priority queue.</li>
+  <li><code>peek()</code>: Returns the highest priority item.</li>
+</ul>
+
+<p><strong>Note:</strong> The priority of items are a function of their priority values.
+In a max priority queue, elements with larger priority values will have higher priority.
+In a min priority queue, elements with smaller priority values will have higher priority.
+In this lab, you will be dealing with the latter: <strong>Items with smaller priority
+values have higher priorities and should be removed from the priority queue first.</strong></p>
+
+<p>Java’s <code>PriorityQueue</code> class is implemented with a data structure
+called a binary min heap. For the remainder of this lab, we will study the heap
+data structure and create our own implementation of a priority queue using a
+binary min heap.</p>
+
+
+<h2 id="c-review-heaps">C. Review: Heaps</h2>
+
+<p><em>Heaps were covered in <a href="../../lectures/lect23.pdf">lecture 23</a>.
+This section is just a reference. Feel free to skip this section if you are
+already familiar with heaps and come back to this later if you get stuck.</em></p>
+
+
+<h3 id="heap-properties">Heap Properties</h3>
+
+
+<p>Heaps are tree-like structures that follow two additional invariants that will
+be discussed more below. Normally, elements in a heap can have any number of
+children, but in this class we will restrict our view to <strong>binary heaps</strong>, where
+each element will have at most two children.</p>
+
+
+<h4 id="invariant-1-completeness">Invariant 1: Completeness</h4>
+
+
+<p>In order to keep our operations fast, we need to make sure the heap is well
+balanced. We will define balance in a binary heap's underlying tree-like
+structure as <em>completeness</em>.</p>
+
+<p>A <strong>complete tree</strong> has all available positions for elements filled, except for
+possibly the last row, which must be filled left-to-right. A heap's underlying
+tree structure must be complete.</p>
+
+<p>Here are some examples of trees that are complete:</p>
+
+<center><img src="img/complete-1.png" alt="drawing" width="300"/> <img src="img/complete-2.png" alt="drawing" width="300"/></center>
+
+<p>And here are some examples of trees that are <strong>not</strong> complete:</p>
+
+<center><img src="img/not-complete-1.png" alt="drawing" width="300"/> <img src="img/not-complete-2.png" alt="drawing" width="300"/></center>
+
+
+<h4 id="invariant-2-heap-property">Invariant 2: Heap Property</h4>
+
+
+<p>Here is another property that will allow us to organize the heap in a way that
+will result in fast operations.</p>
+
+<p>Every element must follow the <strong>heap property</strong>, which states that each element 
+must be smaller than all of its children or larger than those of all of
+its children. The former is known as the <em>min-heap property</em>, while the latter
+is known as the <em>max-heap property</em>.</p>
+
+<p>If we have a min heap, this guarantees that the element with the lowest priority value
+will always be at the root of the tree. This helps us access that item quickly, 
+which is what we need for a priority queue!</p>
+
+<p>For the rest of this lab, we will be discussing the representation and
+operations of <strong>binary min heaps</strong>. However, this logic can be modified to apply
+to max heaps or heaps with any number of children.</p>
+
+
+<h3 id="heap-representation">Heap Representation</h3>
+
+
+<p>We can represent binary trees as arrays. (In this lab, we use ArrayLists.)</p>
+
+<ul>
+  <li>The root of the tree will be in position 1 of the array (nothing is at
+  position 0; this is to to make indexing more convenient).</li>
+  <li>The left child of a node at position $i$ is at position $2i$.</li>
+  <li>The right child of a node at position $i$ is at position $2i + 1$.</li>
+  <li>The parent of a node at position $i$ is at position $i / 2$ rounding down.</li>
+</ul>
+
+<p>Here is an example of a binary tree that contains a letter at each node and its array representation below. As we can see, the node B is at index 2 and its left child D is at index 2 * 2 = 4 and its right child E is at index 2 * 2 + 1 = 5. Node G is at index 7 and its parent C is at index 7 / 2 = 3 (rounding down).</p>
+
+<center><img src="img/binary_tree_array.jpg" alt="drawing" width="600"/></center>
+
+<p>Because binary heaps are essentially binary trees, we can use this array
+representation to represent our binary heaps!</p>
+
+
+<h3 id="heap-operations">Heap Operations</h3>
+
+
+<p>For min heaps, there are four operations that we care about:</p>
+
+<p><code>insert</code>
+: Inserting an element to the heap.</p>
+
+<p><code>removeMin</code>
+: Removing and returning the item with the lowest priority value.</p>
+
+<p><code>peek</code>
+: Returning the lowest priority value item without removal.</p>
+
+<p><code>changePriority</code>
+: Changes the priority of an item to a new priority value.</p>
+
+<p>When we do these operations, we need to make sure to maintain the invariants
+mentioned earlier (completeness and the heap property). Let's walk through how
+to do each one.</p>
+
+
+<h4 id="insert">insert</h4>
+
+
+<ol>
+  <li>Put the item you're adding in the next available spot in the bottom row of
+  the tree.  This is equivalent to placing
+  the element in the next free spot in the array representation of the heap.
+  This ensures the completeness of the heap because we're filling in the
+  bottom-most row left to right.</li>
+  <li><p>If the element that has just been inserted is <code>n</code>, swap <code>n</code> with its parent
+  as long as <code>n</code>'s priority value is smaller than its parent or until <code>n</code> is the
+  new root. If <code>n</code> is equal to its parent, you can either swap the items or not.</p>
+
+  <p>This process is called <strong>bubbling up</strong> (or swimming), and this ensures the min-heap property 
+  is satisfied because once we finish bubbling <code>b</code> up, all elements below <code>b</code> 
+  must be greater than it, and all elements above must be less than it.</p></li>
+</ol>
+
+
+<h4 id="removemin">removeMin</h4>
+
+
+<ol>
+  <li>Swap the element at the root with the element in the bottom rightmost
+  position of the tree. Then, remove the right bottommost element of the tree
+  (which should be the previous root and the minimum element of the heap). This
+  ensures the completeness of the tree.</li>
+  <li><p>If the new root <code>n</code> is greater than either of its children, swap it with that
+  child. If it is greater than both of its children, choose the smaller of the
+  two children. Continue swapping <code>n</code> with its children in the same manner
+  until <code>n</code> is smaller than its children or it has no children. If <code>n</code> is equal
+  to both of its children or is equal to the lesser of the two children, you
+  can choose to swap the items or not.</p>
+
+  <p>This is called <strong>bubbling down</strong> (or sinking), and this ensures the min-heap property is 
+  satisfied because we stop bubbling down only when the element <code>N</code> is less 
+  than both of its children and also greater than its parent.</p></li>
+</ol>
+
+
+<h4 id="findmin-peek">findMin / peek</h4>
+
+
+<p>The element with the smallest value will always be stored at the root due to the
+min-heap property. Thus, we can just return the root node, without changing the
+structure of the heap.</p>
+
+
+<h4 id="changepriority">changePriority</h4>
+
+
+<p>Find the element whose priority you want to change and change its priority value. Then
+bubble up or bubble down the element accordingly.</p>
+
+
+<h2 id="d-exercise-implementing-your-own-min-heap">D. Exercise: Implementing Your Own Min Heap</h2>
+
+
+<p>The class <code>ArrayHeap</code> implements a binary min heap using an underlying <code>ArrayList</code>.
+Open it up and read the provided methods.</p>
+
+<p>Notice in the constructor we call <code>contents.add(null)</code>. Think about how this
+affects indexing and why we choose to add a <code>null</code> element.</p>
+
+<p>Fill in the incomplete methods in <code>ArrayHeap.java</code> (marked with TODOs) You should not edit the methods without TODOs but you can use them in the code you write. As John DeNero wisely says,
+code that doesn't respect abstraction barriers should BURN. Respect abstraction
+barriers! (You should able to finish the lab without directly accessing the
+<code>contents</code> <code>ArrayList</code>.)</p>
+
+<ul>
+  <li>First implement <code>getLeftOf(int i)</code>, <code>getRightOf(int i)</code>, <code>getParentOf(int i)</code>.</li>
+  <li>Next, implement <code>min(int index1, int index2)</code>, <code>peek()</code>, <code>bubbleUp(int
+  index)</code>, <code>bubbleDown(int index)</code></li>
+  <li>Implement <code>insert(T item, double priority)</code>, <code>removeMin()</code>. 
+  Make sure you use the <code>bubbleUp</code> and <code>bubbleDown</code> helper methods when 
+  implementing these functions. After implementing, you should now be passing the tests
+  <code>insertOne</code>, <code>insertAscending</code>, <code>insertDescending</code>, <code>insertMany</code>, and
+  <code>removeMinPeekNull</code>.</li>
+  <li>Implement <code>changePriority(T item, double priority)</code>. Make sure you use the 
+  <code>bubbleUp</code> and <code>bubbleDown</code> helper methods when implementing this functions.
+  After implementing, you should now be passing the tests <code>changePriorityIncreaseOne</code>,
+  <code>changePriorityDecreaseOne</code>, and <code>changePriorityAll</code>.</li>
+</ul>
+
+<p>All tests are located in <code>ArrayHeapTest.java</code>.</p>
+
+
+<h2 id="e-application-heapsort">E. Application: Heapsort</h2>
+
+
+<p>Now, let’s move onto an application of the heap data structure. Suppose you have
+an array of $N$ numbers that you want to sort smallest-to-largest. One algorithm
+for doing this is as follows:</p>
+
+<ol>
+  <li>Put all of the numbers in a min heap.</li>
+  <li>Repeatedly remove the min element from the heap, and store them in an array
+  in that order.</li>
+</ol>
+
+<p>This is called <em>heapsort</em>.</p>
+
+<p>Now, what is the runtime of this sort? Since each insertion takes proportional
+to $\log N$ comparisons once the heap gets large enough and each removal also
+takes proportional to $\log N$ comparisons, the whole process takes
+proportional to $N \log N$ comparisons.</p>
+
+<p>It turns out we can actually make step 1 of heapsort run faster—proportional to
+$N$ comparisons—using a process called heapify. (Unfortunately, we can’t make
+step 2 run any faster than $N \log N$, so the overall heapsort must take $N
+\log N$ time.)</p>
+
+
+<h2 id="f-heapify">F. Heapify</h2>
+
+
+<p>The algorithm for taking an arbitrary array and making it into a min (or max)
+heap in time proportional to $N$ is called <em>heapify</em>. Pseudocode for this
+algorithm is below:</p>
+
+<pre><code>def heapify(array):
+    index = N / 2
+    while index &gt; 0:
+        bubble down item at index
+        index &#x2d;= 1</code></pre>
+
+<p>Conceptually, you can think of this as building a heap from the bottom up. To
+get a visualization of this algorithm working, click on the BuildHeap button on
+<a href="https://www.cs.usfca.edu/~galles/JavascriptVisual/Heap.html">USFCA interactive animation of a min
+heap</a>. This loads a
+pre-set array and then runs heapify on it.</p>
+
+<p>Try to describe the approach in your own words. Why does the index start at the
+middle of the array rather than the beginning, 0, or the end, N? How does each
+bubble down operation maintain heap invariants?</p>
+
+<p>It is probably not immediately clear to you why this heapify runs in $O(N)$.
+For those who are curious, you can check out an explanation on
+<a href="https://stackoverflow.com/questions/9755721/how-can-building-a-heap-be-on-time-complexity">StackOverflow</a> or <a href="https://en.wikipedia.org/wiki/Binary_heap#Building_a_heap">Wikipedia</a>.</p>
+
+
+<h2 id="g-submission">G. Submission</h2>
+
+
+<p>Please submit <code>ArrayHeap.java</code> and your <code>partner.txt</code> file (left blank if you did not work with a partner). The grader for this assignment will be the same as the tests that we have provided for you. You must pass 5/8 tests for full credit for this lab, but we recommend you try to pass all 8 tests.</p>
+    </main></div>
+</body>
+</html>

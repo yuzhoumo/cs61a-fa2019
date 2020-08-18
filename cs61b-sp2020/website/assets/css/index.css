@@ -1,0 +1,75 @@
+table {
+    margin: 20px 0;
+    width: 100%;
+}
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+td {
+    font-size: 14px;
+    line-height: 24px;
+    font-weight: 300;
+    text-align: center;
+    min-width: 80px;
+    padding: 0 10px;
+}
+
+
+/* Announcements Table */
+#announcements td {
+    line-height: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+#announcements td:nth-child(2) {
+    text-align: left;
+}
+#announcements td:nth-child(3) {
+    text-align: left;
+}
+
+/* Calendar */
+.odd {
+    background-color: #DDD;
+}
+.curweek {
+    background-color: #e9f2fd;
+}
+.emph1 {
+    color: white;
+    background-color: #2F86EB;
+}
+.emph2 {
+    background-color: #777;
+    color: white;
+}
+.proj {
+    color: #4CBB17;
+}
+.correction {
+    color: red;
+}
+
+
+/* Google Calendars */
+.calendar {
+    text-align: center;
+    margin-top: 20px;
+}
+@media (min-width: 900px) {
+.curweek {
+    background-color: #e9f2fd;
+}
+.curweek {
+    background-color: #e9f2fd;
+}
+    .small-calendar {
+        display: none;
+    }
+}
+@media (max-width: 900px) {
+    .large-calendar {
+        display: none;
+    }
+}

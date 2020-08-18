@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework 3 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-introduction">A. Introduction</a></li>
+  <li><a href="index.html#b-trreader">B. TrReader</a></li>
+  <ul>
+    <li><a href="index.html#notes">Notes</a></li>
+  </ul>
+  <li><a href="index.html#c-applying-trreader">C. Applying TrReader</a></li>
+  <li><a href="index.html#d-weirdlist">D. WeirdList</a></li>
+  <li><a href="index.html#e-submission">E. Submission</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Homework 3: OOP, Interfaces and Inheritance</header>
+        
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-introduction">Preliminaries</a></li>
+  <li><a href="index.html#b-trreader">TrReader</a></li>
+  <li><a href="index.html#c-applying-trreader">Applying TrReader</a></li>
+  <li><a href="index.html#d-weirdlist">WeirdList</a></li>
+  <li><a href="index.html#e-submission">Submission</a></li>
+</ul>
+
+
+<h2 id="a-introduction">A. Introduction</h2>
+
+
+<p>This homework is intended to reinforce various OOP concepts. You won't
+have to write much code, and it's unlikely you'll have to do much debugging.
+However, the problems will be pretty tricky.
+Make efficient use of your time if you're stuck by working with other students
+or seeking help.</p>
+
+<p>The online documentation for the abstract class <code>java.io.Reader</code> can be found
+<a href="https://docs.oracle.com/en/java/javase/12/docs/api/java.base/java/io/Reader.html">here</a>. It is used as a general template to define types of objects that have
+a <code>read</code> operation. The idea is that each time you read from a
+<code>Reader</code>, it gives you the next character (or characters) from some
+source; just what source depends on what subtype of <code>Reader</code> you have.
+A program that takes in a <code>Reader</code> as a parameter doesn't need to know the
+subtype of the <code>Reader</code> it is reading from; it simply reads from it.</p>
+
+<p>As usual, you can obtain the skeleton with:</p>
+
+<pre><code>$ git fetch shared
+$ git merge shared/hw3 &#x2d;m &quot;Start hw3&quot;
+$ git push</code></pre>
+
+
+<h2 id="b-trreader">B. TrReader</h2>
+
+
+<p>Create a new <code>TrReader</code> class that extends the abstract <code>Reader</code> class and translates the
+characters from another <code>Reader</code>. That is, a <code>TrReader</code>'s source of characters is
+some other <code>Reader</code>, which is passed into the <code>TrReader</code>'s
+constructor. The translation of the characters given by the <code>Reader</code>
+object will be translated in the <code>read</code> routine of the <code>TrReader</code> class.</p>
+
+<pre><code>public class TrReader extends Reader {
+    /** A new TrReader that produces the stream of characters produced
+     *  by STR, converting all characters that occur in FROM to the
+     *  corresponding characters in TO.  That is, change occurrences of
+     *  FROM.charAt(0) to TO.charAt(0), etc., leaving other characters
+     *  unchanged.  FROM and TO must have the same length. */
+    public TrReader(Reader str, String from, String to) {
+       // FILL IN
+    }
+
+    // FILL IN ANY MISSING ABSTRACT METHODS HERE
+}</code></pre>
+
+<p>For example, we can define <code>Reader r = new InputStreamReader(System.in);</code>
+which causes <code>r</code> to point to a <code>Reader</code> whose source of
+characters is the standard input (i.e., by default, what you type on
+your terminal, although you can make it come from a file if desired).
+This means that the following code snippet will simply copy the standard
+input to the standard output:</p>
+
+<pre><code>while (true) {
+   int c = r.read();
+   if (c == &#x2d;1) {
+      break;
+   }
+   System.out.print((char) c);
+}</code></pre>
+
+<p>Printing to standard output is just printing as you normally do.
+However, the following snippet of code will copy the standard input to
+standard output after first capitalizing all occurrences of the letters a--d.
+For example, if the input was "bad data structure", the correctly translated
+output should be "BAD DAtA struCture".</p>
+
+<pre><code>TrReader translation = new TrReader(r, &quot;abcd&quot;, &quot;ABCD&quot;);
+while (true) {
+   int c = translation.read();
+   if (c == &#x2d;1) {
+      break;
+   }
+   System.out.print((char) c);
+}</code></pre>
+
+<p>If we define a <code>TrReader</code> that does not do any perform any translation at all,
+then <code>noTrans.read()</code> has the same effect as <code>someReader.read()</code>. As a result,
+the contents of <code>someReader</code> are copied to standard output with no translation:</p>
+
+<pre><code>/** A TrReader that does no translation. */
+TrReader noTrans = new TrReader(someReader, &quot;&quot;, &quot;&quot;);
+
+while (true) {
+   int c = noTrans.read();
+   if (c == &#x2d;1) {
+      break;
+   }
+   System.out.print((char) c);
+}</code></pre>
+
+<p>The program above will work even if you only implement the
+<code>int read(char[], int, int)</code> method of your reader. This is because
+the default implementation of <code>int read()</code> uses the <code>int read(char[],
+int, int)</code> method (as can be seen in the
+<a href="http://developer.classpath.org/doc/java/io/Reader-source.html">source code for the Reader class</a>).</p>
+
+
+<h3 id="notes">Notes</h3>
+
+
+<ul>
+  <li>The <code>TrReaderWithExamplesEmbedded.java.txt</code> file has some examples and more 
+  explanation on some of the methods, for your convenience.</li>
+  <li>The <code>TrReaderTest</code> contains a smidgen of testing for your convenience--nothing
+  thorough, however.</li>
+  <li>The <code>read()</code> method (which you are <em>not</em> required to implement) returns
+  an <code>int</code>, but we're supposedly working with items of type <code>char</code>. As can be seen
+  in the online documentation for the <code>Reader</code> class, <code>read()</code> returns the
+  character read as an integer, or <code>&#x2d;1</code> if there are no more characters to read
+  (<code>&#x2d;1</code> is used to denote the end of the stream because it not a valid character).</li>
+  <li>You should not create a new <code>char[]</code> array for the <code>read(char[], int,
+  int)</code> method. Modify the array that is given to you. Also keep in mind that
+  all <code>Reader</code>s (including the built-in ones) must implement this
+  particular version of <code>read</code>.</li>
+  <li><p>If you get an error that contains "<code>unreported exception IOException</code>"
+  when running <code>make</code>, you're missing a <code>throws
+  IOException</code> in one of your method declarations (just before the opening
+  <code>{</code>). We haven't learned what this means yet, so don't worry about
+  it too much (or read Chapter 11 of <em>HFJ</em>) and just do it. An example of this can
+  be seen here:</p>
+
+  <p>public void icy() throws IOException { ... }</p></li>
+</ul>
+
+
+<h2 id="c-applying-trreader">C. Applying TrReader</h2>
+
+
+<p>Implement the <code>translate</code> function in <code>Translate.java</code> using the <code>TrReader</code>
+class that you defined in part B. You may use any number of <code>new</code> operations, <strong>one</strong>
+other (non-recursive) method call, and nothing else.
+In addition to <code>StringReader</code>, you are free to use any library classes
+whose names end with <code>Reader</code> (check the online
+documentation), but no others. Feel free to create unit tests
+for your <code>translate</code> method to ensure correctness.</p>
+
+<pre><code>/** This method should return the String S, but with all characters that
+ *  occur in FROM changed to the corresponding characters in TO.
+ *  FROM and TO must have the same length.
+ *  NOTE: You must use your TrReader to achieve this. */
+static String translate(String S, String from, String to) {
+    /* NOTE: The try {...} catch is a technicality to keep Java happy. */
+    char[] buffer = new char[S.length()];
+    try {
+        throw new IOException(); //TODO: REPLACE THIS LINE WITH YOUR CODE.
+    } catch (IOException e) {
+        return null;
+    }
+}</code></pre>
+
+
+<h2 id="d-weirdlist">D. WeirdList</h2>
+
+<p>Conceptual introduction <a href="https://youtu.be/EBcjhMPDqYA">here</a></p>
+
+<p>Complete <code>WeirdList.java</code> and <code>WeirdListClient.java</code>.
+Do <strong>not</strong> use any <code>if</code>, <code>switch</code>, <code>while</code>, <code>for</code>,
+<code>do</code>, or <code>try</code> statements, and do not use the <code>?:</code> conditional operator.
+The <code>WeirdList</code> class may contain only private fields (except for the <code>public
+static final WeirdList EMPTY</code> that is already provided in the skeleton code).
+The methods in <code>WeirdListClient</code> should <strong>not</strong> use recursion.</p>
+
+<p><strong>DO NOT FIGHT THE PROBLEM STATEMENT!</strong> We really do mean to impose
+all these restrictions in an effort to direct you towards a solution
+that illustrates object-oriented features.  You are going to have to
+take some time to think, but the solutions themselves are quite short.
+The skeleton provides some cursory tests. You may refer to
+<code>IntUnaryFunction.java</code>, but <strong>do not modify this file</strong>.</p>
+
+<p>Do <strong>not</strong> modify <code>IntUnaryFunction.java</code>:</p>
+
+<pre><code>/** An IntUnaryFunction represents a function from
+ *  integers to integers. */
+public interface IntUnaryFunction {
+    /** Return the result of applying this function to X. */
+    int apply (int x);
+}</code></pre>
+
+<p>Here's the code for <code>WeirdList.java</code>:</p>
+
+<pre><code>/** A WeirdList holds a sequence of integers. */
+public class WeirdList {
+    /** The empty sequence of integers. */
+    public static final WeirdList EMPTY =
+        null;  // TODO: REPLACE THIS LINE
+
+    /** A new WeirdList whose head is HEAD and tail is TAIL. */
+  public WeirdList(int head, WeirdList tail) { /* TODO: FILL IN */ }
+
+    /** Returns the number of elements in the sequence that
+     *  starts with THIS. */
+    public int length() {
+        return 0;  // TODO: REPLACE THIS LINE
+    }
+
+    /** Return a string containing my contents as a sequence of numerals
+     *  each preceded by a blank.  Thus, if my list contains
+     *  5, 4, and 2, this returns &quot; 5 4 2&quot;. 
+     Note that the toString method of an object is called whenever code attempts to print said object.*/
+    @Override
+    public String toString() {
+        return &quot;&quot;; // TODO: REPLACE THIS LINE
+    }
+
+    /** Part 3b: Apply FUNC.apply to every element of THIS WeirdList in
+     *  sequence, and return a WeirdList of the resulting values. */
+    public WeirdList map(IntUnaryFunction func) {
+        return null;  // TODO: REPLACE THIS LINE
+    }
+
+    // FILL IN WITH *PRIVATE* FIELDS ONLY.
+    // You should NOT need any more methods here.
+}</code></pre>
+
+<p>Here's the code for <code>WeirdListClient.java</code>:</p>
+
+<pre><code>/** Functions to increment and sum the elements of a WeirdList. */
+class WeirdListClient {
+    /** Return the result of adding N to each element of L. */
+    static WeirdList add(WeirdList L, int n) { /* FILL IN */ }
+
+    /** Return the sum of all the elements in L. */
+    static int sum(WeirdList L) { /* FILL IN */ }
+}</code></pre>
+
+<p><strong>HINT</strong>: Feel free to create additional classes to use. See <code>IntUnaryFunction.java</code>.</p>
+
+
+<h2 id="e-submission">E. Submission</h2>
+
+
+<p>The files you will be turning are:</p>
+
+<ul>
+  <li><code>TrReader.java</code></li>
+  <li><code>Translate.java</code></li>
+  <li><code>WeirdList.java</code></li>
+  <li><code>WeirdListClient.java</code></li>
+  <li>Any additional classes that you may have defined to help you with section D.</li>
+</ul>
+
+<p><strong>DO NOT FORGET to commit all the files you created as a part of your solution for section D.</strong></p>
+
+<p>Don't forget to push both your commits and tags for your final submission. As a reminder, you can push your tags by running:</p>
+
+<pre><code>$ git push &#x2d;&#x2d;tags</code></pre>
+    </main></div>
+</body>
+</html>

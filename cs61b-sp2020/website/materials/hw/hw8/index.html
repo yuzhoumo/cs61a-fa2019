@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework 8 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-llrb-trees">A. LLRB Trees</a></li>
+  <li><a href="index.html#b-rotations-and-color-flips">B. Rotations and Color Flips</a></li>
+  <ul>
+    <li><a href="index.html#discussion-rotation-by-hand">Discussion: Rotation by Hand</a></li>
+    <li><a href="index.html#exercise-rotation-implementation">Exercise: Rotation Implementation</a></li>
+    <li><a href="index.html#color-flip">Color Flip</a></li>
+  </ul>
+  <li><a href="index.html#c-insertion">C. Insertion</a></li>
+  <ul>
+    <li><a href="index.html#restoring-llrb-properties-after-insertion">Restoring LLRB Properties after Insertion.</a></li>
+    <li><a href="index.html#exercise">Exercise:</a></li>
+    <li><a href="index.html#discussion">Discussion.</a></li>
+    <li><a href="index.html#deletion">Deletion</a></li>
+  </ul>
+  <li><a href="index.html#d-building-a-llrb-tree">D. Building a LLRB Tree</a></li>
+  <li><a href="index.html#e-submission">E. Submission</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Homework 8: Red Black Trees</header>
+        
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-llrb-trees">A. LLRB Trees</a></li>
+  <li><a href="index.html#b-rotations">B. Rotations</a></li>
+  <li><a href="index.html#c-insertion">C. Insertion</a></li>
+  <li><a href="index.html#d-building-a-llrb-tree">D. Building a LLRB Tree</a></li>
+  <li><a href="index.html#e-submission">E. Submission</a></li>
+</ul>
+
+
+<h2 id="a-llrb-trees">A. LLRB Trees</h2>
+
+
+<p>This entire homework will be implemented in <code>RedBlackTree.java</code>. You will not be implementing any 2-3 or 2-4 Tree code for this homework, but may find it useful to reference <code>BTree.java</code> to understand the interface.</p>
+
+<p>You will examine 2-4 trees their relationship to Red-Black
+trees. Here, we will examine 2-3 trees and their
+corresponding Left-Leaning Red-Black trees.</p>
+
+<p>2-3 trees are B-trees, just like 2-4 trees. However, each node in a 2-3 tree can have up to <em>2</em> elements and <em>3</em> children, whereas 2-4 trees could have one more of each (so 3 elements and 4 children). We can come up with a fairly natural Red-Black tree
+counterpart. However, since we can only have nodes with 1 or 2
+elements, we can either have a single black node (for a one-element 2-3
+node) or a "section" with a black node and a red node (for a two-element 
+2-3 node). We can either let
+the red node be a left child or a right child, so long as we are consistent. However, we choose to
+<em>always</em> let the red node be the <em>left</em> child of the black node. This
+leads to the name, "Left-Leaning" Red-Black tree.</p>
+
+<p>Imagine we have the 2-4 BTree:</p>
+
+<p><img src="firstBTree.png" alt=""></p>
+
+<p>The corresponding Left Leaning Red Black Tree would look like this:</p>
+
+<p><img src="firstRBTree.png" alt=""></p>
+
+<p>The advantages of the LLRB tree over the usual Red-Black tree is the
+ease of implementation. Since there are fewer special cases for each
+"section" that represents a 2-3 node, the implementation is much
+simpler.</p>
+
+<p>Normal binary search tree insertions and deletions can break the Red-Black
+tree invariants, so we need additional operations that can
+"restore" the Red-Black tree properties. In LLRB trees, there are two
+key operations that we use to restore the properties: rotations and
+color flips.</p>
+
+<p>To play around with LLRB trees and view insertions and deletions, check out <a href="http://inst.eecs.berkeley.edu/~cs61b/fa17/materials/demos/ll-red-black-demo.html">this</a> website!</p>
+
+
+<h2 id="b-rotations-and-color-flips">B. Rotations and Color Flips</h2>
+
+<p>You can find a short conceptual introduction to rotations <a href="https://www.youtube.com/watch?v=95s3ndZRGbk">here</a>
+. Consider the following tree</p>
+
+<pre><code>   parent
+     |
+     7
+   /   \
+  1     c
+ / \
+a   b</code></pre>
+
+<p><code>a</code> is a subtree with all elements less than 1, <code>b</code> is a subtree with
+elements between 1 and 7, and <code>c</code> is a subtree with all elements
+greater than 7. Now, let's take a look at another tree:</p>
+
+<pre><code>parent
+  |
+  1
+ / \
+a   7
+   / \
+  b   c</code></pre>
+
+<p>There are few key things to notice:</p>
+
+<ol>
+  <li>The root of the tree has changed from 7 to 1.</li>
+  <li><code>a</code>, <code>b</code>, and <code>c</code> are still correctly placed. That is, their items
+  do not violate the binary search tree invariants.</li>
+  <li>The height of the tree can change by 1.</li>
+</ol>
+
+<p><em>Here, we call this transition from the first tree to the second a
+"right rotation on 7"</em>.</p>
+
+<p>Now, convince yourself that a "left rotation on 1" on the second tree
+will give us the first tree. The two operations are symmetric, and
+both maintain the binary search tree property!</p>
+
+
+<h4 id="discussion-rotation-by-hand">Discussion: Rotation by Hand</h4>
+
+<p>We are given an extremely unbalanced binary search tree:</p>
+
+<pre><code>    0
+     \
+      1
+       \
+        3
+       / \
+      2   6
+         / \
+        4   8</code></pre>
+
+<p>Write down a series of rotations (i.e. rotate right on 2) that will
+make tree balanced and have height of 2.  <em>HINT</em>: Two rotations are
+sufficient. Highlight the text after this to see the answer. Answer: <font color="FFFFFF">Rotate left on 0 and then rotate left on 1. The height is now three and the tree is bushy. Make sure to draw it!</font></p>
+
+
+<h4 id="exercise-rotation-implementation">Exercise: Rotation Implementation</h4>
+
+<p>Now we have seen that we can rotate the tree to balance it without
+violating the binary search tree invariants. Now, we will implement it
+ourselves!  In <code>RedBlackTree.java</code>, implement <code>rotateRight</code> and
+<code>rotateLeft</code>. For your implementation, make the new root have the
+color of the old root, and color the old root red. Why should we have
+the colors change here and what might happen if we did not change the
+colors?</p>
+
+<p><em>Hint</em>: The two operations are symmetric. Should the code
+significantly differ? Think about what we can reuse.</p>
+
+
+<h4 id="color-flip">Color Flip</h4>
+
+<p>Now we consider the color flip operation that is essential to LLRB
+tree implementation. Given a node, this operation simply flips the
+color of itself, and the left and right children. However simple it
+may look now, we will examine its consequences later on.</p>
+
+<p>For now, take a look at the implementation provided in <code>RedBlackTree.java</code>.</p>
+
+
+<h2 id="c-insertion">C. Insertion</h2>
+
+
+<p>Finally, we are ready to put the puzzle pieces together and see how
+insertion works on LLRB trees!</p>
+
+<p>Say we are inserting <code>x</code>.</p>
+
+<ol>
+  <li>If the tree is empty, let <code>x</code> be the root with black color.</li>
+  <li>Otherwise do the normal binary search tree insertion, and color <code>x</code> <em>red</em>.</li>
+  <li>Restore LLRB properties.</li>
+</ol>
+
+
+<h4 id="restoring-llrb-properties-after-insertion">Restoring LLRB Properties after Insertion.</h4>
+
+
+<p>First, let's assume that our new node <code>x</code> is the only child of a black
+node. That is:</p>
+
+<pre><code>     parent (black)
+    /
+   x (red)</code></pre>
+
+<p>or</p>
+
+<pre><code>   parent (black)
+        \
+         x (red)</code></pre>
+
+<p>Since we decided to make our tree left leaning, we know that the first
+tree is the valid form and we will not have to do anything else. If we
+end up with the second tree (<code>x</code> > <code>parent</code>) we can simply apply
+<code>rotateLeft</code> on <code>parent</code> to get the first tree.</p>
+
+<p>Now, let's consider the case when our new node <code>x</code> becomes a child to
+a black node which already has a left child, or a child to a red node.
+LLRB have a one-to-one mapping to 2-3 trees. This is like inserting
+<code>x</code> into a 2-3 tree node that already has 3 children!</p>
+
+<p>Here, we have to deal with 3 different cases, and we will label them
+case A, B, C.</p>
+
+<p><strong>Case A</strong>: <code>x</code> ends up as the right child of the black node.</p>
+
+<pre><code>         |
+         5(black)
+     /      \
+    1(red)   x(red)</code></pre>
+
+<p>For case A, the resulting section is the same as a 2-3 tree node with
+one extra element:</p>
+
+<pre><code>      |
+   1  5  x</code></pre>
+
+<p>To fix it, we "split" the 2-3 node into two halves, "pushing" up the
+middle element to its parent:</p>
+
+<pre><code>        |
+     5  (sibling)
+   |  |         |
+   1  x     (nephews)</code></pre>
+
+<p>Analogously, for our LLRB section, we can apply <code>flipColor</code> on <code>5</code>.
+This results in:</p>
+
+<pre><code>      |
+      5 (red)
+  /      \
+1(black)  x(black)</code></pre>
+
+<p>This exactly models the 2-3 node we desired. 5 is now a red node,
+which means that it is now part of the "parent 2-3 node section". Now,
+if 5 as a new red node becomes a problem, we can <em>recursively</em> deal
+with it as we are dealing with <code>x</code> now.  Also, the root of the whole
+tree should <em>always</em> be black, and it is perfectly fine for the root
+to have two black children. It is simply a root 2-3 node with single
+element and two children, each with single element.</p>
+
+<p><strong>Case B</strong>: <code>x</code> ends up as the left child of the red node.</p>
+
+<pre><code>     |
+     5 (black)
+    /
+   1 (red)
+  /
+ x (red)</code></pre>
+
+<p>In this case, we can apply <code>rotateRight</code> on <code>5</code>, which will result in:</p>
+
+<pre><code>        |
+        1 (black)
+   /        \
+  x(red)     5 (red)</code></pre>
+
+<p>This should look familiar, since it is <em>exactly</em> case A that we just
+examined before! After a rotation, our problem reduces to solving case
+A. Convince yourself that rotation performed here correctly handles
+the color changes and maintains the binary search tree properties.</p>
+
+<p><strong>Case C</strong>: <code>x</code> ends up as the right child of the red node.</p>
+
+<pre><code>          |
+          5 (black)
+       /
+     1 (red)
+      \
+       x (red)</code></pre>
+
+<p>In this case, we can apply <code>rotateLeft</code> on <code>1</code>, which will result in:</p>
+
+<pre><code>         |
+         5 (black)
+        /
+       x (red)
+      /
+     1 (red)</code></pre>
+
+<p>This also should look familiar, since it is <em>exactly</em> case B that we
+just examined. We just need one more rotation and color flip to
+restore LLRB properties.</p>
+
+
+<h4 id="exercise">Exercise:</h4>
+
+<p>Now, we will implement <code>insert</code> in <code>RedBlackTree.java</code>. We have
+provided you with most of the logic structure, so all you need to do
+is deal with normal binary search tree insertion and handle case A, B,
+and C.</p>
+
+
+<h4 id="discussion">Discussion.</h4>
+
+<p>We have seen that even though the LLRB tree guarantees that the tree
+will be almost balanced, LLRB insert operation requires many rotations
+and color flips. Examine the procedure for the insertion and convince
+yourself that the insert operation still takes
+<code>O(log(n))</code> as in balanced binary search trees.</p>
+
+<p><em>Hint:</em> How long is the path from root to the new leaf? For each node
+along the path, are additional operations limited to some constant
+number? What does that mean?</p>
+
+
+<h4 id="deletion">Deletion</h4>
+
+<p>Deletion deals with many more corner cases and is generally more
+difficult to implement. For difficulty's sake, deletion is left out of this assignment. You are <strong>not</strong> expected to complete deletion.</p>
+
+
+<h2 id="d-building-a-llrb-tree">D. Building a LLRB Tree</h2>
+
+<p><strong>The following section is entirely optional, but will help your understanding!</strong>
+To bring every method above together, you will be implementing <code>buildRedBlackTree(BTree.Node&lt;T&gt; r)</code> that builds a Red Black tree that has isometry with given 2-3-4 tree rooted at given node r, and returns the root node. You will have to instatiate the root and build the entire Red Black Tree, using the values provided in the given BTree.
+It may be useful to read the provided <code>BTree.java</code>, as stated in part A.</p>
+
+<p>Things to think about:</p>
+
+<ol>
+  <li>What special cases are there? How many elements do they have?</li>
+  <li>What does an empty BTree look like?</li>
+  <li>With a filled BTree, what node items are we going to create and what recursive calls are we going to make?</li>
+</ol>
+
+
+<h2 id="e-submission">E. Submission</h2>
+
+
+<p>You will be required to submit:</p>
+
+<ol>
+  <li>Both rotation functions</li>
+  <li><code>insert</code></li>
+</ol>
+
+<p>Your score will be proportional to the percentage of tests your code passes, rounded to the nearest 25%.</p>
+
+<p>Don't forget to push both your commits and tags for your final submission. As a reminder, you can push your tags by running:</p>
+
+<pre><code>$ git push &#x2d;&#x2d;tags</code></pre>
+    </main></div>
+</body>
+</html>

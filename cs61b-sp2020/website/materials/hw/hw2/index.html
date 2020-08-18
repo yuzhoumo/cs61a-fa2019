@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Homework 2 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#a-preliminaries">A. Preliminaries</a></li>
+  <li><a href="index.html#b-lists-of-lists">B. Lists of Lists</a></li>
+  <li><a href="index.html#c-array-warm-up">C. Array Warm-up</a></li>
+  <li><a href="index.html#d-seam-carving">D. Seam Carving</a></li>
+  <li><a href="index.html#e-submission">E. Submission</a></li>
+  <ul>
+    <li><a href="index.html#optional">Optional</a></li>
+    <li><a href="index.html#required">Required</a></li>
+  </ul>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Homework 2: Arrays and Lists of Lists</header>
+        
+<script type="text/x-mathjax-config">
+	  MathJax.Hub.Config({
+	    tex2jax: {inlineMath: [["$","$"]]}
+	  });
+	</script>
+	<script type="text/javascript"
+	   src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+	</script>
+
+
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#a-preliminaries">Preliminaries</a></li>
+  <li><a href="index.html#b-lists-of-lists">Lists of Lists</a></li>
+  <li><a href="index.html#c-array-warm-up">Array Warm-up</a></li>
+  <li><a href="index.html#d-seam-carving">Seam Carving</a></li>
+  <li><a href="index.html#e-submission">Submission</a></li>
+</ul>
+
+
+<h2 id="a-preliminaries">A. Preliminaries</h2>
+
+
+<p>You can get the skeleton files from the shared repository as usual.</p>
+
+
+<h2 id="b-lists-of-lists">B. Lists of Lists</h2>
+
+
+<p>We've provided a new class <code>IntListList</code> (in <a href="https://docs.oracle.com/javase/tutorial/java/package/packages.html">package</a> <code>lists</code>), which consists of a reference
+to an <code>IntList</code> and a reference to an <code>IntListList</code>.
+Using this class, we can form lists of lists. Very meta...
+This should remind you of our arrays of arrays!</p>
+
+<p>Complete the following Java function so that it performs as
+indicated in its comment. The files <code>IntList.java</code> and <code>IntListList.java</code> in
+the template contain the declarations of the classes <code>IntList</code> and
+<code>IntListList</code>. Put your answers in a file called <code>Lists.java</code>, for which
+we've also provided a template.</p>
+
+<pre><code>/* B. */
+/** Return the list of lists formed by breaking up L into &quot;natural runs&quot;:
+ *  that is, maximal strictly ascending sublists, in the same order as
+ *  the original.  For example, if L is (1, 3, 7, 5, 4, 6, 9, 10, 10, 11),
+ *  then result is the four&#x2d;item list ((1, 3, 7), (5), (4, 6, 9, 10),
+ *  (10, 11)).
+ *  Destructive: creates no new IntList items, and may modify the
+ *  original list pointed to by L. */
+
+static IntListList naturalRuns(IntList L) {
+    /* *Replace this body with the solution. */
+    return null;
+}</code></pre>
+
+<p>For test-writing purposes, you may find the <code>IntListList</code> constructor helpful, which takes as input two-dimensional arrays.</p>
+
+<p>You'll also write a similar <code>naturalRuns</code> method in the next part with arrays. You may find it useful
+to look at this method when completing the next part.</p>
+
+<p>Also don't go too overboard on tests. Two "normal" input and a couple of
+corner cases per method is likely enough for 61B HW purposes! Write more
+tests when you think you'll either save time or learn something by
+writing them.</p>
+
+<p>The Utils class provides some handy methods, but you are not required to use the Utils class in any way.</p>
+
+
+<h2 id="c-array-warm-up">C. Array Warm-up</h2>
+
+
+<p>Complete the following Java functions (in package <code>arrays</code>)
+so that they perform as
+indicated in their comments.  Remember that some arrays can have zero
+elements. Put your answers to this problem (all parts) in a file named
+<code>Arrays.java</code>, for which we've provided a template.</p>
+
+<p>You may find <code>System.arraycopy</code> useful for these problems, but
+you are not required to use it. We've again provided a <code>Utils</code> class (which could be helpful),
+but again you can get along just fine without using it.</p>
+
+<pre><code>/* C1. */
+/** Returns a new array consisting of the elements of A followed by the
+ *  the elements of B. */
+static int[] catenate(int[] A, int[] B) {
+    /* *Replace this body with the solution. */
+    return null;
+}
+
+/* C2. */
+/** Returns the array formed by removing LEN items from A,
+ *  beginning with item #START. */
+static int[] remove(int[] A, int start, int len) {
+    /* *Replace this body with the solution. */
+    return null;
+}
+
+/* C3. */
+/** Returns the array of arrays formed by breaking up A into
+ *  maximal ascending lists, without reordering.
+ *  For example, if A is {1, 3, 7, 5, 4, 6, 9, 10}, then
+ *  return the three&#x2d;element array
+ *      { {1, 3, 7}, {5}, {4, 6, 9, 10} }. */
+static int[][] naturalRuns(int[] A) {
+    ...
+}</code></pre>
+
+<p>You may find the subarray command in the <code>Utils</code> class useful,
+though you are not required to use the <code>Utils</code> class in your solution.
+For <code>naturalRuns(int[] A)</code>, the approaches one might decide between use
+recursion and iteration. Using iteration might be more intuitive to you,
+but the recursive solution is more elegant and challenging. We encourage
+you to try both approaches but, of course, you are only required to use
+one of these.</p>
+
+
+<h2 id="d-seam-carving">D. Seam Carving</h2>
+
+
+<p>Set aside some time before you start this. There's a solid 15-minute
+read ahead of you before you're ready to get started on this problem.
+The ideas aren't too complicated, but I've erred on the side of
+caution and written a really verbose step-by-step description.</p>
+
+<p>Suppose you have an image and want to rescale it in a way that doesn't
+preserve the aspect ratio, e.g. you have a widescreen movie that you'd
+like to view on a square screen. Two obvious choices are rescaling and
+cropping. However, rescaling makes
+<a href="http://i.imgur.com/sZptm.jpg">everything look weird</a>, and
+cropping means you lose the edges of the image.</p>
+
+<p>There is an image resizing technique known as
+<a href="http://en.wikipedia.org/wiki/Seam_carving">seam carving</a> that
+avoids these problems. In this HW problem you'll implement the tricky
+part of this algorithm.</p>
+
+<p>Before proceeding, watch the first 2 minutes and 30 seconds of this
+<a href="https://www.youtube.com/watch?v=6NcIJXTlugc">video</a> so you can get a feeling for what the
+technique can achieve.</p>
+
+<p>In this problem, you'll be completing an implementation of a partially
+completed <code>MatrixUtils</code> class that supports the rescaling of images. We've provided
+code that does all the messy stuff like reading in image files and so
+forth. You'll be writing the code that does the actual smart part of
+the program.</p>
+
+<p>Seam carving works as follows. First we start with a <em>W</em> x <em>H</em>
+color image, which is really just a two-dimensional array of <code>Color</code>
+objects, where each <code>Color</code> object contains a red, green, and blue
+value. The <code>image.Rescaler</code> class calculates the "energy" of each pixel
+and returns the energy of the overall image as a matrix with
+<em>R=H</em> rows and <em>C=W</em> columns. The energy of a pixel
+represents the importance of a pixel. Pixels with low energy (e.g.
+black in a sea of other black pixels) will be considered unimportant,
+whereas pixels with high energy (e.g. a white dot in a sea of black
+pixels) will be worth saving. You can think of energy as how much a pixel
+contrasts with its neighbors: a pixel that highly contrasts with its neighbors
+has more energy as a pixel that doesn't contrast at all with its neighbors. So
+a pixel's energy is really just how important that pixel is which is measured by
+how much it contrasts with its neighbors. By neighbors we mean the pixels surrounding
+that particular pixel.</p>
+
+<p>As an example, consider the silly 4 pixel wide by 6 pixel tall
+image, shown below (zoomed in):</p>
+
+<center>
+<img src="4x6zoom.png" alt="Silly image">
+</center>
+
+<p>Our code converts the image into its "energy", which depends on the differences
+between the neighboring pixels.  Suppose that a pixel at position
+$(c, r)$ has an RGB color value $V(c, r)$&mdash;a 3-vector of red, green,
+and blue intensities.  Then we'll take its energy to be
+$$||V(c+1, r) - V(c-1,r)||^2 + ||V(c, r+1) - V(c,r-1)||^2.$$ On the boundaries
+(where it lacks one or more neighbors), we'll use a color value of $10^6$, and
+a value of $\infty$ for pixels that are off the image.  (We've already written
+this code, so this is just FYI).
+The basic idea
+is that the more similar a pixel is to its neighbors, the lower its
+energy). For this image, we get:</p>
+
+<pre><code> 1000000   1000000   1000000   1000000
+ 1000000     75990     30003   1000000
+ 1000000     30002    103046   1000000
+ 1000000     29515     38273   1000000
+ 1000000     73403     35399   1000000
+ 1000000   1000000   1000000   1000000</code></pre>
+
+<p>Here, pixels with high values are ones we want to keep, and things
+that have low energy (like the one with energy 29,515) are relatively
+expendable.</p>
+
+<p>Suppose we want to resize this image by making it one row shorter.
+To do this, we'd find the lowest energy horizontal path from any pixel
+in the left column to any pixel in the right column--contraining
+ourselves to only walking between contiguous pixels (see below for a
+more precise definition). As an example, the minimum energy path for
+the energy shown is:</p>
+
+<pre class="centeredmid">
+  1000000   1000000   1000000  <font color="#BB2222">*1000000*</font>
+ <font color="#BB2222">*1000000*</font>    75990   <font color="#BB2222">*30003*</font>   1000000
+  1000000    <font color="#BB2222">*30002*</font>   103046   1000000
+  1000000     29515     38273   1000000
+  1000000     73403     35399   1000000
+  1000000   1000000   1000000   1000000
+</pre>
+
+<p>We'd then remove all the marked pixels, and we'd have a rescaled image
+that is only 5x4. It is not obvious, but the resulting rescaling
+algorithm does a really good job with certain types of images (which
+you'll be able to experiment with once you're done).</p>
+
+<p>We can also use this algorithm to remove columns of images.
+Walking top to bottom, one minimum energy path would be:</p>
+
+<pre class="centeredmid">
+  1000000   1000000   1000000  <font color="#BB2222">*1000000*</font>
+  1000000     75990    <font color="#BB2222">*30003*</font>  1000000
+  1000000    <font color="#BB2222">*30002*</font>   103046   1000000
+  1000000    <font color="#BB2222">*29515*</font>    38273   1000000
+  1000000     73403    <font color="#BB2222">*35399*</font>  1000000
+  1000000   1000000   1000000  <font color="#BB2222">*1000000*</font>
+</pre>
+
+<p>Let's be a bit more explicit in what it means to find a contiguous
+path. For a vertical path, imagine that we're walking from the top to
+the bottom across the image, starting at any point in the top row,
+with the constraint that we can only walk:</p>
+
+<ul>
+  <li>Directly down.</li>
+  <li>Diagonally down and to the left one space.</li>
+  <li>Diagonally down and to the right one space.</li>
+</ul>
+
+<p>The total energy of the marked path is 1000000 for this first step,
+then 30003 for the next step, then 30002 for the third step, then
+29515, 35399, and finally 1000000 for the final three steps. The total
+energy of these is six positions is
+1000000+30003+30002+29515+35399+1000000=2124919 units of energy. By
+inspection, you should be able to convince yourself that the path we
+walked is the minimum among all paths that obey our constraints above.</p>
+
+<p>We now define the useful term <em>vertical seam</em>: The vertical seam
+is the minimum energy contiguous path from any pixel in the top row to
+any pixel in the bottom row. The seam does not need to be unique.
+Observe above that since the edge pixels are all energy 1000000, we
+could have picked any of them.</p>
+
+<p>If the example above is not satisfying to you and you insist on a
+precise definition, we can define it as follows: Given an energy
+matrix <code>int[][] e</code>, then <code>int[] verticalSeam</code> is an
+array of length H such that if at the <code>i</code>th index of <code>verticalSeam</code> 
+there is an integer <code>j</code>, this means that we should remove the 
+pixel at row <code>i</code> and column <code>j</code>. Here are more definitions and
+properties:</p>
+
+<ul>
+  <li><code>abs(verticalSeam[i] &#x2d; verticalSeam[i+1]) &lt;= 1</code></li>
+  <li><p><code>sum</code> is minimized, where <code>sum</code> is defined as:</p>
+
+<pre><code>for (int r = 0; r &lt; R; r += 1) {
+    int lowestTotalEnergyColumn = verticalSeam[r];
+    sum += e[r][lowestTotalEnergyColumn];
+}</code></pre></li>
+</ul>
+
+<p>Don't feel obligated to fully digest this formal definition. If you can
+follow the coming example, you're in great shape.</p>
+
+<p>Finding such a path seems like it might involve a bunch of trial-and-error,
+but we can avoid this by <em>accumulating</em> the energy
+matrix. For example, if we accumulate the energy matrix
+<em>vertically</em> (up to this point we were discussing horizontal
+seams, we are now discussing vertical seams), we get:</p>
+
+<pre class="centeredmid">
+  1000000   1000000   1000000   1000000
+  2000000   <font color="0000CC">1075990</font>   1030003   2000000
+  2075990   1060005   1133049   2030003
+  2060005   1089520   1098278   2133049
+  2089520   1162923   1124919   2098278
+  2162923   2124919   2124919   2124919
+</pre>
+
+<p>If <code>double[][] e</code> is the energy matrix, and <code>double[][] am</code> is
+the vertically accumulated energy matrix, <code>am[i][j]</code> is defined
+as the minimum total energy needed to reach i, j from any starting
+position in the top row.</p>
+
+<p>Let's work through how we could calculate the accumulated energy
+matrix. It's a pretty straightforward idea once you get it, but sorry
+for the moment for the wall of text needed to understand this.</p>
+
+<p>First off, the accumulation of the energy matrix  is 1000000 for the entire top row, because the cost
+to reach any top pixel from itself is 1000000.</p>
+
+<p>This means that the top row of <tt>am</tt> is the trivial:</p>
+
+<pre class="centeredmid">
+  1000000   1000000   1000000   1000000
+  <font color="AAAAAA">???????   ???????   ???????   ???????
+  ???????   ???????   ???????   ???????
+  ???????   ???????   ???????   ???????
+  ???????   ???????   ???????   ???????
+  ???????   ???????   ???????   ???????</font>
+</pre>
+
+<p>Let's next consider position <code>[1][1]</code>. You'll see from the filled
+in copy of <code>int[][] am</code> that <code>am[1][1]</code> (marked in blue in the filled matrix)
+has value 1075990. To understand where this value came from, consider
+that there are three ways that you can get to <code>[1][1]</code>, namely:</p>
+
+<ul>
+  <li>Moving down and to the right from <code>[0][0]</code>, which has
+  accumulated energy 1000000.</li>
+  <li>Moving directly down from <code>[0][1]</code>, which has accumulated energy 1000000.</li>
+  <li>Moving down and to the left from <code>[0][2]</code>, which has accumulated energy
+  1000000.</li>
+</ul>
+
+<p>All of these starting locations are equally bad at a whopping 1000000
+units of energy, so the total cost to reach <code>[1][1]</code> is given by 1000000 +
+75990 (the cost of including the pixel at <code>[1][1]</code> itself).</p>
+
+<p>The rest of the second row will be the same story, and we'll end up with the following top two rows:</p>
+
+<pre class="centeredmid">
+  1000000   1000000   1000000   1000000
+  <font color="008800">2000000   1075990</font>   1030003   2000000
+  <font color="008800">???????</font>   <font color="AAAAAA">???????   ???????   ???????
+  ???????   ???????   ???????   ???????
+  ???????   ???????   ???????   ???????
+  ???????   ???????   ???????   ???????</font>
+</pre>
+
+<p>The first entry that is really interesting is <font
+color="008800"><code>[2][0]</code></font>. There are two ways to get to <font
+color="008800"><code>[2][0]</code></font>, either:</p>
+
+<ul>
+  <li>Moving directly down from <font color="008800"><code>[1][0]</code></font>, which
+  has accumulated energy <font color="008800">2000000</font>.</li>
+  <li>Moving down and to the left from our old friend <font
+  color="008800"><code>[1][1]</code></font>, which has accumulated energy <font
+  color="008800">1075990</font>.</li>
+</ul>
+
+<p>Obviously it'd be better to have come from <font
+color="008800"><code>[1][1]</code></font>, so we know that the minimum cost to
+reach <font color="008800"><code>[2][0]</code></font> must be <font
+color="008800">1075990 + 1000000</font> (the cost of <font
+color="008800"><code>[2][0]</code></font> itself). And in fact, by an inductive
+argument, we know that this is not just the lowest cost to reach <font
+color="008800"><code>[2][0]</code></font> from its two neighbors, but also from any
+pixel in the top row (if you are unsatisfied or bored, try to prove
+that this same way works for all pixels).</p>
+
+<p>Try to figure out what <code>[2][1]</code> should be, and then check your answer
+by highlighting the following blank area after the colon with the mouse: <font color="WHITE">1060005. If you
+didn't get this, then the answer is as follows. There are three
+possible paths:</p>
+
+<ul>
+  <li>Down and to the right from [1][0], which has accumulated energy 2000000.</li>
+  <li>Down from [1][1], which has accumulated energy 1075990.</li>
+  <li>Down and to the left from [1][2], which has accumulated energy 1030003.</li>
+</ul>
+
+<p>Our best choice is to come from [1][2], for a total of 1030003 +
+30002 = 1060005.</font></p>
+
+<p>Following this same process, we finally arrive at the accumulated energy matrix:</p>
+
+<pre class="centeredmid">
+  1000000   1000000   1000000   <font color="#BB2222">1000000</font>
+  2000000   1075990   <font color="#BB2222">1030003</font>   2000000
+  2075990   <font color="#BB2222">1060005</font>   1133049   2030003
+  2060005   <font color="#BB2222">1089520</font>   1098278   2133049
+  2089520   1162923   <font color="#BB2222">1124919</font>   2098278
+  2162923   <font color="#BB2222">2124919</font>   2124919   2124919
+</pre>
+
+<p>Once we have the accumulated energy matrix, finding a minimum energy
+path is trivial (by eye, but trickier in code)! We start by picking
+the lowest energy position in the bottom row, in this case
+<code>am[5][1]</code>, <code>am[5][2]</code>, or <code>am[5][3]</code> are all
+equally good with cumulative energies of 2124919. We then walk back up
+the array, taking note of the smallest entry along the way, leading us
+from 2124919 to 1124919 to 1089520 to 1060005 to 1030003 to 1000000.</p>
+
+<p>This technique is an example of <em>dynamic programming</em>, which we'll be
+revisiting later. If you're curious, dynamic programming is a technique
+in which we solve a problem by identifying its subproblems and solve
+them one by one, smallest first, using the answers from small problems to
+calculate answers to larger ones. In this case, we calculated the accumulated
+energy of a square by considering these 3 subproblems: the accumulated
+energy values of the square (1) one row up, (2) one row up and one column right, and
+(2) one row up and one column left. By starting at the top row and working our
+way down, once we arrive at a square all of its subproblems are already
+solved. To find the accumulated energy of the square all we need is an
+update rule - in our case we add the square's energy with the minimum of
+its 3 subproblems.It has applications from determining the degree of
+difference between two texts to performing error correction on a noisy
+communication line.</p>
+
+<p>For this problem, you'll be required to add two methods to the <code>MatrixUtils</code> class:</p>
+
+<ul>
+  <li><code>accumulateVertical</code>: Does exactly the operation described on this page.</li>
+  <li><code>accumulate</code>: Takes a parameter that determines if we should accumulate vertically or horizontally. See the skeleton file for details.</li>
+</ul>
+
+<p>If you want to complete the image resizing program, you'll also add two more <strong>optional</strong> methods: <code>findVerticalSeam</code> and <code>findSeam</code>. This is <strong>not</strong> required for credit, but is very emotionally satisfying.</p>
+
+<p>If you complete all four methods, you'll be able to use the
+<code>image.Rescaler</code> class. Try it out on images with big empty spaces (e.g.
+the provided <code>HJoceanSmall.jpg</code>). Also try it on faces -- it's super
+creepy and weird. To do this, make sure you're in the <code>hw2</code> directory 
+(not the <code>image</code> subdirectory) and just run the program as follows:</p>
+
+<pre><code>java &#x2d;ea image.Rescaler [image filename] [num columns to remove] [num rows to remove]</code></pre>
+
+<p>or within IntelliJ.</p>
+
+
+<h2 id="e-submission">E. Submission</h2>
+
+
+<h6 id="optional">Optional</h6>
+
+<p><code>findVerticalSeam</code> and <code>findSeam</code> are optional. If you complete them, you will be able to run your seam carver code on images. While this
+is optional, we <strong>highly</strong> encourage you do this so you can see the power of what you've just coded. Even if you cannot do so this week
+because of the project, feel free to come back later in the semester and finish this.</p>
+
+<h6 id="required">Required</h6>
+
+<p>You should have completed Lists.java, ListsTest.java, MatrixUtils.java, MatrixUtilsTest.java, Arrays.java, ArraysTest.java. Submit as usual by adding, committing, tagging, and pushing. Don't forget to run the style checker (<code>make style</code>) before submitting.</p>
+    </main></div>
+</body>
+</html>

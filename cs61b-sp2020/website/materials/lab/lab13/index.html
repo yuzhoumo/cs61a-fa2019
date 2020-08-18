@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 13 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#navigation">Navigation</a></li>
+  <li><a href="index.html#before-you-begin">Before You Begin</a></li>
+  <li><a href="index.html#a-programming-products">A. Programming Products</a></li>
+  <li><a href="index.html#b-discussion-information-hiding">B. Discussion: Information Hiding</a></li>
+  <li><a href="index.html#c-designing-for-change">C. Designing for Change</a></li>
+  <li><a href="index.html#d-dry">D. DRY</a></li>
+  <li><a href="index.html#e-exercise-gitlet-architecture">E. Exercise: Gitlet Architecture</a></li>
+  <ul>
+    <li><a href="index.html#writing-your-design-doc">Writing Your Design Doc</a></li>
+    <ul>
+      <li><a href="index.html#dropbox-paper">Dropbox Paper</a></li>
+      <li><a href="index.html#intellij-markdown">IntelliJ Markdown</a></li>
+    </ul>
+  </ul>
+  <li><a href="index.html#f-deliverables">F. Deliverables</a></li>
+  <ul>
+    <li><a href="index.html#grading">Grading</a></li>
+    <li><a href="index.html#acknowledgments">Acknowledgments</a></li>
+  </ul>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Lab 13: Software Engineering and Design</header>
+        
+<p><strong>Due Date: Friday 4/17 11:59PM.</strong></p>
+
+
+<h2 id="navigation">Navigation</h2>
+
+
+<ul>
+  <li><a href="index.html#before-you-begin">Before You Begin</a></li>
+  <li><a href="index.html#a-programming-products">A. Programming Products</a></li>
+  <li><a href="index.html#b-discussion-information-hiding">B. Discussion: Information Hiding</a></li>
+  <li><a href="index.html#c-designing-for-change">C. Designing for Change</a></li>
+  <li><a href="index.html#d-dry">D. DRY</a></li>
+  <li><a href="index.html#e-exercise-gitlet-architecture">E. Exercise: Gitlet Architecture</a></li>
+  <li><a href="index.html#f-deliverables">F. Deliverables</a></li>
+</ul>
+
+
+<h2 id="before-you-begin">Before You Begin</h2>
+
+
+<p>In this lab, we'll be exploring deeper into the art and practice of software engineering, which combines all of the ideas we've learned in the course to this point. For the most part, our discussion of design trade-offs in the course have mainly focused around smaller snippets of code. We learned algorithmic analysis to make arguments about the <strong>execution costs</strong> of a piece of code, and throughout the projects and other assignments you have probably noticed some of the <strong>programming costs</strong> incurred from the writing, improvement, and maintenance of a <em>programming product</em>. By the end of this lab you should have been introduced to some important concepts of software engineering. You are <em>highly encouraged</em> to work through this lab with a partner, and we have tried to incorporate a number of prompts for you to discuss things with your partner.</p>
+
+<p>The core exercise in this lab will be writing a design document for Project 3: Gitlet. If you have not already, you should read through the <a href="../../proj/proj3/index.html">Gitlet spec</a>. You are not expected to know everything about the project before beginning this lab. However, without a solid understanding of the fundamentals of the project the assignment will be more challenging to execute and will likely be less useful to you. A great way to reinforce your understanding is to discuss any questions you have about the spec with your lab partner as you work through the design process. You may work through the design for Gitlet with your lab partner and even may have the same design document (however you will both have to submit individually). <strong>To be explicit, you will be able to work with a partner in order to come up with a design, but all code for the project must be written individually.</strong></p>
+
+
+<h2 id="a-programming-products">A. Programming Products</h2>
+
+
+<p>Designing a <strong>programming product</strong> is different from 'simple programming'.</p>
+
+<p><strong>Programming products often combine the work of many programmers:</strong> It's not always the case that programmers share a common understanding of every component of the program. Code that is written by one programmer may not be easily understood by another programmer, or even the original programmer themselves weeks or months down the line. Working in teams imposes real stress that is not evident from working alone.</p>
+
+<p><strong>Programming products are prepared for use by other people:</strong> Unlike software that is written by programmers, for programmers, or purely 'academic' problems which might not be used in a real world setting, <em>programming products</em> need to meet the requirements of the client or target user. Unfortunately, clients and users rarely, if ever, completely understand what their programming product should do; instead, they often have a vague notion of a problem. Part of the challenge of software engineering is in acquiring a deep-enough mental model of the fundamental problem the client is facing in order to choose between multiple possible solutions.</p>
+
+<p>In short, software engineering is concerned with the problem of "multi-person development of multi-version programs".</p>
+
+
+<h2 id="b-discussion-information-hiding">B. Discussion: Information Hiding</h2>
+
+
+<p>Software doesn't exist in a vacuum. In the real world, software constantly
+undergoes changes in requirements in response to shifts in requirements.</p>
+
+<blockquote><p>There are two, quite distinct, types of software aging. The first is caused
+by the failure of the product’s owners to modify it to meet changing needs;
+the second is the result of the changes that are made. This "one-two punch"
+can lead to rapid decline in the value of a software product.</p></blockquote>
+
+<p>Read <strong><a href="https://john.cs.olemiss.edu/~hcc/researchMethods/notes/ClassicParnas/ACMannotated/ClassicParnasRevisionAnnotated.pdf">Revealing the Secrets of David Parnas</a></strong>.</p>
+
+<ol>
+  <li><p>Work with your partner to come up with a shared definition for <strong>information hiding</strong> as it is used in the excerpt below. Then, come up with a couple examples of instances where we've used the principle of information hiding in this course.</p>
+
+  <blockquote><p>Parnas uses information hiding to decompose the system in modules that
+  satisfy his goals; each module keeps its own secret design decision about
+  some aspect of the system (e.g., choice of a data structure). A module's
+  design decision can change but none of the other modules should be
+  affected.</p></blockquote></li>
+  <li><p>Consider the following claim from the paper.</p>
+
+  <blockquote><p>[Parnas] defines the "interface between programs" to consist "of the set of
+  assumptions that each programmer needs to make about the other program in
+  order to demonstrate the correctness of his own program." In addition to an
+  operation signature, these assumptions must specify the restrictions on
+  data passed to the operation, the effect of the operation, and exceptions
+  to the normal processing that may arise.</p></blockquote>
+
+  <p>How can information hiding affect the number of assumptions a programmer
+  needs to make? How is <strong>testing</strong> related to the assumptions that come with
+  designing a particular program method?</p></li>
+  <li><p>One aspect of information hiding is <em>encapsulation</em>, an idea we've already
+  explored several times in the course. Can you think of other examples
+  outside of encapsulation where the hiding information from the programmer has
+  been helpful or desirable?</p>
+
+  <blockquote><p>A secret of a well-designed module is more than hidden data. It is any
+  aspect that can change as the system evolves: processing algorithms used,
+  hardware devices accessed, other modules present, and specific functional
+  requirements supported.</p></blockquote>
+
+  <p>In what ways has technology changed in the past 5 or 10 years? What kind of
+  gadgets and software services have become popular in recent years? How can
+  information hiding help software adapt to these changes?</p></li>
+</ol>
+
+
+<h2 id="c-designing-for-change">C. Designing for Change</h2>
+
+
+<p>David Parnas also has written about designing for change. In multi-version programming we find three additional problems that are not present if we are going to write a single program:</p>
+
+<ol>
+  <li>How to write programs that are easily modified. Programs in which a change of one design decision does not require changes in many parts of the program.</li>
+  <li>How to write programs with useful subsets. If we only need a subset of the services performed by a program we should be able to quickly remove unneeded parts without having to rewrite the remainder. If we are unable to complete or use certain functions, we would like a reduced set of capabilities to be available.</li>
+  <li>How to write programs that are easily extended. We should like to be able to add new capabilities to programs without rewriting the programs that are already present. This, too, is a fail soft goal; build a subset to meet a deadline, then extend as time permits.</li>
+</ol>
+
+<p>Some key ideas that can help you create code are listed below:</p>
+
+<ol>
+  <li><p>Apply the following ideas to your design:</p>
+
+  <ul>
+    <li>Information hiding</li>
+    <li>Abstraction</li>
+    <li>Separation of concerns</li>
+    <li>Data hiding</li>
+  </ul></li>
+  <li><p>Begin by characterizing likely classes of changes:</p>
+
+  <ul>
+    <li>Do not begin with data structures</li>
+    <li>Do not begin with algorithms</li>
+    <li>Think about change as part of documenting requirements</li>
+    <li>Changeability is a requirement and should be treated as such.</li>
+  </ul></li>
+  <li><p>Estimate the probabilities of each type of change:</p>
+
+  <ul>
+    <li>We cannot make everything equally easy to change.</li>
+    <li>Our intuition on what will change is often wrong, but we can consult clients as well as more experienced software engineers for feedback.</li>
+    <li>Oftentimes, we won't know what will be more likely to change, but an educated guess is better than nothing.</li>
+    <li>Review changeability at every step in the design.</li>
+  </ul></li>
+  <li><p>Then, organize the software to confine or <em>encapsulate</em> likely changes:</p>
+
+  <ul>
+    <li>Provide an abstract interface that is unlikely to change.</li>
+    <li>Implement objects that hide changeable data structures.</li>
+  </ul></li>
+</ol>
+
+<p>Experience has shown that, even if unanticipated changes are eventually required, software designed for ease of change is easier to maintain than software designed without concern for future changes.</p>
+
+
+<h2 id="d-dry">D. DRY</h2>
+
+
+<p>When working on any software project, the principle of "Don't repeat yourself", or <strong>DRY</strong>, is one of the simplest but also most general principles for writing maintainable software. We've already seen several examples of this in action when we examined the <code>Comparable</code>, <code>Comparator</code> and <code>Iterable</code>, <code>Iterator</code> interfaces.</p>
+
+<p>Each of these methods reduced our need to make near-copies of code throughout our program. For example, say we had several classes that represented animals and we wanted to implement some function that would take the maximum of two such animal objects. If we wanted to Before the introduction of <code>Comparable</code>, we would have needed to implement a different <code>max</code> function for each type of <code>Animal</code>: we'd need to write a <code>maxDog</code> function, a <code>maxCat</code> function, a <code>maxPenguin</code> function, a <code>maxWhale</code> function, etc., resulting in unnecessary repeated work and a lot of redundant code. By introducing the <code>Comparable</code> interface, we can instead implement one <code>max</code> function that uses each <code>Animal</code>'s <code>compareTo</code> method.</p>
+
+<p>In Java (and many other programming languages), our solution to improve code reuse is to extract repeated code snippets into methods or other subroutines. For each variable or value that differs between the code snippets, <em>parameterize</em> the variables, turning them into parameters that can be passed into the function by the caller.</p>
+
+<p>DRY, as a design philosophy, is interesting because it takes the approach of <em>write code first, then abstract it away second</em>. Unlike upfront design where all the decisions are made at the start, pulling code out into a method can be done at the precise time when the abstraction is needed. But DRY is not incompatible with information hiding. The better way to formulate the problem may be to say that, if <strong>information hiding</strong> is responsible for managing the complexity of the high-level program architecture, <strong>DRY</strong> can be thought of as a technique to help programmers manage complexity as they implement each individual class.</p>
+
+<p>There are many different approaches to how to go about practicing these DRY principals. One good approach is that the second time you write the same (or code that is similar enough that can be parameterized), you should create a new function or otherwise. This makes your code easier to maintain as the logic is only contained in one location. In general it should also lead to hopefully shorter and more cleanly written code.</p>
+
+
+<h2 id="e-exercise-gitlet-architecture">E. Exercise: Gitlet Architecture</h2>
+
+
+<blockquote><p>One key idea in designing architecture is to imagine you're inventing new
+"species" of creatures. Unlike living species, however, which are concerned
+with survival, your components are entities that have responsibilities for
+storing data and accomplishing computation of some kind. Inventing new
+species is a creative activity; you want to think about what they will and
+won't do, give them names, and tell stories about how they interact with each
+other, exchanging data.</p>
+
+<p>---Amy Ko</p></blockquote>
+
+<p>For the remainder of the lab you are to work on the Gitlet Design Document. You will be required to submit your first draft of your design for this lab assignment. It is ok if you have not finalized all of the details by this submission, and it is important to remember that a design document should be a living document. If your design changes at any point, or if you do determine more details of your design, you should update the design document to reflect this.</p>
+
+<p>Keeping an updated design document should keep you organized, but it will also allow us to be able to help you. In order for us to understand your implementation in a timely manner when we help you in office hours or via GitBugs, <strong>it is imperative that you keep a design document in your <code>proj3</code> folder that reflects the current design of your program</strong>. We will not help you in office hours or process your GitBugs otherwise.</p>
+
+<p>Again, before beginning you and your lab partner should take some time to first ensure that both of you have a reasonable understanding of the project. If you have not already, you should read or at the very least skim the spec <a href="../../proj/proj3/index.html">here</a>. What is the problem(s) that Gitlet aims to solve? How does Gitlet propose to solve that problem? What kind of mental models and representations are used as part of Gitlet?</p>
+
+<p>You will be adding design doc to the <code>proj3/gitlet/gitlet&#x2d;design.md</code> file. This means that you must have fetched and merged the project files before continuing. Again to do this please run the following commands:</p>
+
+<pre><code>git fetch shared
+git merge shared/proj3 &#x2d;m &quot;get proj3 skeleton&quot;</code></pre>
+
+
+<h3 id="writing-your-design-doc">Writing Your Design Doc</h3>
+
+<p>We are asking you to complete your design doc in <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">markdown</a>, a language that allows you to nicely format and style a text file. There are various ways that you can edit markdown (we will describe two options below). We again do not necessarily care that your file is perfectly formatted, but find that it can be nice to write design documents (or other files like this) in a more featured way (e.g. with bold text, code blocks / text, bullets, etc.). Some features that might be particularly useful for your design doc are the headers and the code / syntax highlighting (see the link above for how to do each of these)!</p>
+
+<p>Don't spend too much time deciding how you want you want to work on the design doc, we care much more about the content than the formatting. <strong>The guidelines of your design document can be found <a href="../../proj/proj3/design.html">here</a></strong> along with an <a href="../../proj/proj3/enigma-example.html">example of a design document for Enigma</a>. Remember that the purpose of this document you're writing is not just to satisfy the instructors. It's intended to help you organize, plan, and streamline your Gitlet implementation, so focus on writing a document that's useful to you.</p>
+
+
+<h4 id="dropbox-paper">Dropbox Paper</h4>
+
+
+<p><img src="img/paper.png" alt="Dropbox Paper"></p>
+
+<p>There are many ways that you can edit Markdown files that allow you to more easily visualize the formatted output. One of our favorite methods is <a href="https://paper.dropbox.com">Dropbox Paper</a>, which renders the markdown live in the same window as the editor. One benefit of this is that both you and your partner can collaborate on the file remotely, which might make your workflow a bit smoother.</p>
+
+<p>If you edit your file in Dropbox Paper, you will have to export the markdown and paste it into your <code>proj3/gitlet/gitlet&#x2d;design.md</code> file which adds one extra step. To do this, see the screenshot below to see how. Make sure to select the "Markdown (.md)" option when given the choice.</p>
+
+<p><img src="img/export.png" alt="Dropbox Paper Export"></p>
+
+<p>If you do choose to use Dropbox Paper, again please remember to copy over your most recent version of your design document to the <code>proj3/gitlet/gitlet&#x2d;design.md</code> file whenever you make significant changes. If you would like to submit Gitbugs, remember that you must have committed the updated version of your design doc, or your GitBug skipped. Additionally, please include a link to a viewable version in your design document, so we can access the rendered file.</p>
+
+
+<h4 id="intellij-markdown">IntelliJ Markdown</h4>
+
+
+<p><img src="img/intellij.png" alt="IntelliJ Markdown"></p>
+
+<p>If you do not wish to make an account or learn how to use Dropbox Paper you can also just edit the markdown directly in IntelliJ. Open the <code>proj3</code> folder as you would normally, then if you edit the <code>gitlet&#x2d;design.md</code> file you should see the live rendering of the markdown appear in a different pane of the IDE.</p>
+
+
+<h2 id="f-deliverables">F. Deliverables</h2>
+
+
+<p>The submission process for this assignment will be a bit different than other labs, so please follow the instructions carefully. To receive full credit for completing this lab, make sure that you:</p>
+
+<ul>
+  <li>Double check that your design document fulfills all of the requirements specified in the <a href="../../proj/proj3/design.html">design document guidelines</a></li>
+  <li>Complete your design document and ensure that the markdown / text has been copied into the <code>proj3/gitlet/gitlet&#x2d;design.md</code> file.</li>
+  <li>Added and committed you <code>proj3/gitlet/gitlet&#x2d;design.md</code> file.</li>
+  <li><p>If you have not already, fetch the files for Lab 13 (the only file distributed will be <code>partner.txt</code>). To do this run the commands:</p>
+
+<pre><code>git fetch shared
+git merge shared/lab13 &#x2d;m &quot;get lab13 skeleton&quot;</code></pre></li>
+  <li>Fill out the <code>lab13/partner.txt</code> with your partners information. If you did not complete this lab / your design document with a partner, just leave this blank.</li>
+  <li><p>Copy your <code>proj3/gitlet/gitlet&#x2d;design.md</code> into the lab folder. This is only for submission purposes, and you will only need to maintain / update the <code>proj3/gitlet/gitlet&#x2d;design.md</code> file. You can do this by running the following command from your <code>repo</code> folder:</p>
+
+<pre><code>cp proj3/gitlet/gitlet&#x2d;design.md lab13/gitlet&#x2d;design.md</code></pre></li>
+  <li><p>Once this has been copied over, you can now submit the assignment in the same way you usually do.</p>
+
+<pre><code>git add lab13 # or equivalent add command
+git commit &#x2d;m &quot;submitting lab13&quot;
+git tag lab13&#x2d;x  # x is the next highest submission number
+git push
+git push &#x2d;&#x2d;tags</code></pre></li>
+</ul>
+
+
+<h3 id="grading">Grading</h3>
+
+<p>This assignment is not being manually graded for content, we will simply be doing a check for the length of your document. That being said, this is one of the most important things you can do in order to set yourself up for success on the project. Putting in effort to this assignment should lead to a cleaner implementation of Gitlet and designing before you code will almost certainly save you time. Additionally once again, if you do not have a sufficient design document, you will not be able to get help from course staff through office hours or GitBugs.</p>
+
+
+<h3 id="acknowledgments">Acknowledgments</h3>
+
+
+<p>This lab was adapted by Matthew Owen from the CS61BL Summer 2018 Software Engineering lab written by <a href="https://kevinl.info/">Kevin Lin</a>.</p>
+    </main></div>
+</body>
+</html>

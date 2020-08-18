@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab 2 | CS 61B Spring 2020</title>
+    <meta charset="UTF-8">
+
+    
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/common.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/lab.css" rel="stylesheet" type="text/css">
+    <link href="../../../assets/css/highlight/styles/tomorrow.css" rel="stylesheet" type="text/css">
+    
+    <script src="../../../assets/js/jquery-1.12.4.min.js" type="text/javascript"></script>
+    <script src="../../../assets/css/highlight/highlight.pack.js" type="text/javascript"></script> 
+    <script src="../../../assets/js/sidebar.js" type="text/javascript"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+
+    tex2jax: {inlineMath: [["$", "$"]]}
+})
+   
+</script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_HTML-full"></script>
+</head>
+<body>
+    <div class="navbar-top"><div id="navitems">
+        <a href="../../../index.html"><div class="navitem">Main</div></a>
+        <a href="../../../about.html"><div class="navitem">Course Info</div></a>
+        <a href="../../../staff.html"><div class="navitem">Staff</div></a>
+        <!--<a href="../../../assign.html"><div class="navitem">Assignments</div></a>-->
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fscreencasts.html" target="_blank"><div class="navitem">Screencasts</div></a>
+        <a href="../../../../../../auth.berkeley.edu/cas/login%3Fservice=https:%252F%252Finst.EECS.Berkeley.EDU%252F~cs61b%252Fsp20%252Fcgi-bin%252Fcalnet-auth-scores.cgi.html" target="_blank"><div class="navitem">Scores</div></a>
+        <a href="../../../resources.html"><div class="navitem">Resources</div></a>
+        <a href="https://piazza.com/class/jkx2gta66436jq"><div class="navitem">Piazza</div></a>
+    </div></div>
+    <div id="sidebar">
+        <div id="sidebar-content">
+            <h3>Navigation</h3>
+            <ul>
+  <li><a href="index.html#table-of-contents">Table of Contents</a></li>
+  <li><a href="index.html#a-partner-labs">A. Partner Labs</a></li>
+  <li><a href="index.html#b-cs61b-software-setup">B. CS61B Software Setup</a></li>
+  <ul>
+    <li><a href="index.html#mac-setup">Mac Setup</a></li>
+    <li><a href="index.html#linux-setup">Linux Setup</a></li>
+    <li><a href="index.html#windows-setup">Windows Setup</a></li>
+  </ul>
+  <li><a href="index.html#c-intellij-ide-setup">C. IntelliJ IDE Setup</a></li>
+  <ul>
+    <li><a href="index.html#introduction-to-intellij-and-ides">Introduction to IntelliJ and IDEs</a></li>
+    <li><a href="index.html#downloading-and-installing-intellij">Downloading and Installing IntelliJ</a></li>
+    <li><a href="index.html#installing-plugins">Installing Plugins</a></li>
+    <li><a href="index.html#setting-up-sdks">Setting Up SDKs</a></li>
+    <li><a href="index.html#creating-projects">Creating Projects</a></li>
+  </ul>
+  <li><a href="index.html#d-using-intellij">D. Using IntelliJ</a></li>
+  <ul>
+    <li><a href="index.html#intellij-documentation">IntelliJ Documentation</a></li>
+    <ul>
+      <li><a href="index.html#read-now">Read Now</a></li>
+      <li><a href="index.html#watch-later">Watch Later</a></li>
+    </ul>
+    <li><a href="index.html#running-java-files">Running Java Files</a></li>
+    <li><a href="index.html#very-brief-debugger-introduction">Very Brief Debugger Introduction</a></li>
+    <li><a href="index.html#creating-junit-tests">Creating JUnit Tests</a></li>
+    <li><a href="index.html#using-the-cs-61b-plugins">Using the CS 61B Plugins</a></li>
+    <ul>
+      <li><a href="index.html#java-visualizer">Java Visualizer</a></li>
+      <li><a href="index.html#style-checking">Style Checking</a></li>
+    </ul>
+  </ul>
+  <li><a href="index.html#e-programming-with-intlists">E. Programming with IntLists</a></li>
+  <ul>
+    <li><a href="index.html#introduction-to-intlists">Introduction to IntLists</a></li>
+    <li><a href="index.html#destructive-vs-non-destructive">Destructive vs. Non-destructive</a></li>
+    <li><a href="index.html#your-task">Your Task</a></li>
+  </ul>
+  <li><a href="index.html#f-submission-and-grading">F. Submission and Grading</a></li>
+</ul>
+        </div>
+    </div>
+    <div id="content-container"><main id="content">
+        <header class="title">Lab 2: IntelliJ and IntLists</header>
+        
+<p>Continuing with the theme of learning practical programming skills, in this lab we will introduce you to IntelliJ which will be a powerful tool to help you develop code in Java. This lab unfortunately contains a bit more setup, but after this lab you should be fully set up for the rest of the semester. Again the setup portion of this lab must be completed by all students, but the rest of the work can be completed with a partner (more details below). Finally this lab will give you some practice on programming questions involving IntLists.</p>
+
+<p>Before completing this lab, make sure that you have completed the entirety of <a href="../lab1/index.html">Lab 1</a>. It is crucial that you do the setup in Lab 1 to continue the course, so please prioritize this. Without it you will be unable to receive starter code, submit assignments, etc. <strong>Both Lab 1 and Lab 2 will be due this Friday 1/31 at 11:59pm.</strong></p>
+
+<p>We would like to especially reemphasize the importance of understanding Git. Version control systems are essential in industry jobs, as working with others quickly becomes very difficult without them. If you did not read sections A, B and F of the <a href="../../../docs/using-git.html">git guide</a> please do so and make sure you understand these. If you have any questions about Git please try to resolve them by discussing with your partner or by asking any TA or AI (academic intern) in lab.</p>
+
+
+<h2 id="table-of-contents">Table of Contents</h2>
+
+
+<ul>
+  <li><a href="index.html#a-partner-labs">A. Partner Labs</a></li>
+  <li><p><a href="index.html#b-cs61b-software-setup">B. CS61B Software Setup</a></p>
+
+  <ul>
+    <li><a href="index.html#mac-setup">Mac Setup</a></li>
+    <li><a href="index.html#linux-setup">Linux Setup</a></li>
+    <li><a href="index.html#windows-setup">Windows Setup</a></li>
+  </ul></li>
+  <li><p><a href="index.html#c-intellij-ide-setup">C. IntelliJ IDE Setup</a></p>
+
+  <ul>
+    <li><a href="index.html#introduction-to-intellij-and-ides">Introduction to IntelliJ and IDEs</a></li>
+    <li><a href="index.html#downloading-and-installing-intellij">Downloading and Installing IntelliJ</a></li>
+    <li><a href="index.html#installing-plugins">Installing Plugins</a></li>
+    <li><a href="index.html#setting-up-sdks">Setting Up SDKs</a></li>
+    <li><a href="index.html#creating-projects">Creating Projects</a></li>
+  </ul></li>
+  <li><p><a href="index.html#d-using-intellij">D. Using IntelliJ</a></p>
+
+  <ul>
+    <li><a href="index.html#intellij-documentation">IntelliJ Documentation</a></li>
+    <li><a href="index.html#running-java-files">Running Java Files</a></li>
+    <li><a href="index.html#very-brief-debugger-introduction">Very Brief Debugger Introduction</a></li>
+    <li><a href="index.html#creating-junit-tests">Creating JUnit Tests</a></li>
+    <li><a href="index.html#using-the-cs-61b-plugins">Using the CS61B Plugins</a></li>
+  </ul></li>
+  <li><p><a href="index.html#e-programming-with-intlists">E. Programming with IntLists</a></p>
+
+  <ul>
+    <li><a href="index.html#introduction-to-intlists">Introduction to IntLists</a></li>
+    <li><a href="index.html#destructive-vs-non-destructive">Destructive vs. Non-destructive</a></li>
+    <li><a href="index.html#your-task">Your Task</a></li>
+  </ul></li>
+  <li><a href="index.html#f-submission-and-grading">F. Submission and Grading</a></li>
+</ul>
+
+
+<h2 id="a-partner-labs">A. Partner Labs</h2>
+
+<p>For this lab and the remainder of the labs in the course (unless explicitly mentioned otherwise), you will be able to work with a partner to complete the lab assignment. Computer science is almost always a collaborative discipline, so learning how to work and code with others is an incredibly important skill to learn. Some important rules on working with partners are described below. Please make sure that you understand all of these policies so that you do not commit an act of academic dishonesty.</p>
+
+<ul>
+  <li>Partnerships in this class are comprised of only two students. This means you are allowed to openly share code <strong>with only one other student</strong> in the class. Sharing code with more than your partner will be considered academic dishonesty. There will be no groups of three.</li>
+  <li>Each student must submit their lab assignment, even if it is identical. If you do not submit the assignment and your partner does, you will not get credit for the assignment.</li>
+  <li>You are highly encouraged to find your partner in lab. There will not be any formal partner matching or registration for the semester. This means that each week you could choose to work with a different partner. Later we will release a piazza post for people to find partners.</li>
+  <li>For each week's lab, you must fill out the <code>partner.txt</code> file with your partner's name, <code>cs61b&#x2d;***</code> login, and @berkeley.edu email. We will use this to track your partnership information for each lab.</li>
+</ul>
+
+<p>You and your partner will be able to work in a way that you find suitable. We encourage you to try different style of work to see what seems to work best. Say if you both want to write your own code, you can brainstorm ideas together, implement the code independently, then discuss your different approaches. Another popular practice is pair programming where only one computer is used and one partner "drives" by controlling the computer. The other partner watches the code that they are typing and provides feedback or ideas. If pair programming it is typical to switch who the "driver" is every 15-20 minutes to allow both partners to contribute.</p>
+
+
+<h2 id="b-cs61b-software-setup">B. CS61B Software Setup</h2>
+
+
+<hr/>
+
+<p>Recall from Lab 1 that you weren't able to run your testing files on your personal computer. That is because the testing files used a library called JUnit which we had not setup yet. Upon completion of this section, you should no longer have the issue with the missing packages. For this we must update the <code>CLASSPATH</code> environment variable. You can think about the <code>CLASSPATH</code> as the list of locations for java to look for <code>*.class</code> file to be ran from your terminal. In other words, it specifies the locations of packages and programs for the Java compiler. Before we did not specify the location of the JUnit files, so they could not be compiled.</p>
+
+<p>We will also have you setup the <code>PATH</code> variable. This is similar to the <code>CLASSPATH</code> variable, but instead is the list of locations for executable programs to be ran from your terminal. At various points in the semester you might need to run some of our software that we have distributed in the <code>cs61b&#x2d;software</code> repository (that you downloaded onto your computer last lab). By setting up the <code>PATH</code>, you should be able to run all of these commands directly from terminal.</p>
+
+<hr/>
+
+
+<h3 id="mac-setup">Mac Setup</h3>
+
+<p><em>Note: If you do not have a Mac computer, skip this step.</em></p>
+
+<p>You should have a hidden file called <code>.bash_profile</code> in your home directory. This file is part of the initialization of your shell and we will be appending to it. Please execute the next two lines which will first add the one line of necessary setup code and then the next one which effectively refreshes the shell by executing all of the code in your <code>.bash_profile</code>.</p>
+
+<pre><code>echo &#x27;source $HOME/cs61b&#x2d;software/adm/login&#x27; &gt;&gt; ~/.bash_profile
+source ~/.bash_profile</code></pre>
+
+<p><em>Note: If you are on Mac OS X Catalina, you may have to replace .bash_profile with .zprofile in the above commands.</em></p>
+
+<hr/>
+
+
+<h3 id="linux-setup">Linux Setup</h3>
+
+<p><em>Note: If you do not have a Linux computer, skip this step.</em></p>
+
+<p>You should have a hidden file called <code>.bashrc</code> in your home directory. This file is part of the initialization of your shell and we will be appending to it. Please execute the next two lines which will first add the one line of necessary setup code and then the next one which effectively refreshes the shell by executing all of the code in your <code>.bashrc</code>.</p>
+
+<pre><code>echo &#x27;source $HOME/cs61b&#x2d;software/adm/login&#x27; &gt;&gt; ~/.bashrc
+source ~/.bashrc</code></pre>
+
+<hr/>
+
+
+<h3 id="windows-setup">Windows Setup</h3>
+
+<p><em>Note: If you do not have a Windows computer, skip this step.</em></p>
+
+<p>Editing the <code>CLASSPATH</code> and <code>PATH</code> variables will involve using Windows Powershell. <strong>THIS MEANS THAT YOU SHOULD NOT EXECUTE THE FOLLOWING COMMANDS IN GIT BASH</strong> or they will not work. First you need to open up a Windows Powershell command prompt <strong>as an administrator</strong> as shown in the next two images below. You will be prompted with "Do you want to allow this app to make changes to your device?", go ahead and select "Yes".</p>
+
+<p><img src="img/windows-ps1.png" alt="windows-ps1" title="Windows Powershell - 1">
+<img src="img/windows-ps2.png" alt="windows-ps2" title="Windows Powershell - 2"></p>
+
+<p>After opening a terminal as an administrator you should be greeted with a prompt that looks like the following. If the top bar does not say "Administrator: PowerShell", please try opening it as an administrator again. Without this the following two commands will fail.</p>
+
+<p><img src="img/windows-ps3.png" alt="powershell" title="Windows Powershell - 3"></p>
+
+<p>Now execute the following two commands. Neither of these will produce any output. <strong>Again only execute these in an administrator PowerShell, not Git Bash.</strong></p>
+
+<pre><code>[System.Environment]::SetEnvironmentVariable(&#x27;CLASSPATH&#x27;, &quot;$HOME\cs61b&#x2d;software\lib\*;.&quot;, [System.EnvironmentVariableTarget]::Machine)
+[System.Environment]::SetEnvironmentVariable(&#x27;PATH&#x27;, &quot;$Env:Path;$HOME\cs61b&#x2d;software\bin&quot;, [System.EnvironmentVariableTarget]::Machine)</code></pre>
+
+<p>If neither of the commands produced any output, you are finished and you should close the PowerShell window as we will not longer need it.</p>
+
+<p><strong>Restart Git-Bash after this step so the changed environment variables can take effect</strong></p>
+
+
+<h2 id="c-intellij-ide-setup">C. IntelliJ IDE Setup</h2>
+
+
+<hr/>
+
+
+<h3 id="introduction-to-intellij-and-ides">Introduction to IntelliJ and IDEs</h3>
+
+<p>Previously in Lab 1, you were editing your Java code in a text editor of your choice and then compiling and running code through the terminal. Although this worked, the process was slightly disjointed and you had to switch back and forth between your editor and terminal. Additionally, most text editors do not have that much built in functionality to help you code in Java. Starting this week we will use IntelliJ which is an Integrated Development Environment or IDE. An IDE is a single program which combines typically a source code editor, compile / run tools, and a debugger. Some IDEs like IntelliJ contain even more features such as an integrated terminal and a graphical interface for Git commands. Finally IDEs also have tools like code completion which will help you write Java faster.</p>
+
+<p>We will not be forcing you to use IntelliJ if you choose not to, but we recommend that all students do use it. The debugger and other features will make it well worth the time it takes to learn as they should make you a more efficient programmer and one that can solve problems on your own. From this point forward we will assume that you are using IntelliJ and if you do not we will not necessarily be able to offer the same support (e.g. if you use another program like VSCode for this class, our staff will not be able to help you with any problems like we would had you chosen to use IntelliJ).</p>
+
+<hr/>
+
+
+<h3 id="downloading-and-installing-intellij">Downloading and Installing IntelliJ</h3>
+
+
+<p><em>Note: If you are only planning on using the lab computers, skip the setup.</em></p>
+
+<ol>
+  <li>You'll need to install the Community Edition of IntelliJ from the <a href="https://www.jetbrains.com/idea/download/">Jetbrains</a> website. As a student you can actually get a student license for the Ultimate version, but there are not any additional features that we will use for this class. It is recommended that you proceed with the Community Edition.</li>
+  <li>After selecting the appropriate version for your OS (Mac OSX, Windows, or Linux), click download.</li>
+  <li>Run the install file and follow the prompts to install IntelliJ onto your computer. You can stick to all the default settings. It might take a few minutes to install, just wait until it has completed before continuing. If you are working with a partner ask them how their semester is going. You can use this down time to get to know them better than you do right now!</li>
+</ol>
+
+<hr/>
+
+
+<h3 id="installing-plugins">Installing Plugins</h3>
+
+
+<p>We will now instruct you to install three plugins to help you add some CS61B specific functionality to IntelliJ. The three plugins are Python Community Edition (this will allow you to run python scripts from inside IntelliJ), Java Visualizer (this will allow you to see visualizations of your code similar to what you might see on <a href="http://pythontutor.com/java.html">python tutor</a>), and CS 61B (includes among other things a style checker). Follow the steps below to install these plugins.</p>
+
+<ol>
+  <li>Start up IntelliJ. If you're on the lab computers, you can start up IntelliJ by using the command <code>/share/instsww/bin/idea.sh</code> in a terminal window. You might be asked to import settings, choose to not do this. Also if prompted accept the terms and conditions.</li>
+  <li>In the <em>Welcome to IntelliJ IDEA</em> window, click the <strong>Configure -> Plugins</strong> button on the bottom right of the window.</li>
+  <li>In the window that appears, enter "Python Community Edition" in the search bar at the top. Select the "Python Community Edition" plugin by JetBrains and click the green <strong>Install</strong> button. Wait for the plugin to download and install.</li>
+  <li>Now repeat step 3, but instead install the "Java Visualizer" plugin by Eli Lipsitz.</li>
+  <li>Finally repeat step 3 once more, but instead install the "CS 61B" plugin by CS 61B Course Staff. If nothing comes up make sure you have a space in the name.</li>
+  <li>Once all of the plugins have installed, click the green <strong>Restart IDE</strong> button to finalize the installation.</li>
+</ol>
+
+<p>Before you move on make sure that you have successfully added the Python Community Edition plugin, the Java Visualizer plugin, and the CS 61B plugin before moving on. A few parts later in the lab will refer to the functionality of these plugins which will not exist unless you have correctly installed them.</p>
+
+<hr/>
+
+
+<h3 id="setting-up-sdks">Setting Up SDKs</h3>
+
+
+<p>There will be a shared structure to pretty much every programming assignment you will complete this semester so we will configure the default settings so that you should not have to do this for every new assignment.</p>
+
+<ol>
+  <li>If not already running, start up IntelliJ. Again for lab computers, you can start up IntelliJ by using the command <code>/share/instsww/bin/idea.sh</code> in a terminal window.</li>
+  <li><p>In the <em>Welcome to IntelliJ IDEA</em> window, click the <strong>Configure -> Structure for New Projects</strong> button on the bottom right of the window. After doing this step, you should see a window that looks like the following.</p>
+
+  <p><img src="img/proj-struct-1.png" alt="proj-strct-1" title="Project Structure Start"></p></li>
+  <li><p>For the Project SDK option, you should select the option "11" from the list which corresponds to using Java 11. Once selected your screen should now look like the following.</p>
+
+  <p><img src="img/proj-struct-2.png" alt="proj-strct-2" title="JDK Select"></p></li>
+  <li><p>Next we will add the Python SDK. Now navigate to the <strong>"Platform Settings -> SDKs"</strong> section in the sidebar. This should take you to a window that looks something like the below.</p>
+
+  <p><img src="img/proj-struct-3.png" alt="proj-strct-3" title="SDKs"></p></li>
+  <li><p>Click the <strong>"+ -> Python SDK"</strong> button to add a new SDK. Once open select the <strong>"System Interpreter"</strong> option from the sidebar and you should be greeted with a screen that looks like the following.</p>
+
+  <p><img src="img/proj-struct-4.png" alt="proj-strct-4" title="Python SDK Select"></p>
+
+  <p>It is possible that IntelliJ will already know where your python executable is, but if not you can click the <strong>"..."</strong> option and then select the corresponding location of the <code>python3</code> executable (macOS and Linux) or the <code>python.exe</code> executable (Windows). If you are unsure where this might be try using the command <code>which python3</code> (macOS and Linux) or <code>which python</code> (Windows) in your terminal. This should print out the print out the path for you!</p>
+
+  <p>After completing this step you should now see two SDKs, "11" and "Python 3.8" (if your python version differs that should be fine as long as it is Python 3.5+)</p></li>
+</ol>
+
+<hr/>
+
+
+<h3 id="creating-projects">Creating Projects</h3>
+
+
+<p>Before creating your first IntelliJ project, you must have the starter code for this lab. As usual, you can get the start files for this lab through Git. Before running these commands make sure you have committed and pushed any current work in your <code>repo</code> directory. If you do not remember what this means talk with your lab partner and / or check in with your lab TA. Once you are sure you have done this use the following commands. Note: you can still run the commands even if you have not committed and pushed, but this might cause merge conflicts, so it is best to just commit and push before merging in the new code.</p>
+
+<pre><code>git fetch shared
+git merge shared/lab2 &#x2d;m &quot;Start lab2&quot;
+git push</code></pre>
+
+<p>Now that you have the starter code, we can setup your first project. The following instructions apply for both this Lab and for future assignments (homeworks, projects, and labs).  Each time after using <code>git fetch</code> and <code>git merge</code> to retrieve the starter code for a new assignment, you will notice that you have a new assignment directory (e.g. next week, you'll get lab3/).  Therefore, you can simply run through the following steps again.  Don't be intimidated by the long section; this is because we've carefully screenshotted every step. In future iterations, setting up will likely involve pressing next for all steps and, if IntelliJ asks you to overwrite various housekeeping files (such as .iml files) because they already exist, respond "Yes" or "Overwrite" to those popup windows.  This is so IntelliJ can automatically mark the new directories for your assignment for you as opposed to you manually marking source folders and/or modules.</p>
+
+<ol>
+  <li>Start up IntelliJ. Again if you're on the lab computers, you can start up IntelliJ by using the command <code>/share/instsww/bin/idea.sh</code> in a terminal window.</li>
+  <li><p>Upon opening IntelliJ, click on the "Import Project" option. We will use "Import Project" rather than "Create New Project" throughout the semester which will make setup slightly easier as IntelliJ will automatically mark *.java files as source code.</p>
+
+  <p><img src="img/intellij-1.png" alt="intellij-1" title="IntelliJ Start Menu"></p></li>
+  <li><p>Find and choose the directory of your current assignment (for today's lab, it should be <code>~/repo/lab2</code>), then press the OK button.</p>
+
+  <p><img src="img/intellij-2.png" alt="intellij-2" title="Select File or Directory"></p></li>
+  <li><p>Make sure "Create project from existing sources" is selected and press next. You shouldn't have to change anything at this step.</p>
+
+  <p><img src="img/intellij-3.png" alt="intellij-3" title="Existing Sources"></p></li>
+  <li><p>Leave these fields untouched and press next.</p>
+
+  <p><img src="img/intellij-4.png" alt="intellij-4" title="Project Name"></p></li>
+  <li><p>Again you should not have to do anything here so just click "Finish". For context, IntelliJ is automatically detecting what your Java files are and self-configuring itself to edit and run them.</p>
+
+  <p><img src="img/intellij-5.png" alt="intellij-5" title="Import Sources"></p></li>
+  <li><p>You should at this point be greeted with the main screen of IntelliJ which should look like the following. If you are greeted with any additional screens when setting up the project you can go ahead and select the default options for now.</p>
+
+  <p><img src="img/intellij-6.png" alt="intellij-6" title="Main Screen"></p></li>
+  <li><p>Finally we will setup the Java libraries that we will be using this semester, so that you do not have to <code>ssh</code> into your instructional account to run any testing code. Navigate to the <strong>"File -> Project Structure"</strong> menu, then select <strong>"Libraries"</strong> in the sidebar. You should be greeted with a screen that looks like this.</p>
+
+  <p><img src="img/intellij-7.png" alt="intellij-7" title="Libraries Project Structure"></p></li>
+  <li><p>Click the "<strong>+ -> Java</strong>" button, which should prompt you to select the file location. Navigate to the <code>~/cs61b&#x2d;software/lib</code> folder and then select all of the <code>*.jar</code> files (i.e. select all of the files that end in <code>.jar</code> in the <code>~/cs61b&#x2d;software/lib</code> folder). After selecting them your window should look like the following.</p>
+
+  <p><img src="img/intellij-8.png" alt="intellij-8" title="Libraries Project Structure"></p>
+
+  <p>If prompted to add the library to the <code>lab2</code> module, select "<strong>Ok</strong>". After these steps the libraries tab should look like the following with all of the <code>.jar</code> files listed here.</p>
+
+  <p><img src="img/intellij-9.png" alt="intellij-9" title="Libraries Project Structure"></p></li>
+</ol>
+
+<p>At this point if things have been configured correctly each Java file should have a blue circle next to its name, and when you open the file <code>IntList.java</code> file you should see a green triangle near the line numbers on line 6. At this point you should be all done now and can move on with the lab!</p>
+
+
+<h2 id="d-using-intellij">D. Using IntelliJ</h2>
+
+
+<hr/>
+
+
+<h3 id="intellij-documentation">IntelliJ Documentation</h3>
+
+<p>As we have mentioned, IntelliJ is an IDE that is widely used in industry which has its advantages and disadvantages for you. This means you will learn how to use a real tool, one that you might keep using for years after you graduate. IntelliJ is also incredibly powerful and can allow you to code in ways perhaps unlike anything you have seen before in previous classes. As it is widely used, they have dedicated resources to maintaining documentation. A <a href="https://www.jetbrains.com/help/idea/guided-tour-around-the-user-interface.html">complete guide can be found here</a> and they also have <a href="https://www.jetbrains.com/idea/documentation/">many helpful video tutorials here</a>.</p>
+
+<p>By looking at these links you can notice one disadvantage of using IntelliJ is that there are so many features and configurable settings that it can be overwhelming. Their documentation and videos often might mention things you have never heard of, but that does not mean you won't be able to use IntelliJ effectively in this class. We will do our best to make this process as painless as it can be for you, and hopefully will help to make you more efficient in programming.</p>
+
+<p>Out of the guide and tutorial videos, we have found the following pages / videos to help jump start learning how to develop in IntelliJ. This list is probably too long to get through in its entirety in addition to the rest of the lab. We have included it here as a reference that you can finish on your own time, and have split things into "Read Now" and "Watch Later". If you have time continue to explore the listed resources and try to experiment with different workflows that work for you.</p>
+
+
+<h4 id="read-now">Read Now</h4>
+
+
+<ul>
+  <li><a href="https://www.jetbrains.com/help/idea/guided-tour-around-the-user-interface.html">Overview of the user interface</a>: This is a very high level overview which explains some of the various different windows and names IntelliJ uses to describe them. Understanding this will help you to understand their other reference material.</li>
+  <li><a href="https://www.jetbrains.com/help/idea/discover-intellij-idea.html">Discover IntelliJ IDEA</a>: This guide is longer and explains some of the most important functionality of the IDE along with helpful keyboard shortcuts that can be used. Feel free to just skim this for now, and again if there are sections which use vocabulary you are unfamiliar with that is fine. Some parts of this guide refer to features that we will not use. If the rest of the documentation feels too large, this is a one stop shop which contains explanations of most of the functionality we will use this semester.</li>
+</ul>
+
+
+<h4 id="watch-later">Watch Later</h4>
+
+
+<ul>
+  <li>This video shows how to efficiently navigate the IDE with minimal mouse / trackpad action. A lot of the features presented in this video are not needed for use of the editor, but can make you quicker at getting things done. If you have the time try to watch this and if possible follow along. Even just knowing that this functionality exists can be useful for the future.</li>
+</ul>
+
+<div style="position: relative; width: 100%; padding-top: 56.25%"><iframe style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; height: 90%; width: 90%; margin: auto" src="https://www.youtube.com/embed/1UHsJyCq1SU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+<ul>
+  <li>This video shows the power of code generation within IntelliJ. Again the features shown here are more advanced than what you will likely need to succeed in this class, but when watching try to pick up on new things that you can work into your use of the IDE</li>
+</ul>
+
+<div style="position: relative; width: 100%; padding-top: 56.25%"><iframe style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; height: 90%; width: 90%; margin: auto" src="https://www.youtube.com/embed/sx7_SS8y-_o" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+<ul>
+  <li>Finally this video discusses some of the Git (or other version control) integration with the IntelliJ IDE. Throughout this course we will be expecting you to understand the Git CLI (command line interface), but sometimes it may be useful to use some kind of GUI (graphical user interface) to visualize changes to your Git repositories. Again, this is not something we expect students to be using as their primary method of interacting with Git but it is helpful to know that it exists.</li>
+</ul>
+
+<div style="position: relative; width: 100%; padding-top: 56.25%"><iframe style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; height: 90%; width: 90%; margin: auto" src="https://www.youtube.com/embed/MaQnpCaiop0"
+ frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+
+<hr/>
+
+
+<h3 id="running-java-files">Running Java Files</h3>
+
+
+<p>There are a lot of features that you may or may not use in IntelliJ that are described in the above resources, but there are a few that are essential, like running Java files, which everyone will use. Now that you have been acquainted let's try running a program. First we need to open the <code>IntList.java</code> file. You can do so by clicking on the file <code>IntList.java</code> from the left sidebar or you can try using the shortcut <strong>"Shift+Shift"</strong> to search for it and open it. Either way once you have opened it, next go to the top of the screen and press <strong>"Run -> Run... ."</strong> A small box should appear where you should click on the <code>IntList</code> option as shown below, and the java file will run!</p>
+
+<p><img src="img/intellij-run-1.png" alt="intellij-run-1" title="IntelliJ Run IntList"></p>
+
+<p>A new pane should appear on the bottom of the IDE which is where the result of your program will be printed out (like before how it was printed into your terminal). Right now, it looks like we have an exception (error) as can be seen below.</p>
+
+<p><img src="img/intellij-run-2.png" alt="intellij-run-2" title="IntelliJ Run Error"></p>
+
+<p><strong>NOTE: If you did not get this exact error go to File -> Project Structure -> Projects and make sure that the selected project SDK is Java 11 not python 3.8 (the option should just be called "11").</strong></p>
+
+<p>The blue link <code>IntList.java:xx</code> indicates the file and line number at which the error or exception occurred. We can click on it to go directly to that line in our code. It looks like that particular print statement prints <code>Hello</code> and then <code>args[0]</code> which is an argument that you provide to a Java program when ran through your terminal (e.g. in <code>java Year 2000</code> from Lab 1).</p>
+
+<p>We get an error here, because we did not run this program through the command line, so there was never an option for us to provide the command line argument the program is looking for. To mimic this functionality in IntelliJ, we first need to click on <strong>"Run -> Edit Configurations"</strong> in the top bar. On the blank that says <strong>"Program Arguments"</strong>, put your name which should result in a window that looks like the below. After you have done this, click OK. Let's run our file again. Go to <strong>"Run -> Run 'IntList'"</strong> and this time you should get an output: <code>Hello, &lt;Your Name&gt;</code>.</p>
+
+<p><img src="img/intellij-run-3.png" alt="intellij-run-3" title="IntelliJ Edit Configuration"></p>
+
+<p>Now, let's take a look at the main method again. We have created an <code>IntList</code> for you. On the line after <code>IntList L1 = list(1, 2, 3, 4, 5);</code>, type <code>sout</code> then press Enter. Did you see what happened? IntelliJ converted <code>sout</code> to <code>System.out.println();</code>, which is how we print things in Java. Cool right? This is called a <a href="https://www.jetbrains.com/help/idea/using-live-templates.html">live template</a> in IntelliJ and is one method of how IntelliJ can make your life easier. There are many other examples and you can even configure your own if you so desire.</p>
+
+<p>Inside the parentheses of your new <code>System.out.println();</code>, add <code>L1</code>. Now run <code>IntList</code> again. Verify that your output is now <code>Hello, &lt;Your Name&gt;</code> on the first line, and <code>[1, 2, 3, 4, 5]</code> on the second line.</p>
+
+<hr/>
+
+
+<h3 id="very-brief-debugger-introduction">Very Brief Debugger Introduction</h3>
+
+
+<p>Now let's try running the debugger on IntelliJ. The debugger is perhaps even more important than the ability to just run code we discussed above. It is single-handedly the most important tool you will use in this course. If you are able to use the debugger you can become a more independent programmer and will hopefully be able to solve any bug! Again this is not meant to be a formal tutorial of the debugger, more so just a cursory introduction. In Lab 3 and HW 1 there will be more instructions and examples for you to learn from.</p>
+
+<p>Many of you might have had experience with using print statements to probe what a program is doing as it runs. Essentially by placing print statements at different places throughout the program, you can see what the state of variables will be throughout. While it is true that print statements can be useful for debugging, often it takes less time and mental effort to find a bug if you use a debugger.</p>
+
+<p>Let's begin by adding another print statement to the main method which will print the sum of the IntList we provided for you. Feel free to use the <code>sum</code> method that we have provided you. To do this first declare an integer variable, <code>sumL1</code>, into which you can save the returned value from <code>sum</code>. Then add a print statement and pass in the variable <code>sumL1</code>. When you are done, run the main method again. You should get a third line with the sum of the integers in the IntList, <code>[1, 2, 3, 4, 5]</code>.</p>
+
+<p>You may have noticed that the provided <code>sum</code> method returned a wrong number. The sum should be (1 + 2 + 3 + 4 + 5 =) 15, but <code>sum</code> returned 5. Clearly, there is a bug in the code of <code>sum</code> and we would like to figure out where it is exactly. To do so, we will use the debugger.</p>
+
+<p>The debugger allows us to investigate the code, line by line, to see what is the state of all of the program's variables at every step. To begin using the debugger, we must specify at which line we want to start our "investigation process". To do so, we set a <strong>breakpoint</strong> near a line of choice. Let's set a breakpoint on the line <code>IntList L1 = list(1, 2, 3, 4, 5);</code>, by clicking once to its left. After setting this breakpoint a red circle should appear as pictured below.</p>
+
+<p><img src="img/intellij-debug-1.png" alt="intellij-debug-1" title="Setting a Breakpoint"></p>
+
+<p>Next go to <strong>"Run -> Debug 'IntList'"</strong>. The debugger pane will now open at the bottom of your IDE window. The program execution has been paused at the breakpoint we've just set! From here, we can step through each line of code to find bugs.</p>
+
+<p>Near the top of the debugger console, you will see some blue and red arrows. Hover your cursor
+over them to see what they each say. Then, click the arrow that says <strong>"Step Over"</strong>. This button allows us to continue the execution to the next line of code. Note that we "stepped over" the code contained in <code>list</code> method. Since we know it works properly, there is no reason to debug it. The <strong>"Step Over"</strong> button is helpful when we want to look at a program from a higher level and skip stepping over every individual line of code.</p>
+
+<p>Keep stepping over until you get to the call to the <code>sum</code> method. Unlike before where we did not care about the internals of <code>list</code>, we want to "Step Into" the <code>sum</code> method call in order to debug it. Again, hover over the blue arrows in the debugging window to find the <strong>"Step Into"</strong> button then click it.</p>
+
+<p>Once you have stepped into the <code>sum</code> method, continue to step through the code (using <strong>"Step Over"</strong> since there is no code to step into) until you find what is the problem. Pay attention to the <strong>"Variables</strong> window at the bottom to see if any values are being updated incorrectly. Talk to your partner about what the error seems to be <strong>then fix the code in <code>sum</code> such that the method will return the correct result.</strong></p>
+
+<p>When you finish, you can exit the debugger by clicking on the <strong>"Stop"</strong> button, which is a red square in the debugging console (off to the side from where the arrows were). Alternitavely, you can also click on the <strong>"Resume"</strong> button, which will have the debugger execute all the remaining code until another breakpoint is reached, or until the program terminates.</p>
+
+<hr/>
+
+
+<h3 id="creating-junit-tests">Creating JUnit Tests</h3>
+
+<p><em>Note: You should not have to follow along with this exercise, but you should read and understand it for when you might have to later in the course.</em></p>
+
+<p>We have not discussed writing tests much, but we have provided you a second file, called <code>IntListTest.java</code> which contains some test methods for you. Had we not provided these tests, then you would have had to write them in order to ensure correctness of your code. Again IntelliJ can be used to speed this process up a bit. Normally, to generate a JUnit test file, open to the file you'd like to test (e.g. <code>IntList.java</code> here), then go to <strong>"Navigate -> Test"</strong>.</p>
+
+<p>A small window will pop up; click <strong>"Create New Test..."</strong> (here we see two options since we have provided <code>IntListTest.java</code>, but again that might not always be the case). In the next window, select <code>JUnit5</code> for the testing library. You will then be able to check boxes to indicate which methods you want to test for. You can always write in more tests, but the check box option is nice since IntelliJ will automatically generate the method header for these tests for you.</p>
+
+<p>You can run these tests the same way you would run a regular Java file (as described above). Again, we have provided you the testing file for this lab, so you will not need to generate a new test file.</p>
+
+<hr/>
+
+
+<h3 id="using-the-cs-61b-plugins">Using the CS 61B Plugins</h3>
+
+
+
+<h4 id="java-visualizer">Java Visualizer</h4>
+
+
+<p>This plugin contains a built-in version of the Java Visualizer, a tool similar to Python Tutor which you may have used in CS 61A or other previous courses. This tool is intended to help you debug and understand your code, and is integrated into IntelliJ's Java debugger. Students often find this helpful to transition to debugging in IntelliJ, and unfortunately at some point in the semester the code we will be running will become too complicated for the visualizer.</p>
+
+<p>To use the built-in visualizer you must be debugging your code, so you can follow along the steps above to start the debugger again. When your code stops at a breakpoint, you can click the Java Visualizer icon:</p>
+
+<p><img src="img/java-viz-1.png" alt="java-viz-1" title="Java Visualizer Start"></p>
+
+<p>After clicking this button, the Java Visualizer will appear, displaying the stack of the currently paused program as well as a diagram of the different variables.</p>
+
+<p><img src="img/java-viz-2.png" alt="java-viz-2" title="Java Visualizer in Action"></p>
+
+<p>As you continue to step through and pause your code, the visualizer display will update accordingly to show you what's going on in your program. In the coding portions of the lab try using the visualizer to check your understanding.</p>
+
+
+<h4 id="style-checking">Style Checking</h4>
+
+
+<p>In this class, you will eventually be required to make sure your code conforms to the <a href="../../../docs/style-guide.html">official style guide</a>. The CS61B plugin includes a helpful style checker, which will check your code and inform you of any style errors and their locations. This will allow you to fix your style locally so that you do not lose points later on. <em>Note: the sytle checker is not being run for this assignment so you do not need to worry about the style error in the files provided.</em></p>
+
+<p>To run the style checker, simply right click any file or directories you want to check, and select <strong>Check Style</strong> in the menu that appearss</p>
+
+<p><img src="img/check-style-1.png" alt="check-style-1" title="Check Style"></p>
+
+<p>After clicking it the style checker will run. A tool window will appear with the results of the style check, and a list of any errors. Click the links to jump directly to the problematic line of code:</p>
+
+<p><img src="img/check-style-2.png" alt="check-style-2" title="Checked Style"></p>
+
+
+<h2 id="e-programming-with-intlists">E. Programming with IntLists</h2>
+
+
+<hr/>
+
+
+<h3 id="introduction-to-intlists">Introduction to IntLists</h3>
+
+
+<p>As discussed in Wednesday's lecture, an <code>IntList</code> is our CS61B implementation for a linked list of integers, which you might have already seen if you took CS 61A or other programming courses.</p>
+
+<p>For our definition implementation, an IntList has a <code>head</code> and <code>tail</code> property. It is named an <code>IntList</code> because a set of these objects can represent a list (sequence) of Java <code>int</code> values. The <code>head</code> of the first <code>IntList</code> object is the first element of the list. The <code>tail</code> (another <code>IntList</code>) represents the list of remaining elements (that is, it is a pointer to the <code>IntList</code> object whose <code>head</code> is the second item of the list).</p>
+
+<p>As a result of this correspondence between sets of <code>IntList</code> objects and lists, we often conflate pointers to <code>IntList</code> objects with the lists they head and use the term "IntList" to refer both to individual <code>IntList</code> objects and to the entire set of objects reachable by following the <code>tail</code> pointers. Usually, the distinction is clear from context.</p>
+
+<p>In the <code>IntList.java</code> file, we've added a method called <code>list</code>, which makes it easier to create IntLists. For example, to create an <code>IntList</code> containing the numbers 0, 1, 2,
+and 3, we could use the method as follows:</p>
+
+<pre><code>IntList myList = IntList.list(0, 1, 2, 3);</code></pre>
+
+<p>After executing the above code, the following will be true about the state of our program. Discuss each of these with your partner and make sure that you understand them. For <code>IntList</code> questions it can be helpful to draw the lists out on paper or on the whiteboard.</p>
+
+<ul>
+  <li><code>myList.head</code>  returns 0</li>
+  <li><code>myList.tail</code> returns 1 -> 2 -> 3 -> null</li>
+  <li><code>myList.tail.tail.tail</code> returns 3 -> null</li>
+  <li><code>myList.tail.tail.tail.tail</code> returns null</li>
+</ul>
+
+<p>The <code>IntList.list</code> method makes it much easier to create <code>IntLists</code> compared to the naive approach which would look something like the following.</p>
+
+<pre><code>IntList myList = new IntList(0, null);
+myList.tail = new IntList(1, null);
+myList.tail.tail = new IntList(2, null);
+myList.tail.tail.tail = new IntList(3, null);</code></pre>
+
+<p>We have also provided a convenient <code>toString</code> method. As we'll see later in the course, this is a useful method, because among other things, the standard <code>print...</code> methods in <code>System.out</code> use it whenever they are asked to print a value of type <code>IntList</code>, so that running the command <code>System.out.println(myList)</code> will print out <code>[0, 1, 2, 3]</code>. Likewise, the "+" (append) operation on values of type <code>String</code> will use the <code>toString</code> method to figure out what string to append when adding an arbitrary object to a <code>String</code>.</p>
+
+<hr/>
+
+
+<h3 id="destructive-vs-non-destructive">Destructive vs. Non-destructive</h3>
+
+
+<p>Let's consider a method <code>dSquareList</code> that will destructively square every item in a list.</p>
+
+<pre><code>IntList origL = Intlist.list(1, 2, 3)
+dSquareList(origL);
+// origL is now (1, 4, 9)</code></pre>
+
+<p>Where <code>dSquareList</code> is defined as follows.</p>
+
+<pre><code>public static void dSquareList(IntList L) {
+    while (L != null) {
+        L.head = L.head * L.head;
+        L = L.tail;
+    }
+}</code></pre>
+
+<p>This is a classic example of a <em>destructive method</em> as it iterates through the list and squares each item. This causes the values linked by <code>L</code> to change. In other words, after calling this method once on <code>L</code>, every element in <code>L</code> will be squared.</p>
+
+<p>Examining the code above, we see that the <code>origL</code> variable contains a reference to the created <code>IntList</code>. The value of this variable never changes. By contrast, the <code>L</code> variable in <code>dSquareList</code> moves around inside the method when the line <code>L = L.tail</code> is executed. As we iterate through the method, <code>origL</code> always points to the beginning of the <code>IntList</code>, but <code>L</code> moves to the right until it reaches the null value at the end.</p>
+
+<p>The reason we say that <code>dSquareList</code> is destructive is that we change the values of the original <code>IntList</code> objects, destroying the original data. As we go along, we replace each <code>head</code> value with its square. By the end of the method, <code>L</code> is null, and <code>origL</code> is still pointing
+at the beginning of the <code>IntList</code>, but every value in the <code>IntList</code> that <code>origL</code> points to is now squared.</p>
+
+<p>If these ideas don't yet make total sense, ask a TA or lab assistant to draw a diagram of the code execution or you can try to use the Java Visualizer to walk through this example. Pointers and IntLists might seem confusing at first, but it's important that you understand these concepts!</p>
+
+<p>Now, look at at <code>squareListIterative</code> and <code>squareListRecursive</code> in the <code>IntList.java</code> file provided. These methods are both <em>non-destructive</em>. That is, the underlying <code>IntList</code> passed into the methods does <em>not</em> get modified. Try looking at the recursive version with your partner and try to reason why this is non-destructive. Next try look at <code>squareListIterative</code>, then discuss why this too is non-destructive.</p>
+
+<p>The iterative version of a non-destructive method is often quite a bit messier than the recursive version, since it takes some careful pointer action to create a new <code>IntList</code>, build it up, and return it (this is a general trend and there will likely be examples where the opposite is true).  Try to understand what this code is doing and discuss with your partner.</p>
+
+<p>Finally, look at the test method <code>testdSquareList</code> in <code>IntListTest.java</code>. This test checks whether or not <code>dSquareList</code> is destructive by making sure that the original list is
+mutated. Again discuss with your partner what you think this test is doing and if it makes sense. Try using both the debugger and the Java Visualizer plugin to verify your thoughts!</p>
+
+<hr/>
+
+
+<h3 id="your-task">Your Task</h3>
+
+
+<p>Again, we have not fully introduced JUnit and unit testing but you should be able to write the following code by basing it off of the existing tests. For this assignment we want you to fill in the test <code>testSquareListRecursive</code> in the <code>IntListTest.java</code> file which should test the <code>squareListRecursive</code> method. This test should both check the method for correctness and non-destructiveness. Use the <code>testdSquareList</code> test as inspiration for this new test. Your new tests can be fairly similar in structure to <code>testdSquareList</code>.</p>
+
+<p>Once you have checked both requirements and your own test passes, you're done! Since we have not formally introduced JUnit this test will not be tested heavily for correctness, but still we want to encourage you to try your best to make a test. Unit testing is an incredibly important skill to learn and the sooner you learn it the better!</p>
+
+
+<h2 id="f-submission-and-grading">F. Submission and Grading</h2>
+
+<p>This semester we will be grading your work through Gradescope. The instructions for submitting assignments are the same as in the previous lab and homework. First make sure that you have added and committed your latest work before continuing. For this lab you should first tag the commit you want to submit with the following command.</p>
+
+<pre><code>git tag lab2&#x2d;0</code></pre>
+
+<p>Then you need to push both you code and your tags which can be done with the following two commands.</p>
+
+<pre><code>git push
+git push &#x2d;&#x2d;tags</code></pre>
+
+<p>Once you complete these steps, your assignment will automatically be uploaded to Gradescope and you should see autograder results within a few minutes. This is a new feature of the course and we expect there may be some kinks to iron out. So if anything doesn't look right (e.g. you don't see a submission or it says failed to generate a proper output), please report this to course staff so we can investigate.</p>
+
+<p>At this point you should also be able to see your graded work on Gradescope for Lab 1 (we manually ran the grader based on your latest submission). If you do not see any submission or have not yet submitted, try submitting Lab 1 (through the same process as above) and let us know if there are any problems.</p>
+
+<p>You should make sure that you have registered with the same email address that is associated with your Gradescope account (this should be your @berkeley.edu email address). You will have to run the command <code>re&#x2d;register</code> to set the email appropriately otherwise this submission process will not work.</p>
+
+<p>Also you should never be submitting code directly through Gradescope. The only way you should submit your code is by making a tag and pushing that tag. If you log into Gradescope and try to submit an assignment directly it will prompt you to use a BitBucket account. Please ignore this and again only submit through the Git commands that we have shown here.</p>
+    </main></div>
+</body>
+</html>
