@@ -1,10 +1,12 @@
 # CS61A Fall 2019
+
 UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 
 * Website - https://inst.eecs.berkeley.edu/~cs61a/fa19/
 * Textbook - http://www.composingprograms.com
 
 ## Homework
+
 * [09/05 HW01](homework/hw01): Control
 * [09/12 HW02](homework/hw02): Higher Order Functions
 * [09/26 HW03](homework/hw03): Recursion
@@ -17,10 +19,11 @@ UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 * [12/05 HW10](homework/hw10): SQL
 
 ## Labs
+
 * [09/06 Lab00](labs/lab00): Getting Started
 * [09/06 Lab01](labs/lab01): Variables & Functions, Control
 * [09/13 Lab02](labs/lab2): Higher-Order Functions
-*  09/20 Lab03: No lab due to [Midterm 1](exams/midterm-1)
+* 09/20 Lab03: No lab due to [Midterm 1](exams/midterm-1)
 * [09/27 Lab04](labs/lab04): Recursion, Python Lists
 * [10/04 Lab05](labs/lab05): Data Abstraction, Trees
 * [10/11 Lab06](labs/lab06): Nonlocal, Object-Oriented Programming
@@ -34,17 +37,20 @@ UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 * [12/06 Lab14](labs/lab14): Final Review
 
 ## Projects
+
 * [09/12    Hog](projects/hog): Dice game
 * [10/03   Cats](projects/cats): Typing test
 * [10/18   Ants](projects/ants): Plants vs Zombies clone
 * [11/20 Scheme](projects/scheme): Scheme Interpreter
 
 ## Exams
+
 * [09/16 Midterm 1](exams/midterm-1): 19:00-21:00 (1 hr 50 min)
 * [10/24 Midterm 2](exams/midterm-2): 20:00-22:00 (1 hr 50 min)
 * [12/19     Final](exams/final): 15:00-18:00 (2 hr 50 min)
 
 ## Exam Statistics
+
 |Exam     |Mean |Median|Standard Deviation|Total Points|
 |---------|-----|------|------------------|------------|
 |Midterm 1|26.85|28    | 8.51             |40          |
@@ -52,10 +58,13 @@ UC Berkeley CS61A: Structure and Interpretation of Computer Programs, Fall 2019
 |Final    |49.88|54.75 |16.9              |75          |
 
 ### Midterm 1 Histogram
+
 ![Midterm 1 Histogram](exams/midterm-1/mt1.png)
 
 ### Midterm 2 Histogram
+
 ![Midterm 2 Histogram](exams/midterm-2/mt2.png)
 
 ### Final Histogram
+
 ![Final Histogram](exams/final/final.png)
