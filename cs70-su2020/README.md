@@ -1,6 +1,6 @@
 # CS70 Summer 2020 (COVID Edition)
 
-UC Berkeley CS61B: Discrete Math & Probability Theory, Summer 2020
+UC Berkeley CS70: Discrete Math & Probability Theory, Summer 2020
 
 * Website - https://inst.eecs.berkeley.edu/~cs70/su20/
 
